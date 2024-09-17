@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import {SafeAreaView, TouchableOpacity} from 'react-native';
+import {SafeAreaView, TouchableOpacity, Text} from 'react-native';
 import VideoCall from './src/videocall'; // Path to the component
 
 const App = () => {
