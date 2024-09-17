@@ -15,7 +15,7 @@ const App = () => {
      <View >
       {!activeCall && (
         <>
-          <TouchableOpacity onPress={() => setActiveCall('video')}>
+          <TouchableOpacity style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} onPress={() => setActiveCall('video')}>
             <Text>Start Video Call</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setActiveCall('voice')}>
