@@ -12,7 +12,21 @@ import VideoCall from './src/videocall'; // Path to the component
 const App = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <VideoCall />
+     <View >
+      {!activeCall && (
+        <>
+          <TouchableOpacity onPress={() => setActiveCall('video')}>
+            <Text>Start Video Call</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setActiveCall('voice')}>
+            <Text>Start Voice Call</Text>
+          </TouchableOpacity>
+        </>
+      )}
+      
+      {activeCall === 'video' && <VideoCall />}
+      {activeCall === 'voice' && <VoiceCall />}
+    </View>
     </SafeAreaView>
   );
 };
