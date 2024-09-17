@@ -17,10 +17,10 @@ const App = () => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {!activeCall && (
           <>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setActiveCall('voice')}>
               <Text>Start Video Call</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setActiveCall('voice')}>
               <Text>Start Voice Call</Text>
             </TouchableOpacity>
           </>
