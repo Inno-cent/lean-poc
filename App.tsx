@@ -11,13 +11,13 @@ import VideoCall from './src/videocall';
 import VoiceCall from './src/voicecall';
 
 const App = () => {
-  const [activeCall, setActiveCall] = useState(null);
+  const [activeCall, setActiveCall] = useState("");
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {!activeCall && (
           <>
-            <TouchableOpacity onPress={() => setActiveCall('voice')}>
+            <TouchableOpacity onPress={() => setActiveCall('video')}>
               <Text>Start Video Call</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setActiveCall('voice')}>
