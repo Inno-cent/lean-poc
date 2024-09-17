@@ -7,8 +7,8 @@ const VoiceCall = () => {
   
   const connectionData = {
     appId: '4f3e2bbec8e64405a07bdea5e7cd6ee0',  
-    channel: 'voiceChannel',
-    token: 'YOUR_VOICE_TOKEN_HERE',
+    channel: 'new-channel',
+    token: '007eJxTYGBYyjhhhv9PFbFSPqOTgkZ1rLybfFxlZBm0n3rwsp1xlFFgMEkzTjVKSkpNtkg1MzExME00ME9KSU00TTVPTjFLTTXQm/wyrSGQkSFjSzYDIxSC+NwMeanluskZiXl5qTkMDABkzh04',
   };
 
   const rtcCallbacks = {

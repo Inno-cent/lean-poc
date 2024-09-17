@@ -10,8 +10,8 @@ const VideoCall = () => {
   const [videoCall, setVideoCall] = useState(null);
   const connectionData = {
     appId: '4f3e2bbec8e64405a07bdea5e7cd6ee0',
-    channel: 'test',
-    token: '007eJxTYOD9bNqU/eUO7xmBd7+qegtu3zZbfUkpsi/e2PVKjr6uQ7gCg0macapRUlJqskWqmYmJgWmigXlSSmqiaap5copZaqpB+M6naQ2BjAxXb9YyMTJAIIjPwlCSWlzCwAAAsNQhlw==',
+    channel: 'new-channel',
+    token: '007eJxTYGBYyjhhhv9PFbFSPqOTgkZ1rLybfFxlZBm0n3rwsp1xlFFgMEkzTjVKSkpNtkg1MzExME00ME9KSU00TTVPTjFLTTXQm/wyrSGQkSFjSzYDIxSC+NwMeanluskZiXl5qTkMDABkzh04',
   };
   const callbacks = {
     EndCall: () => setVideoCall(false),
