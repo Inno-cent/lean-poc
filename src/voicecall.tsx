@@ -3,7 +3,7 @@ import AgoraUIKit from 'agora-rn-uikit';
 import {Text, View} from 'react-native';
 
 const VoiceCall = () => {
-  const [voiceCall, setVoiceCall] = useState(null);
+  const [voiceCall, setVoiceCall] = useState(true);
   
   const connectionData = {
     appId: '4f3e2bbec8e64405a07bdea5e7cd6ee0',  
@@ -19,6 +19,11 @@ const VoiceCall = () => {
     enableVideo: false,  // Disable video for voice-only calls
   };
 
+  const settings = {
+    videoMode: {
+      useVideo: false,  // This will disable video and make it voice-only
+    },
+  };
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
       <Text onPress={() => setVoiceCall(true)}>Start Voice Call</Text>
