@@ -19,11 +19,6 @@ const VoiceCall = () => {
     enableVideo: false,  // Disable video for voice-only calls
   };
 
-  const settings = {
-    videoMode: {
-      useVideo: false,  // This will disable video and make it voice-only
-    },
-  };
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
       <Text onPress={() => setVoiceCall(true)}>Start Voice Call</Text>
