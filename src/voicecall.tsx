@@ -35,4 +35,4 @@ const VoiceCall = () => {
   );
 };
 
-export default VoiceCall;
+// export default VoiceCall;
