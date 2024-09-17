@@ -8,6 +8,8 @@
 import React from 'react';
 import {SafeAreaView, TouchableOpacity, Text, View} from 'react-native';
 import VideoCall from './src/videocall'; 
+import VoiceCall from './src/voicecall'; 
+
 
 const App = () => {
   return (
