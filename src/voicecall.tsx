@@ -22,7 +22,7 @@ const VoiceCall = () => {
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
       <Text onPress={() => setVoiceCall(true)}>Start Voice Call</Text>
-      {/* {voiceCall ? (
+      {voiceCall ? (
         <AgoraUIKit 
           connectionData={connectionData} 
           rtcProps={rtcProps} 
@@ -30,7 +30,7 @@ const VoiceCall = () => {
         />
       ) : (
         <Text onPress={() => setVoiceCall(true)}>Start Voice Call</Text>
-      )} */}
+      )}
     </View>
   );
 };
