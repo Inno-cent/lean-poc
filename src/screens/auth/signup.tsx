@@ -10,26 +10,62 @@ import {
 import {useNavigation} from '@react-navigation/native';
 
 const SignupScreen = () => {
-    const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isSucces , setIsSuccess] = useState('');
+  const [isSucces, setIsSuccess] = useState(false);
 
   const navigation = useNavigation();
 
-  const handleSignup = () => {
- if(!email || !password || !confirmPassword || !username){
-    setMessage('Please fill ouut all fields')
- }
+  const handleSignup = async () => {
+    if (!email || !password || !confirmPassword || !username) {
+      setMessage('Please fill ouut all fields');
+    }
+
+    try {
+      const response = await fetch(
+        'https://lean-videocall-app-be.onrender.com/v1/session/signup',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Signup successful!');
+        setIsSuccess(true);
+        // Navigate to another screen, etc.
+      } else {
+        setMessage(data.error || 'Signup failed.');
+        setIsSuccess(false);
+      }
+    } catch (error) {
+      setMessage('Network error. Please try again.');
+      setIsSuccess(false);
+    }
   };
 
   return (
     <View style={styles.signupContainer}>
       <View style={styles.formSection}>
-      {message ? (
-          <View style={[styles.messageBox, isSuccess ? styles.success : styles.error]}>
+        {message ? (
+          <View
+            style={[
+              styles.messageBox,
+              isSuccess ? styles.success : styles.error,
+            ]}>
             <Text style={styles.messageText}>{message}</Text>
           </View>
         ) : null}
