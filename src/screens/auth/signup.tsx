@@ -150,6 +150,21 @@ const styles = StyleSheet.create({
   inputGroup: {
     marginBottom: 15,
   },
+  messageBox: {
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 4,
+  },
+  success: {
+    backgroundColor: 'green',
+  },
+  error: {
+    backgroundColor: 'red',
+  },
+  messageText: {
+    color: '#fff',
+    // textAlign: 'center',
+  },
   label: {
     fontSize: 14,
     fontWeight: '400',
