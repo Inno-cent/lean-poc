@@ -15,7 +15,7 @@ const SignupScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isSucces, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const navigation = useNavigation();
 
@@ -31,7 +31,7 @@ const SignupScreen = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'accept': 'application/json',
+            accept: 'application/json',
           },
           body: JSON.stringify({
             username,
@@ -105,6 +105,18 @@ const SignupScreen = () => {
             value={password}
             placeholderTextColor="#1B263BE5"
             onChangeText={setPassword}
+          />
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Confirm Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="........"
+            secureTextEntry
+            value={confirmPassword}
+            placeholderTextColor="#1B263BE5"
+            onChangeText={setConfirmPassword}
           />
         </View>
 
