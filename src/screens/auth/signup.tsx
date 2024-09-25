@@ -10,22 +10,29 @@ import {
 import {useNavigation} from '@react-navigation/native';
 
 const SignupScreen = () => {
+    const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [username, setUsername] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSucces , setIsSuccess] = useState('');
 
   const navigation = useNavigation();
 
   const handleSignup = () => {
-    console.log('Email:', email);
-    console.log('Password:', password);
-    // Handle signup logic here
+ if(!email || !password || !confirmPassword || !username){
+    setMessage('Please fill ouut all fields')
+ }
   };
 
   return (
     <View style={styles.signupContainer}>
       <View style={styles.formSection}>
+      {message ? (
+          <View style={[styles.messageBox, isSuccess ? styles.success : styles.error]}>
+            <Text style={styles.messageText}>{message}</Text>
+          </View>
+        ) : null}
         <View style={styles.formHeadText}>
           <Text style={styles.header}>Let’s Get Started</Text>
           <Text style={styles.subText}>Sign up to create an account.</Text>
