@@ -23,18 +23,18 @@ const HomePage = () => {
       isCallIncoming: false,
       profileImage: require('../assets/images/ll.png'),
     },
-    // {
-    //   name: "Jane Smith",
-    //   timeAgo: "1 hour ago",
-    //   isCallIncoming: true,
-    //   profileImage: require("assets/images/Ellipse37.png"),
-    // },
-    // {
-    //   name: "Aloye",
-    //   timeAgo: "2 hours ago",
-    //   isCallIncoming: false,
-    //   profileImage: require("assets/images/Ellipse37.png"),
-    // },
+    {
+      name: 'John Doe',
+      timeAgo: '25 mins ago',
+      isCallIncoming: false,
+      profileImage: require('../assets/images/ll.png'),
+    },
+    {
+      name: 'John Doe',
+      timeAgo: '25 mins ago',
+      isCallIncoming: false,
+      profileImage: require('../assets/images/ll.png'),
+    },
   ];
 
   const handleTabPress = (tab: React.SetStateAction<string>) => {
