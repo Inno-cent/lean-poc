@@ -8,7 +8,7 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import NavigationTab from '../components/navigation-tab';
 import RecentCallsCard from '../components/callCard';
 import {useNavigation} from '@react-navigation/native';
@@ -61,7 +61,7 @@ const HomePage = () => {
           </View>
           <View style={styles.searchSection}>
             <View style={styles.searchInputContainer}>
-              <FontAwesome
+              <Icon
                 name="search"
                 size={20}
                 color="#1B263B"
@@ -74,7 +74,7 @@ const HomePage = () => {
               />
             </View>
             <TouchableOpacity style={styles.filterButton}>
-              <FontAwesome name="sliders" size={24} color="#1B263B" />
+              <Icon name="sliders" size={24} color="#1B263B" />
             </TouchableOpacity>
           </View>
         </View>
@@ -92,10 +92,10 @@ const HomePage = () => {
 
             <View style={styles.cardInfo}>
               <View style={styles.timeContainer}>
-                <FontAwesome name="clock-o" size={16} color="white" />
+                {/* <FontAwesome name="clock-o" size={16} color="white" /> */}
                 <Text style={styles.timeText}>10:30AM - 11:30AM</Text>
               </View>
-              <FontAwesome name="ellipsis-h" size={24} color="white" />
+              {/* <FontAwesome name="ellipsis-h" size={24} color="white" /> */}
             </View>
           </View>
         </View>
@@ -103,14 +103,14 @@ const HomePage = () => {
         <View style={styles.boxContainer}>
           <View style={styles.boxWrapper}>
             <TouchableOpacity style={styles.box}>
-              <FontAwesome name="video-camera" size={20} color="#FFF" />
+              {/* <FontAwesome name="video-camera" size={20} color="#FFF" /> */}
             </TouchableOpacity>
             <Text style={styles.boxText}>Quick Call</Text>
           </View>
 
           <View style={styles.boxWrapper}>
             <TouchableOpacity style={styles.box}>
-              <FontAwesome name="calendar" size={20} color="#FFF" />
+              {/* <FontAwesome name="calendar" size={20} color="#FFF" /> */}
             </TouchableOpacity>
             <Text style={styles.boxText}>Schedule</Text>
           </View>
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   searchInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 15,
+    // padding: 15,
     backgroundColor: '#FFFFFF',
     flex: 1,
     paddingHorizontal: 10,
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   },
   filterButton: {
     backgroundColor: '#fff',
-    padding: 15,
+    padding: 12,
     borderRadius: 5,
   },
   cardWrapper: {
