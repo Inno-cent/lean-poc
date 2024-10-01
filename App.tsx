@@ -6,6 +6,7 @@ import SplashScreen from './src/screens/SplashScreen'
 import Onboarding from './src/screens/onboarding';
 import LoginScreen from './src/screens/auth/login'
 import SignUpScreen from './src/screens/auth/signup'
+import HomePage from './src/screens/home';
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
 // import { ThemeProvider } from '../navigation/ThemeProvider';
@@ -55,7 +56,8 @@ function AppNavigator() {
       <Stack.Screen name="ResetSuccess" component={ResetSuccessScreen} /> */}
 
       {/* Main App Stack */}
-      {/* <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Home" component={HomePage} />
+       {/*
       <Stack.Screen name="Contact" component={ContactScreen} />
       <Stack.Screen name="CreateContact" component={CreateContactScreen} />
       <Stack.Screen name="Call" component={CallScreen} />

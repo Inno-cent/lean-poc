@@ -124,6 +124,11 @@ const LoginScreen = () => {
             </TouchableOpacity>
           </Text>
         </View>
+        <TouchableOpacity
+        style={styles.nextButton}
+        onPress={() => navigation.navigate('Home')}>
+        <Text style={styles.nextButtonText}>Home</Text>
+      </TouchableOpacity>
       </View>
     </View>
   );

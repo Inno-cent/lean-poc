@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { FontAwesome } from '@expo/vector-icons'; // 
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 
 const NavigationTab = ({ activeTab, handleTabPress }) => {
@@ -8,7 +8,7 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
 
   const handleNavigation = (tab) => {
     handleTabPress(tab);
-    navigation.replace(tab); // Navigate to the tab
+    navigation.navigate(tab); // Navigate to the tab
   };
 
   return (
