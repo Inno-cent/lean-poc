@@ -5,26 +5,27 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {handleLogin} from './auth';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState('');
 
   const navigation = useNavigation();
 
-  const handlelogin = () => {
-    console.log('Email:', email);
-    console.log('Password:', password);
-    // Handle login logic here
-
-    if(!email || !password){
-      return
-    }
+  const displayMessage = msg => {
+    setMessage(msg);
+    // Automatically clear the message after 5 seconds
+    setTimeout(() => {
+      setMessage('');
+    }, 5000);
   };
 
   return (
@@ -34,6 +35,16 @@ const LoginScreen = () => {
           <Text style={styles.header}>Welcome Back!</Text>
           <Text style={styles.subText}>Login to your account.</Text>
         </View>
+        {message ? (
+          <View
+            style={[
+              styles.messageBox,
+              isSuccess ? styles.success : styles.error,
+            ]}>
+            <Text style={styles.messageText}>{message}</Text>
+          </View>
+        ) : null}
+
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Email</Text>
           <TextInput
@@ -66,8 +77,24 @@ const LoginScreen = () => {
             <Text style={styles.forgetPassword}>Forget password?</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.formSubmitButton} onPress={handlelogin}>
-          <Text style={styles.buttonText}>Log in</Text>
+        <TouchableOpacity
+          style={styles.formSubmitButton}
+          onPress={() =>
+            handleLogin(
+              email,
+              password,
+              displayMessage,
+              setIsSuccess,
+              setLoading,
+              navigation,
+            )
+          }
+          disabled={loading}>
+          {loading ? (
+            <ActivityIndicator color="#fff" /> // Show loader when loading
+          ) : (
+            <Text style={styles.buttonText}>Sign Up</Text>
+          )}
         </TouchableOpacity>
         <View style={styles.divider}>
           <View style={styles.dividerLine}></View>
@@ -83,12 +110,17 @@ const LoginScreen = () => {
             <Text style={styles.googleText}>Continue with Google</Text>
           </View>
         </TouchableOpacity>
-        
+
         <View style={styles.acctTextContainer}>
           <Text style={styles.acctText}>
             Don’t have an Account?
-            <TouchableOpacity >
-              <Text style={styles.createAccountText} onPress={() => navigation.navigate("SignUp")}> Create an account</Text>
+            <TouchableOpacity>
+              <Text
+                style={styles.createAccountText}
+                onPress={() => navigation.navigate('SignUp')}>
+                {' '}
+                Create an account
+              </Text>
             </TouchableOpacity>
           </Text>
         </View>
@@ -130,6 +162,21 @@ const styles = StyleSheet.create({
   },
   inputGroup: {
     marginBottom: 15,
+  },
+  messageBox: {
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 4,
+  },
+  success: {
+    backgroundColor: 'green',
+  },
+  error: {
+    backgroundColor: '#c13515',
+  },
+  messageText: {
+    color: '#fff',
+    // textAlign: 'center',
   },
   label: {
     fontSize: 14,
@@ -217,7 +264,6 @@ const styles = StyleSheet.create({
     color: '#1b263b',
   },
   acctTextContainer: {
-
     alignItems: 'center',
   },
   acctText: {

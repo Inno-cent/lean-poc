@@ -77,7 +77,7 @@ export const handleSignup = async (
   
     setLoading(true);
     try {
-      const response = await fetch('http://10.0.2.2:8000/v1/session/login', {
+      const response = await fetch('http://10.0.2.2:8000/v1/session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
