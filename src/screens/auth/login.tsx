@@ -12,12 +12,19 @@ import {useNavigation} from '@react-navigation/native';
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState('');
+
   const navigation = useNavigation();
 
-  const login = () => {
+  const handlelogin = () => {
     console.log('Email:', email);
     console.log('Password:', password);
     // Handle login logic here
+
+    if(!email || !password){
+      return
+    }
   };
 
   return (
@@ -59,7 +66,7 @@ const LoginScreen = () => {
             <Text style={styles.forgetPassword}>Forget password?</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.formSubmitButton} onPress={login}>
+        <TouchableOpacity style={styles.formSubmitButton} onPress={handlelogin}>
           <Text style={styles.buttonText}>Log in</Text>
         </TouchableOpacity>
         <View style={styles.divider}>
