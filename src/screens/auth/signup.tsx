@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -15,31 +17,61 @@ const SignupScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const navigation = useNavigation();
 
+  const isPasswordStrong = passwords => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(passwords);
+    const hasLowerCase = /[a-z]/.test(passwords);
+    const hasNumbers = /\d/.test(passwords);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(passwords);
+
+    return (
+      passwords.length >= minLength &&
+      hasUpperCase &&
+      hasLowerCase &&
+      hasNumbers &&
+      hasSpecialChar
+    );
+  };
+
   const handleSignup = async () => {
     if (!email || !password || !confirmPassword || !username) {
-      setMessage('Please fill ouut all fields');
+      setMessage('Please fill out all fields');
+      return;
     }
 
-    try {
-      const response = await fetch(
-        'https://lean-videocall-app-be.onrender.com/v1/session/signup',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            accept: 'application/json',
-          },
-          body: JSON.stringify({
-            username,
-            email,
-            password,
-          }),
-        },
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+      return;
+    }
+
+    if (!isPasswordStrong(password)) {
+      setIsSuccess(false);
+      setMessage(
+        'Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character',
       );
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch('http://10.0.2.2:8000/v1/session/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          confirmPassword,
+        }),
+      });
 
       const data = await response.json();
 
@@ -48,119 +80,130 @@ const SignupScreen = () => {
         setIsSuccess(true);
         // Navigate to another screen, etc.
       } else {
+        console.error('Network Error:', data.error);
         setMessage(data.error || 'Signup failed.');
         setIsSuccess(false);
       }
     } catch (error) {
+      console.error('Network Error:', error);
       setMessage('Network error. Please try again.');
       setIsSuccess(false);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <View style={styles.signupContainer}>
-      <View style={styles.formSection}>
-        {message ? (
-          <View
-            style={[
-              styles.messageBox,
-              isSuccess ? styles.success : styles.error,
-            ]}>
-            <Text style={styles.messageText}>{message}</Text>
+    <ScrollView>
+      <View style={styles.signupContainer}>
+        <View style={styles.formSection}>
+          <View style={styles.formHeadText}>
+            <Text style={styles.header}>Let’s Get Started</Text>
+            <Text style={styles.subText}>Sign up to create an account.</Text>
           </View>
-        ) : null}
-        <View style={styles.formHeadText}>
-          <Text style={styles.header}>Let’s Get Started</Text>
-          <Text style={styles.subText}>Sign up to create an account.</Text>
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Username</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Peach Alda"
-            value={username}
-            placeholderTextColor="#1B263BE5"
-            onChangeText={setUsername}
-          />
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="peachalda@gmail.com"
-            value={email}
-            placeholderTextColor="#1B263BE5"
-            onChangeText={setEmail}
-          />
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="........"
-            secureTextEntry
-            value={password}
-            placeholderTextColor="#1B263BE5"
-            onChangeText={setPassword}
-          />
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Confirm Password</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="........"
-            secureTextEntry
-            value={confirmPassword}
-            placeholderTextColor="#1B263BE5"
-            onChangeText={setConfirmPassword}
-          />
-        </View>
-
-        <View style={styles.bottomTextContainer}>
-          <TouchableOpacity>
-            <Text style={styles.rememberText}>Already have an Account?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.forgetPassword}>Forget password?</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity
-          style={styles.formSubmitButton}
-          onPress={handleSignup}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
-
-        <View style={styles.divider}>
-          <View style={styles.dividerLine}></View>
-          <Text style={styles.dividerText}>OR</Text>
-          <View style={styles.dividerLine}></View>
-        </View>
-
-        <TouchableOpacity style={styles.googleSignupWrapper}>
-          <View style={styles.innerContainer}>
-            <Image
-              source={require('../../assets/images/Google.png')}
-              style={styles.logo}
+          {message ? (
+            <View
+              style={[
+                styles.messageBox,
+                isSuccess ? styles.success : styles.error,
+              ]}>
+              <Text style={styles.messageText}>{message}</Text>
+            </View>
+          ) : null}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Username</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Peach Alda"
+              value={username}
+              placeholderTextColor="#1B263BE5"
+              onChangeText={setUsername}
             />
-            <Text style={styles.googleText}>Continue with Google</Text>
           </View>
-        </TouchableOpacity>
 
-        <View style={styles.acctTextContainer}>
-          <Text style={styles.acctText}>
-            Already have an Account?
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="peachalda@gmail.com"
+              value={email}
+              placeholderTextColor="#1B263BE5"
+              onChangeText={setEmail}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="........"
+              secureTextEntry
+              value={password}
+              placeholderTextColor="#1B263BE5"
+              onChangeText={setPassword}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Confirm Password</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="........"
+              secureTextEntry
+              value={confirmPassword}
+              placeholderTextColor="#1B263BE5"
+              onChangeText={setConfirmPassword}
+            />
+          </View>
+
+          <View style={styles.bottomTextContainer}>
             <TouchableOpacity>
-              <Text style={styles.createAccountText}> Log in</Text>
+              <Text style={styles.rememberText}>Already have an Account?</Text>
             </TouchableOpacity>
-          </Text>
+            <TouchableOpacity>
+              <Text style={styles.forgetPassword}>Forget password?</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity
+            style={[styles.formSubmitButton, loading && styles.disabledButton]} // Add disabled style
+            onPress={handleSignup}
+            disabled={loading} // Disable the button when loading
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" /> // Show loader when loading
+            ) : (
+              <Text style={styles.buttonText}>Sign Up</Text>
+            )}
+          </TouchableOpacity>
+
+          <View style={styles.divider}>
+            <View style={styles.dividerLine}></View>
+            <Text style={styles.dividerText}>OR</Text>
+            <View style={styles.dividerLine}></View>
+          </View>
+
+          <TouchableOpacity style={styles.googleSignupWrapper}>
+            <View style={styles.innerContainer}>
+              <Image
+                source={require('../../assets/images/Google.png')}
+                style={styles.logo}
+              />
+              <Text style={styles.googleText}>Continue with Google</Text>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.acctTextContainer}>
+            <Text style={styles.acctText}>
+              Already have an Account?
+              <TouchableOpacity>
+                <Text style={styles.createAccountText}> Log in</Text>
+              </TouchableOpacity>
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -207,7 +250,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
   error: {
-    backgroundColor: 'red',
+    backgroundColor: '#c13515',
   },
   messageText: {
     color: '#fff',
@@ -297,6 +340,9 @@ const styles = StyleSheet.create({
   acctText: {
     fontSize: 15,
     color: '#1B263B',
+  },
+  disabledButton: {
+    opacity: 0.6, // Add blur effect by lowering opacity
   },
   createAccountText: {
     color: '#778DA9',

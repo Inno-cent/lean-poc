@@ -76,11 +76,12 @@ const LoginScreen = () => {
             <Text style={styles.googleText}>Continue with Google</Text>
           </View>
         </TouchableOpacity>
+        
         <View style={styles.acctTextContainer}>
           <Text style={styles.acctText}>
             Don’t have an Account?
             <TouchableOpacity >
-              <Text style={styles.createAccountText}> Create an account</Text>
+              <Text style={styles.createAccountText} onPress={() => navigation.navigate("SignUp")}> Create an account</Text>
             </TouchableOpacity>
           </Text>
         </View>
@@ -209,6 +210,7 @@ const styles = StyleSheet.create({
     color: '#1b263b',
   },
   acctTextContainer: {
+
     alignItems: 'center',
   },
   acctText: {
