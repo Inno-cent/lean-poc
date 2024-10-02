@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 
@@ -12,11 +12,14 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
   };
 
   return (
+    <SafeAreaView style={styles.safeArea}>
+
+
     <View style={styles.navigationTabContainer}>
       <View style={styles.navigationTab}>
         <TouchableOpacity
           style={[styles.navItem, activeTab === "home" && styles.activeTab]}
-          onPress={() => handleNavigation("HomeScreen")}
+          onPress={() => handleNavigation("Home")}
         >
           <View style={styles.navContent}>
             <FontAwesome
@@ -30,7 +33,7 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
 
         <TouchableOpacity
           style={[styles.navItem, activeTab === "contact" && styles.activeTab]}
-          onPress={() => handleNavigation("ContactScreen")}
+          onPress={() => handleNavigation("Contact")}
         >
           <View style={styles.navContent}>
             <FontAwesome
@@ -44,7 +47,7 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={[styles.navItem, activeTab === "schedule" && styles.activeTab]}
           onPress={() => handleNavigation("ScheduleScreen")}
         >
@@ -58,7 +61,7 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
               <Text style={styles.navText}>Schedule</Text>
             )}
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           style={[styles.navItem, activeTab === "call" && styles.activeTab]}
@@ -91,10 +94,14 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
         </TouchableOpacity>
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex:1
+  },
   navigationTabContainer: {
     position: "absolute",
     bottom: 0,
