@@ -15,6 +15,7 @@ import ForgetPasswordScreen from './src/screens/auth/forget-password'
 import SOS from './src/screens/sos';
 import HomePage from './src/screens/home';
 import ContactScreen from './src/screens/contact'
+import CallScreen from './src/screens/call'
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
 // import { ThemeProvider } from '../navigation/ThemeProvider';
@@ -66,7 +67,7 @@ function AppNavigator() {
        
       <Stack.Screen name="Contact" component={ContactScreen} />
       {/* <Stack.Screen name="CreateContact" component={CreateContactScreen} /> */}
-      {/* <Stack.Screen name="Call" component={CallScreen} /> */}
+      <Stack.Screen name="Call" component={CallScreen} />
       <Stack.Screen name="SOS" component={SOS} /> 
 
       {/* Additional Screens */}

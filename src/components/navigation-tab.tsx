@@ -65,7 +65,7 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
 
         <TouchableOpacity
           style={[styles.navItem, activeTab === "call" && styles.activeTab]}
-          onPress={() => handleNavigation("CallScreen")}
+          onPress={() => handleNavigation("Call")}
         >
           <View style={styles.navContent}>
             <FontAwesome
@@ -79,7 +79,7 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
 
         <TouchableOpacity
           style={[styles.navItem, activeTab === "profile" && styles.activeTab]}
-          onPress={() => handleNavigation("ProfileScreen")}
+          onPress={() => handleNavigation("Profile")}
         >
           <View style={styles.navContent}>
             <FontAwesome
