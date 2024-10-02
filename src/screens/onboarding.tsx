@@ -58,7 +58,7 @@ export default function Onboarding() {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.navigate('CheckMail')}>
         <Text style={styles.nextButtonText}>Home</Text>
       </TouchableOpacity>
 

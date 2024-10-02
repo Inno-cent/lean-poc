@@ -3,7 +3,6 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 
-
 export default function ConfirmationPage() {
   const navigation = useNavigation();
 
@@ -18,32 +17,26 @@ export default function ConfirmationPage() {
 
       <View style={styles.mainContent}>
         <Image
-          source={require("../../assets/images/confirmmail.png")}
+          source={require("../../assets/images/congrats-check.png")}
           style={styles.image}
           resizeMode="cover"
         />
 
-        <Text style={styles.headText}>Check your mail</Text>
+        <Text style={styles.headText}>
+          Congratulations! Your Account is Now Active!
+        </Text>
         <Text style={styles.descriptionText}>
-          A verification link has been sent to your email. Please check your
-          inbox.
+          Your account with Onbrela is now active! You're all set to start
+          exploring and enjoying all the features we offer
         </Text>
 
         <TouchableOpacity
           style={styles.checkoutButton}
-          onPress={() => navigation.navigate("auth/email-verification")}
+          onPress={() => navigation.navigate("Home")}
         >
-          <Text style={styles.checkoutButtonText}>Check Out</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Text style={styles.skipText}>Skip, I'll confirm later</Text>
+          <Text style={styles.checkoutButtonText}>Go To Homepage</Text>
         </TouchableOpacity>
       </View>
-
-      <Text style={styles.bottomText}>
-        Did not receive email? Check your spam or try another email address.
-      </Text>
     </View>
   );
 }
@@ -75,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     marginBottom: 10,
+    textAlign: "center",
   },
   descriptionText: {
     fontSize: 16,
@@ -109,9 +103,6 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     textAlign: "center",
-    color: "#778DA9",
-  },
-  bottomTextLink: {
     color: "#778DA9",
   },
 });

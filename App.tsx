@@ -6,9 +6,11 @@ import SplashScreen from './src/screens/SplashScreen'
 import Onboarding from './src/screens/onboarding';
 import LoginScreen from './src/screens/auth/login'
 import SignUpScreen from './src/screens/auth/signup'
+import ConfirmationPage from './src/screens/auth/checkmail'
+import EmailVerificationScreen from './src/screens/auth/email-verification'
+import CongratsMailScreen from './src/screens/auth/congrats'
 import SOS from './src/screens/sos';
 import HomePage from './src/screens/home';
-import ConfirmationPage from './src/screens/auth/checkmail'
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
 // import { ThemeProvider } from '../navigation/ThemeProvider';
@@ -49,9 +51,9 @@ function AppNavigator() {
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
        <Stack.Screen name="CheckMail" component={ConfirmationPage} />
-      {/* <Stack.Screen name="EmailVerification" component={EmailVerificationScreen} /> */}
+      <Stack.Screen name="EmailVerification" component={EmailVerificationScreen} />
       {/* <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} /> */}
-      {/* <Stack.Screen name="CongratsMail" component={CongratsMailScreen} /> */}
+      <Stack.Screen name="CongratsMail" component={CongratsMailScreen} />
       {/* <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} /> */}
       {/* <Stack.Screen name="ResetSuccess" component={ResetSuccessScreen} />  */}
 
