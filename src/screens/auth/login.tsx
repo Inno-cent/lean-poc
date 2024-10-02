@@ -93,7 +93,7 @@ const LoginScreen = () => {
           {loading ? (
             <ActivityIndicator color="#fff" /> // Show loader when loading
           ) : (
-            <Text style={styles.buttonText}>Sign Up</Text>
+            <Text style={styles.buttonText}>Log in</Text>
           )}
         </TouchableOpacity>
         <View style={styles.divider}>
