@@ -63,14 +63,14 @@ export const handleSignup = async (
   };
   
   export const handleLogin = async (
-    email,
+    username,
     password,
     displayMessage,
     setIsSuccess,
     setLoading,
     navigation
   ) => {
-    if (!email || !password) {
+    if (!username || !password) {
       displayMessage('Please fill out both email and password');
       return;
     }
@@ -84,7 +84,7 @@ export const handleSignup = async (
           accept: 'application/json',
         },
         body: JSON.stringify({
-          email,
+          username,
           password,
         }),
       });
@@ -96,6 +96,7 @@ export const handleSignup = async (
         // Navigate to another screen, etc.
         navigation.navigate('Home');
       } else {
+        console.error( data);
         displayMessage(data.message || 'Login failed.');
         setIsSuccess(false);
       }

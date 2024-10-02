@@ -92,10 +92,10 @@ const HomePage = () => {
 
             <View style={styles.cardInfo}>
               <View style={styles.timeContainer}>
-                {/* <FontAwesome name="clock-o" size={16} color="white" /> */}
+                <Icon name="clock-o" size={16} color="white" />
                 <Text style={styles.timeText}>10:30AM - 11:30AM</Text>
               </View>
-              {/* <FontAwesome name="ellipsis-h" size={24} color="white" /> */}
+              <Icon name="ellipsis-h" size={24} color="white" />
             </View>
           </View>
         </View>
@@ -103,14 +103,14 @@ const HomePage = () => {
         <View style={styles.boxContainer}>
           <View style={styles.boxWrapper}>
             <TouchableOpacity style={styles.box}>
-              {/* <FontAwesome name="video-camera" size={20} color="#FFF" /> */}
+              <Icon name="video-camera" size={20} color="#FFF" />
             </TouchableOpacity>
             <Text style={styles.boxText}>Quick Call</Text>
           </View>
 
           <View style={styles.boxWrapper}>
             <TouchableOpacity style={styles.box}>
-              {/* <FontAwesome name="calendar" size={20} color="#FFF" /> */}
+              <Icon name="calendar" size={20} color="#FFF" />
             </TouchableOpacity>
             <Text style={styles.boxText}>Schedule</Text>
           </View>

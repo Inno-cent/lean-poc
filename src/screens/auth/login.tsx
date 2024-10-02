@@ -12,7 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {handleLogin} from './auth';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -50,9 +50,9 @@ const LoginScreen = () => {
           <TextInput
             style={styles.input}
             placeholder="PeachAlda@gmail.com"
-            value={email}
+            value={username}
             placeholderTextColor="#1B263BE5"
-            onChangeText={setEmail}
+            onChangeText={setUsername}
           />
         </View>
         <View style={styles.inputGroup}>
@@ -81,7 +81,7 @@ const LoginScreen = () => {
           style={styles.formSubmitButton}
           onPress={() =>
             handleLogin(
-              email,
+              username,
               password,
               displayMessage,
               setIsSuccess,
