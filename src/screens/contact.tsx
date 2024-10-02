@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   ScrollView,
+  SafeAreaView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -94,6 +95,7 @@ const Contact = () => {
   };
 
   return (
+    <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {/* Header Section */}
@@ -197,10 +199,14 @@ const Contact = () => {
       {/* Bottom Navigation */}
       <NavigationTab activeTab={activeTab} handleTabPress={handleTabPress} />
     </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex:1
+      },
   container: {
     flex: 1,
     position: 'relative',

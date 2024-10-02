@@ -12,7 +12,7 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+   
 
 
     <View style={styles.navigationTabContainer}>
@@ -94,14 +94,12 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
         </TouchableOpacity>
       </View>
     </View>
-    </SafeAreaView>
+   
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex:1
-  },
+ 
   navigationTabContainer: {
     position: "absolute",
     bottom: 0,
