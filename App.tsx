@@ -71,12 +71,12 @@ function AppNavigator() {
       <Stack.Screen name="SOS" component={SOS} /> 
 
       {/* Additional Screens */}
-      {/* <Stack.Screen name="Profile" component={ProfileScreen} />
+       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-      <Stack.Screen name="Notification" component={NotificationScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen name="HelpSupport" component={HelpSupportScreen} /> */}
+      {/* <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} /> */}
+      {/* <Stack.Screen name="Notification" component={NotificationScreen} /> */}
+      {/* <Stack.Screen name="Settings" component={SettingsScreen} /> */}
+      {/* <Stack.Screen name="HelpSupport" component={HelpSupportScreen} /> */}
     </Stack.Navigator>
   );
 }
