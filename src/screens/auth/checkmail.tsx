@@ -50,7 +50,7 @@ export default function ConfirmationPage() {
               style={styles.checkoutButton}
               // Different action based on the type
               onPress={() => {
-                navigation.navigate('EmailVerification'); // Navigate to email verification screen
+                navigation.navigate('EmailVerification', { type }); // Navigate to email verification screen
               }}>
               <Text style={styles.checkoutButtonText}>Check Out</Text>
             </TouchableOpacity>

@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation,useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const EmailVerification = () => {
@@ -15,6 +15,19 @@ const EmailVerification = () => {
   const [focusedInput, setFocusedInput] = useState(null);
 
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const { type } = route.params || {}; // 'verification' or 'passwordRecovery'
+
+  const handleNextPress = () => {
+    if (type === 'passwordRecovery') {
+      // Navigate to CreatePassword screen if it's password recovery
+      navigation.navigate('CreatePassword');
+    } else {
+      // Navigate to Congrats screen if it's email verification
+      navigation.navigate('CongratsMailScreen');
+    }
+  };
 
   const handleKeypadPress = value => {
     const nextEmptyIndex = code.findIndex(digit => digit === '');
@@ -133,7 +146,7 @@ const EmailVerification = () => {
 
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={() => navigation.navigate('CongratsMailScreen')}>
+        onPress={handleNextPress}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
 
@@ -152,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   backArrow: {
-    marginTop: 30,
+    marginTop: 5,
     marginBottom: 30,
   },
   headerText: {
@@ -168,8 +181,8 @@ const styles = StyleSheet.create({
   codeInputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 80,
-    marginTop: 80,
+    marginBottom: 70,
+    marginTop: 70,
   },
   codeInput: {
     backgroundColor: '#D9D9D980',
