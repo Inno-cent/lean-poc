@@ -132,7 +132,7 @@ const EmailVerification = () => {
 
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={() => navigation.navigate('auth/create-password')}>
+        onPress={() => navigation.navigate('CongratsMailScreen')}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
 

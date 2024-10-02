@@ -9,6 +9,7 @@ import SignUpScreen from './src/screens/auth/signup'
 import ConfirmationPage from './src/screens/auth/checkmail'
 import EmailVerificationScreen from './src/screens/auth/email-verification'
 import CongratsMailScreen from './src/screens/auth/congrats'
+import ForgetPasswordScreen from './src/screens/auth/forget-password'
 import SOS from './src/screens/sos';
 import HomePage from './src/screens/home';
 
@@ -52,9 +53,9 @@ function AppNavigator() {
       <Stack.Screen name="SignUp" component={SignUpScreen} />
        <Stack.Screen name="CheckMail" component={ConfirmationPage} />
       <Stack.Screen name="EmailVerification" component={EmailVerificationScreen} />
-      {/* <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} /> */}
       <Stack.Screen name="CongratsMail" component={CongratsMailScreen} />
-      {/* <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} /> */}
+      <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} />
+      {/* <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} /> */}
       {/* <Stack.Screen name="ResetSuccess" component={ResetSuccessScreen} />  */}
 
       {/* Main App Stack */}

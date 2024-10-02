@@ -7,11 +7,24 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function ConfirmationPage() {
   const navigation = useNavigation();
+  const route = useRoute();
+  
+  // Get the type from the route params to determine if it's for email verification or password recovery
+  const {type} = route.params || {}; // type could be 'verification' or 'passwordRecovery'
+
+  // Dynamic text based on the type
+  const mainText = type === 'passwordRecovery' 
+    ? 'Password recovery instructions have been sent to your email.' 
+    : 'A verification link has been sent to your email. Please check your inbox.';
+
+  const buttonText = type === 'passwordRecovery' 
+    ? 'Recover Password' 
+    : 'Check Out';
 
   return (
     <>
@@ -32,14 +45,20 @@ export default function ConfirmationPage() {
 
             <Text style={styles.headText}>Check your mail</Text>
             <Text style={styles.descriptionText}>
-              A verification link has been sent to your email. Please check your
-              inbox.
+              {mainText}
             </Text>
 
             <TouchableOpacity
               style={styles.checkoutButton}
-              onPress={() => navigation.navigate('auth/email-verification')}>
-              <Text style={styles.checkoutButtonText}>Check Out</Text>
+              // Different action based on the type
+              onPress={() => {
+                if (type === 'passwordRecovery') {
+                  navigation.navigate('PasswordReset'); // Navigate to password reset screen
+                } else {
+                  navigation.navigate('EmailVerification'); // Navigate to email verification screen
+                }
+              }}>
+              <Text style={styles.checkoutButtonText}>{buttonText}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
@@ -120,9 +139,6 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     textAlign: 'center',
-    color: '#778DA9',
-  },
-  bottomTextLink: {
     color: '#778DA9',
   },
 });
