@@ -10,9 +10,9 @@ import {
   ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {handleSignup} from './auth';
+import {handleSignup,handleGoogleSignup } from './auth';
 
-const SignupScreen = ({navigation }) => {
+const SignupScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -149,7 +149,10 @@ const SignupScreen = ({navigation }) => {
             <View style={styles.dividerLine}></View>
           </View>
 
-          <TouchableOpacity style={styles.googleSignupWrapper}>
+          <TouchableOpacity
+            style={styles.googleSignupWrapper}
+            
+            disabled={loading}>
             <View style={styles.innerContainer}>
               <Image
                 source={require('../../assets/images/Google.png')}

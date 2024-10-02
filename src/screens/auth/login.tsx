@@ -25,7 +25,7 @@ const LoginScreen = () => {
     // Automatically clear the message after 5 seconds
     setTimeout(() => {
       setMessage('');
-    }, 5000);
+    }, 6000);
   };
 
   return (

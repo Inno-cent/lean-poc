@@ -109,3 +109,80 @@ export const handleSignup = async (
     }
   };
   
+  // Google OAuth Signup Flow
+export const handleGoogleSignup = async (
+    redirectUrl,
+    displayMessage,
+    setIsSuccess,
+    setLoading,
+    navigation
+  ) => {
+    setLoading(true);
+    try {
+      // Step 1: Get Google OAuth redirect URL
+      const response = await fetch('http://10.0.2.2:8000/v1/google/oauth/redirect', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: JSON.stringify({
+          redirect_url: 'http://localhost:8081/oauth/callback', // Pass the frontend redirect URL
+        }),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        // Redirect the user to Google OAuth consent page
+        window.location.href = data.url;
+      } else {
+        displayMessage(data.message || 'Failed to start Google OAuth process.');
+        setIsSuccess(false);
+      }
+    } catch (error) {
+      displayMessage('Network error. Please try again.');
+      setIsSuccess(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Handle the Google OAuth callback (called after Google OAuth redirects back)
+  export const handleGoogleCallback = async (
+    oauthCode,
+    displayMessage,
+    setIsSuccess,
+    setLoading,
+    navigation
+  ) => {
+    setLoading(true);
+    try {
+      // Step 2: Exchange the OAuth code for a session
+      const response = await fetch('http://10.0.2.2:8000/v1/google/oauth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: JSON.stringify({
+          code: oauthCode, // Pass the authorization code returned by Google
+        }),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        displayMessage('Google signup successful!');
+        setIsSuccess(true);
+        // Navigate to the home screen or any other protected route
+        navigation.navigate('Home');
+      } else {
+        displayMessage(data.message || 'Google signup failed.');
+        setIsSuccess(false);
+      }
+    } catch (error) {
+      displayMessage('Network error. Please try again.');
+      setIsSuccess(false);
+    } finally {
+      setLoading(false);
+    }
+  };
