@@ -9,8 +9,9 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import Icon from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 const ResetPassword = ({}) => {
   const navigation = useNavigation();
@@ -22,13 +23,11 @@ const ResetPassword = ({}) => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const router = useRouter();
-
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
       <TouchableOpacity style={styles.backArrow}>
-        <AntDesign name="arrowleft" size={24} color="#1B263B" />
+        <Icon name="arrowleft" size={24} color="#1B263B" />
       </TouchableOpacity>
 
       <Text style={styles.headerText}>Create New Password</Text>
