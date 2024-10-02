@@ -25,7 +25,7 @@ const EmailVerification = () => {
       navigation.navigate('CreatePassword');
     } else {
       // Navigate to Congrats screen if it's email verification
-      navigation.navigate('CongratsMailScreen');
+      navigation.navigate('CongratsMail');
     }
   };
 

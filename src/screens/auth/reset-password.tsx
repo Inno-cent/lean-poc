@@ -80,7 +80,7 @@ const ResetPassword = ({}) => {
 
         <TouchableOpacity
           style={styles.formSubmitButton}
-          onPress={() => router.replace("auth/reset-success")}
+          onPress={() => navigation.navigate("ResetSuccess")}
         >
           <Text style={styles.buttonText}>Reset Password</Text>
         </TouchableOpacity>
