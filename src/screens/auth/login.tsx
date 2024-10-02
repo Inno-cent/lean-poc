@@ -264,6 +264,9 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 10,
   },
+  disabledButton: {
+    opacity: 0.6, // Add blur effect by lowering opacity
+  },
   googleText: {
     fontSize: 15,
     color: '#1b263b',
