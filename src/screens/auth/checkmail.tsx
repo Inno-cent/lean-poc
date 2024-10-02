@@ -13,18 +13,18 @@ import Icon from 'react-native-vector-icons/AntDesign';
 export default function ConfirmationPage() {
   const navigation = useNavigation();
   const route = useRoute();
-  
+
   // Get the type from the route params to determine if it's for email verification or password recovery
   const {type} = route.params || {}; // type could be 'verification' or 'passwordRecovery'
 
   // Dynamic text based on the type
-  const mainText = type === 'passwordRecovery' 
-    ? 'Password recovery instructions have been sent to your email.' 
-    : 'A verification link has been sent to your email. Please check your inbox.';
+  const mainText =
+    type === 'passwordRecovery'
+      ? 'Password recovery instructions have been sent to your email.'
+      : 'A verification link has been sent to your email. Please check your inbox.';
 
-  const buttonText = type === 'passwordRecovery' 
-    ? 'Recover Password' 
-    : 'Check Out';
+  const buttonText =
+    type === 'passwordRecovery' ? 'Recover Password' : 'Check Out';
 
   return (
     <>
@@ -44,26 +44,22 @@ export default function ConfirmationPage() {
             />
 
             <Text style={styles.headText}>Check your mail</Text>
-            <Text style={styles.descriptionText}>
-              {mainText}
-            </Text>
+            <Text style={styles.descriptionText}>{mainText}</Text>
 
             <TouchableOpacity
               style={styles.checkoutButton}
               // Different action based on the type
               onPress={() => {
-                if (type === 'passwordRecovery') {
-                  navigation.navigate('PasswordReset'); // Navigate to password reset screen
-                } else {
-                  navigation.navigate('EmailVerification'); // Navigate to email verification screen
-                }
+                navigation.navigate('EmailVerification'); // Navigate to email verification screen
               }}>
-              <Text style={styles.checkoutButtonText}>{buttonText}</Text>
+              <Text style={styles.checkoutButtonText}>Check Out</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <Text style={styles.skipText}>Skip, I'll confirm later</Text>
-            </TouchableOpacity>
+            {type !== 'passwordRecovery' && (
+              <TouchableOpacity>
+                <Text style={styles.skipText}>Skip, I'll confirm later</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           <Text style={styles.bottomText}>
@@ -95,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   mainContent: {
-    marginTop: 120, 
+    marginTop: 120,
     alignItems: 'center', // Center content horizontally
   },
   image: {

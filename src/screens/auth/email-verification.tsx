@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const EmailVerification = () => {
   const [code, setCode] = useState(['', '', '', '']);
@@ -48,7 +49,7 @@ const EmailVerification = () => {
     ];
 
     return (
-      <>
+      <SafeAreaView style={styles.safeArea}>
         <View style={styles.keypadRow}>
           {keypadNumbers.slice(0, 3).map((key, index) => (
             <TouchableOpacity
@@ -98,7 +99,7 @@ const EmailVerification = () => {
             <Icon name="delete" size={24} color="#1B263B" />
           </TouchableOpacity>
         </View>
-      </>
+      </SafeAreaView>
     );
   };
 
@@ -142,6 +143,9 @@ const EmailVerification = () => {
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 20,
