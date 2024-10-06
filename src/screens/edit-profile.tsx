@@ -9,11 +9,14 @@ import {
   ScrollView,
 } from "react-native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import {useNavigation} from '@react-navigation/native';
+
 import RNPickerSelect from "react-native-picker-select";
 import DatePicker from "react-native-date-picker";
 
 const EditProfile = ({ navigation }) => {
+    const navigation = useNavigation();
+
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -22,7 +25,7 @@ const EditProfile = ({ navigation }) => {
   const [gender, setGender] = useState("");
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
-  const router = useRouter();
+
 
   return (
     <View style={styles.container}>
@@ -164,6 +167,9 @@ const EditProfile = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1
+    },
   container: {
     flex: 1,
     padding: 20,
