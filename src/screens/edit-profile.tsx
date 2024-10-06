@@ -29,7 +29,7 @@ const EditProfile = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeArea}>
 
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
