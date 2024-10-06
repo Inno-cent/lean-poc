@@ -97,9 +97,9 @@ const Notifications = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    safeArea: {
-        
-    }
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 20,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    marginTop: 50,
+    marginTop: 10,
   },
   headerText: {
     flex: 1,
