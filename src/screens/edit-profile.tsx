@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import {useNavigation} from '@react-navigation/native';
@@ -28,6 +29,8 @@ const EditProfile = ({ navigation }) => {
 
 
   return (
+    <SafeAreaView>
+
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.header}>
@@ -163,6 +166,7 @@ const EditProfile = ({ navigation }) => {
         </TouchableOpacity>
       </ScrollView>
     </View>
+    </SafeAreaView>
   );
 };
 
