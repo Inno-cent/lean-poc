@@ -15,10 +15,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from "@react-navigation/native";
 
-
 const Notifications = ({}) => {
   const navigation = useNavigation();
-  const router = useRouter();
+
 
   const [isPushEnabled, setIsPushEnabled] = useState(false);
   const [isSMSEnabled, setIsSMSEnabled] = useState(false);
