@@ -25,9 +25,8 @@ const createContact = ({}) => {
 
 
   return (
-    <SafeAreaView>
-      
-    </SafeAreaView>
+    <SafeAreaView style={styles.safeArea}>
+
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.header}>
@@ -98,6 +97,7 @@ const createContact = ({}) => {
         <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   );
 };
 
