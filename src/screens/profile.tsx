@@ -44,7 +44,7 @@ const ProfilePage = () => {
 
       <TouchableOpacity
         style={styles.formSubmitButton}
-        onPress={() => navigation.navigate("/edit-profile")}
+        onPress={() => navigation.navigate("EditProfile")}
       >
         <Feather name="edit-2" size={20} color="#FFF" style={styles.icon} />
         <Text style={styles.buttonText}>Edit Profile</Text>

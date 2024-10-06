@@ -16,6 +16,9 @@ import SOS from './src/screens/sos';
 import HomePage from './src/screens/home';
 import ContactScreen from './src/screens/contact'
 import CallScreen from './src/screens/call'
+import ProfileScreen from './src/screens/profile'
+import SettingsScreen from './src/screens/settings';
+// import EditProfileScreen from './src/screens/edit-profile'
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
 // import { ThemeProvider } from '../navigation/ThemeProvider';
@@ -72,10 +75,10 @@ function AppNavigator() {
 
       {/* Additional Screens */}
        <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+      {/* <Stack.Screen name="EditProfile" component={EditProfileScreen} /> */}
       {/* <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} /> */}
       {/* <Stack.Screen name="Notification" component={NotificationScreen} /> */}
-      {/* <Stack.Screen name="Settings" component={SettingsScreen} /> */}
+      <Stack.Screen name="Settings" component={SettingsScreen} />
       {/* <Stack.Screen name="HelpSupport" component={HelpSupportScreen} /> */}
     </Stack.Navigator>
   );

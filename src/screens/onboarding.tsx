@@ -56,11 +56,11 @@ export default function Onboarding() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.nextButton}
         onPress={() => navigation.navigate('CheckMail')}>
         <Text style={styles.nextButtonText}>Home</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <Text style={styles.headText}>{title}</Text>
       <Image source={image} style={styles.image} />

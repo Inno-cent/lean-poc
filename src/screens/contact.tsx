@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   searchInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 15,
+    padding: ,
     backgroundColor: '#D9D9D980',
     flex: 1,
     paddingHorizontal: 10,
