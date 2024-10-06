@@ -97,6 +97,9 @@ const Notifications = ({}) => {
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        
+    }
   container: {
     flex: 1,
     padding: 20,
