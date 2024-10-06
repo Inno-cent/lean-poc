@@ -9,7 +9,6 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
-import {   } from "@expo/vector-icons";
 import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
