@@ -29,7 +29,7 @@ const EditProfile = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.header}>
           <TouchableOpacity
-            onPress={() => router.replace("/profile")}
+            onPress={() => navigation.goBack}
             style={styles.arrowButton}
           >
             <AntDesign name="arrowleft" size={24} color="#1B263B" />
