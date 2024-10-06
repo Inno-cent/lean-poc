@@ -98,9 +98,9 @@ const createContact = ({}) => {
 };
 
 const styles = StyleSheet.create({
-  safeArea:[
+  safeArea:{
     flex: 1
-  ]
+  },
   container: {
     flex: 1,
     padding: 20,
