@@ -9,7 +9,6 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import {  AntDesign } from "@expo/vector-icons";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Accordion from "../components/accordion";
