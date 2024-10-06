@@ -11,6 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import {  AntDesign } from "@expo/vector-icons";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Accordion from "../components/accordion";
 
 const helpSupport = ({}) => {
@@ -59,7 +60,7 @@ const helpSupport = ({}) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
-          onPress={() => navigation.goBack}
+          onPress={() => navigation.goBack()}
           style={styles.arrowButton}
         >
           <AntDesign name="arrowleft" size={24} color="#1B263B" />
