@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Modal,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -56,6 +57,8 @@ const HelpSupport = ({}) => {
 
 
   return (
+    <SafeAreaView style={styles.safeArea}>
+
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
@@ -150,10 +153,14 @@ const HelpSupport = ({}) => {
         </View>
       </Modal>
     </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1
+    }
   container: {
     flex: 1,
     backgroundColor: "#FFF",
