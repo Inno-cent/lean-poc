@@ -54,7 +54,6 @@ const helpSupport = ({}) => {
     },
   ];
 
-  const router = useRouter();
 
   return (
     <View style={styles.container}>
