@@ -11,6 +11,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {SafeAreaView} from 'react-native';
 
 const EditProfile = ({}) => {
   const navigation = useNavigation();
@@ -23,85 +24,86 @@ const EditProfile = ({}) => {
   };
 
   return (
-    <
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.arrowButton}>
-            <AntDesign name="arrowleft" size={24} color="#1B263B" />
-          </TouchableOpacity>
-          <Text style={styles.headerText}>Change password</Text>
-        </View>
+    <SafeAreaView>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <View style={styles.header}>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.arrowButton}>
+              <AntDesign name="arrowleft" size={24} color="#1B263B" />
+            </TouchableOpacity>
+            <Text style={styles.headerText}>Change password</Text>
+          </View>
 
-        <Text style={styles.label}>Enter Old Password</Text>
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.inputWithIcon}
-            placeholder="Enter your password"
-            secureTextEntry={!isPasswordVisible}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TouchableOpacity
-            style={styles.eyeIcon}
-            onPress={togglePasswordVisibility}>
-            <FontAwesome
-              name={isPasswordVisible ? 'eye' : 'eye-slash'}
-              size={20}
-              color="#778DA9"
+          <Text style={styles.label}>Enter Old Password</Text>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="Enter your password"
+              secureTextEntry={!isPasswordVisible}
+              value={password}
+              onChangeText={setPassword}
             />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={togglePasswordVisibility}>
+              <FontAwesome
+                name={isPasswordVisible ? 'eye' : 'eye-slash'}
+                size={20}
+                color="#778DA9"
+              />
+            </TouchableOpacity>
+          </View>
 
-        <Text style={styles.label}>New Password</Text>
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.inputWithIcon}
-            placeholder="Enter your password"
-            secureTextEntry={!isPasswordVisible}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TouchableOpacity
-            style={styles.eyeIcon}
-            onPress={togglePasswordVisibility}>
-            <FontAwesome
-              name={isPasswordVisible ? 'eye' : 'eye-slash'}
-              size={20}
-              color="#778DA9"
+          <Text style={styles.label}>New Password</Text>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="Enter your password"
+              secureTextEntry={!isPasswordVisible}
+              value={password}
+              onChangeText={setPassword}
             />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={togglePasswordVisibility}>
+              <FontAwesome
+                name={isPasswordVisible ? 'eye' : 'eye-slash'}
+                size={20}
+                color="#778DA9"
+              />
+            </TouchableOpacity>
+          </View>
 
-        <Text style={styles.label}>Confirm New Password</Text>
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.inputWithIcon}
-            placeholder="Enter your password"
-            secureTextEntry={!isPasswordVisible}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TouchableOpacity
-            style={styles.eyeIcon}
-            onPress={togglePasswordVisibility}>
-            <FontAwesome
-              name={isPasswordVisible ? 'eye' : 'eye-slash'}
-              size={20}
-              color="#778DA9"
+          <Text style={styles.label}>Confirm New Password</Text>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="Enter your password"
+              secureTextEntry={!isPasswordVisible}
+              value={password}
+              onChangeText={setPassword}
             />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={togglePasswordVisibility}>
+              <FontAwesome
+                name={isPasswordVisible ? 'eye' : 'eye-slash'}
+                size={20}
+                color="#778DA9"
+              />
+            </TouchableOpacity>
+          </View>
 
-        <TouchableOpacity
-          style={styles.formSubmitButton}
-          onPress={() => router.replace('/profile')}>
-          <Text style={styles.buttonText}>Change Password</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+          <TouchableOpacity
+            style={styles.formSubmitButton}
+            onPress={() => router.replace('/profile')}>
+            <Text style={styles.buttonText}>Change Password</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
