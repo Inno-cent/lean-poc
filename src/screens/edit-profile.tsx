@@ -263,21 +263,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// const pickerSelectStyles = StyleSheet.create({
-//   inputIOS: {
-//     backgroundColor: "#F5F5F5",
-//     padding: 10,
-//     borderRadius: 8,
-//     marginBottom: 15,
-//     color: "#415A77",
-//   },
-//   inputAndroid: {
-//     backgroundColor: "#F5F5F5",
-//     padding: 10,
-//     borderRadius: 8,
-//     marginBottom: 15,
-//     color: "#415A77",
-//   },
-// });
+
 
 export default EditProfile;
