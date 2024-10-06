@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,16 +7,15 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
 
 const EditProfile = ({}) => {
   const navigation = useNavigation();
 
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -24,13 +23,13 @@ const EditProfile = ({}) => {
   };
 
   return (
+    <
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={styles.arrowButton}
-          >
+            style={styles.arrowButton}>
             <AntDesign name="arrowleft" size={24} color="#1B263B" />
           </TouchableOpacity>
           <Text style={styles.headerText}>Change password</Text>
@@ -47,10 +46,9 @@ const EditProfile = ({}) => {
           />
           <TouchableOpacity
             style={styles.eyeIcon}
-            onPress={togglePasswordVisibility}
-          >
+            onPress={togglePasswordVisibility}>
             <FontAwesome
-              name={isPasswordVisible ? "eye" : "eye-slash"}
+              name={isPasswordVisible ? 'eye' : 'eye-slash'}
               size={20}
               color="#778DA9"
             />
@@ -68,10 +66,9 @@ const EditProfile = ({}) => {
           />
           <TouchableOpacity
             style={styles.eyeIcon}
-            onPress={togglePasswordVisibility}
-          >
+            onPress={togglePasswordVisibility}>
             <FontAwesome
-              name={isPasswordVisible ? "eye" : "eye-slash"}
+              name={isPasswordVisible ? 'eye' : 'eye-slash'}
               size={20}
               color="#778DA9"
             />
@@ -89,10 +86,9 @@ const EditProfile = ({}) => {
           />
           <TouchableOpacity
             style={styles.eyeIcon}
-            onPress={togglePasswordVisibility}
-          >
+            onPress={togglePasswordVisibility}>
             <FontAwesome
-              name={isPasswordVisible ? "eye" : "eye-slash"}
+              name={isPasswordVisible ? 'eye' : 'eye-slash'}
               size={20}
               color="#778DA9"
             />
@@ -101,8 +97,7 @@ const EditProfile = ({}) => {
 
         <TouchableOpacity
           style={styles.formSubmitButton}
-          onPress={() => router.replace("/profile")}
-        >
+          onPress={() => router.replace('/profile')}>
           <Text style={styles.buttonText}>Change Password</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -111,24 +106,27 @@ const EditProfile = ({}) => {
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
   },
   arrowButton: {},
   header: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 80,
-    marginTop: 50,
+    marginTop: 10,
   },
   headerText: {
     flex: 1,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 20,
-    fontWeight: "700",
-    color: "#415A77",
+    fontWeight: '700',
+    color: '#415A77',
     lineHeight: 30,
   },
   inputContainer: {
@@ -136,40 +134,40 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: "400",
+    fontWeight: '400',
     marginBottom: 5,
-    color: "#1B263B",
+    color: '#1B263B',
   },
   inputWithIcon: {
     height: 44,
     padding: 12,
     fontSize: 14,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 4,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     marginBottom: 50,
   },
 
   passwordContainer: {
-    position: "relative",
+    position: 'relative',
   },
   eyeIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 10,
     top: 14, // Adjust to vertically center the icon inside the input
   },
 
   formSubmitButton: {
-    backgroundColor: "#415a77",
+    backgroundColor: '#415a77',
     padding: 12,
     borderRadius: 10,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 80,
     marginBottom: 25,
   },
   buttonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 15,
   },
 });
