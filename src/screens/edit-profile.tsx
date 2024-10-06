@@ -11,9 +11,7 @@ import {
 } from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
 import RNPickerSelect from "react-native-picker-select";
 import DatePicker from "react-native-date-picker";
 

@@ -9,8 +9,8 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
 
 const createContact = ({}) => {
   const navigation = useNavigation();
@@ -22,7 +22,6 @@ const createContact = ({}) => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const router = useRouter();
 
   return (
     <View style={styles.container}>
@@ -99,6 +98,9 @@ const createContact = ({}) => {
 };
 
 const styles = StyleSheet.create({
+  safeArea:[
+    flex: 1
+  ]
   container: {
     flex: 1,
     padding: 20,
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 80,
-    marginTop: 50,
+    marginTop: 10,
   },
   headerText: {
     flex: 1,
