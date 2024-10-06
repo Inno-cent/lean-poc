@@ -18,6 +18,7 @@ import ContactScreen from './src/screens/contact'
 import CallScreen from './src/screens/call'
 import ProfileScreen from './src/screens/profile'
 import SettingsScreen from './src/screens/settings';
+import Notifications from './src/screens/notification';
 // import EditProfileScreen from './src/screens/edit-profile'
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
@@ -77,7 +78,7 @@ function AppNavigator() {
        <Stack.Screen name="Profile" component={ProfileScreen} />
       {/* <Stack.Screen name="EditProfile" component={EditProfileScreen} /> */}
       {/* <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} /> */}
-      {/* <Stack.Screen name="Notification" component={NotificationScreen} /> */}
+      <Stack.Screen name="Notification" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       {/* <Stack.Screen name="HelpSupport" component={HelpSupportScreen} /> */}
     </Stack.Navigator>
