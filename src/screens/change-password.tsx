@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const EditProfile = ({}) => {
