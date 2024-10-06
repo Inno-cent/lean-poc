@@ -9,8 +9,8 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons, AntDesign, FontAwesome } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Accordion from "../components/accordion";
 
 const helpSupport = ({}) => {
