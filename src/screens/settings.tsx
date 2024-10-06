@@ -31,7 +31,7 @@ const SettingsScreen = ({}) => {
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.header}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Profile')}
+              onPress={() => navigation.goBack()}
               style={styles.arrowButton}>
               <Icon name="arrowleft" size={24} color="#1B263B" />
             </TouchableOpacity>
