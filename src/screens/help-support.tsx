@@ -13,7 +13,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Accordion from "../components/accordion";
 
-const helpSupport = ({}) => {
+const HelpSupport = ({}) => {
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -327,4 +327,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default helpSupport;
+export default HelpSupport;
