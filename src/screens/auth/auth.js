@@ -1,4 +1,4 @@
-// auth.js
+
 export const handleSignup = async (
     email, 
     password, 
@@ -13,7 +13,7 @@ export const handleSignup = async (
     if (!email || !password || !confirmPassword || !username) {
       displayMessage('Please fill out all fields');
       return;
-    }ur
+    }
   
     if (password !== confirmPassword) {
       setIsSuccess(false);
