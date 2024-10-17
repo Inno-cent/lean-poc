@@ -15,6 +15,12 @@ import {useNavigation} from '@react-navigation/native';
 import {getUser} from './auth/auth';
 import {connectSocket, disconnectSocket} from '../services/socketService';
 
+// Define a type for the user object
+interface User {
+  username: string;
+  // Add other user properties as needed
+}
+
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('home'); // Default active tab
   const navigation = useNavigation();
@@ -39,14 +45,21 @@ const HomePage = () => {
     },
   ];
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Call getUser on component mount to fetch user details
     const fetchUser = async () => {
-      const userData = await getUser();
-      console.log(userData);
-      setUser(userData);
+      try {
+        const userData = await getUser();
+        console.log(userData);
+        setUser(userData); // Update state with user data
+      } catch (error) {
+        console.error('Error fetching user:', error); // Log any errors
+      } finally {
+        setLoading(false); // Set loading to false when done
+      }
     };
 
     fetchUser();
@@ -64,7 +77,16 @@ const HomePage = () => {
           <View style={styles.headerSectionInn}>
             <View style={styles.headerSectionInner}>
               <Text style={styles.headerText}>Onbrela</Text>
-              <Text style={styles.subText}>Hi, {user.username}</Text>
+              <Text style={styles.subText}>Hi, Jane</Text>
+              <View>
+                {loading ? (
+                  <Text style={styles.subText}>Hi ...</Text> // Display loading text
+                ) : user ? (
+                  <Text style={styles.subText}>Hi, {user.username}</Text> // Accessing username
+                ) : (
+                  <Text style={styles.subText}>User not found</Text> // Handle case where user is null
+                )}
+              </View>
             </View>
 
             <View style={styles.profileSection}>
