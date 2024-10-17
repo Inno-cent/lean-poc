@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { useNavigation } from '@react-navigation/native'; 
 
 // Define the backend server URL
 const SOCKET_URL = 'http://10.0.2.2:8000/'; // Replace with your actual backend URL
@@ -6,19 +7,19 @@ const SOCKET_URL = 'http://10.0.2.2:8000/'; // Replace with your actual backend 
 let socket;
 
 // Function to connect to the Socket.IO server and emit 'join-room'
-const connectSocket = () => {
+// Accept the userId (MongoDB _id) after login
+const connectSocket = (userId) => {
   if (!socket) {
     // Establish connection to Socket.IO server
     socket = io(SOCKET_URL);
 
     // Log the connection status
     socket.on('connect', () => {
-      const dummyUserId = 'dummyUser123';
       console.log('Connected to Socket.IO server:', socket.id);
 
-      // Emit 'join-room' event once connected
-      socket.emit('join-room', dummyUserId);
-      console.log(`Emitted 'join-room' for user ID: ${dummyUserId}`);
+      // Emit 'join-room' event with the MongoDB ObjectId (userId)
+      socket.emit('join-room', userId);
+      console.log(`Emitted 'join-room' for user ID: ${userId}`);
     });
 
     // Handle disconnection
@@ -29,6 +30,7 @@ const connectSocket = () => {
 };
 
 // Function to emit 'call-initiate' event
+// Pass the userId as part of the callInitiateData if necessary
 const initiateCall = (callInitiateData) => {
   if (socket) {
     // Emit the 'call-initiate' event
@@ -44,6 +46,24 @@ const initiateCall = (callInitiateData) => {
   }
 };
 
+// Function to handle incoming calls
+const handleIncomingCall = (setCallerInfo) => {
+  if (socket) {
+    // Listen for the 'call-received' event
+    socket.on('call-received', (callData) => {
+      console.log('Incoming call received:', callData);
+      
+      // Set the caller information in the state
+      setCallerInfo(callData);
+
+      // Navigate to the incoming call screen
+      const navigation = useNavigation();
+      navigation.navigate('IncomingCall', { callerInfo: callData });
+    });
+  }
+};
+
+// Function to disconnect the socket
 const disconnectSocket = () => {
   if (socket) {
     socket.disconnect();
@@ -52,5 +72,5 @@ const disconnectSocket = () => {
   }
 };
 
-export { connectSocket, initiateCall, socket,disconnectSocket };
-
+// Export the necessary functions
+export { connectSocket, initiateCall, socket, disconnectSocket, handleIncomingCall };
