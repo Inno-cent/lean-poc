@@ -1,23 +1,24 @@
 import io from 'socket.io-client';
 
 // Define the backend server URL
-const SOCKET_URL = 'http://your-backend-url'; // Replace with your actual backend URL
+const SOCKET_URL = 'http://10.0.2.2:8000/'; // Replace with your actual backend URL
 
 let socket;
 
 // Function to connect to the Socket.IO server and emit 'join-room'
-const connectSocket = (userId) => {
+const connectSocket = () => {
   if (!socket) {
     // Establish connection to Socket.IO server
     socket = io(SOCKET_URL);
 
     // Log the connection status
     socket.on('connect', () => {
+      const dummyUserId = 'dummyUser123';
       console.log('Connected to Socket.IO server:', socket.id);
 
       // Emit 'join-room' event once connected
-      socket.emit('join-room', userId);
-      console.log(`Emitted 'join-room' for user ID: ${userId}`);
+      socket.emit('join-room', dummyUserId);
+      console.log(`Emitted 'join-room' for user ID: ${dummyUserId}`);
     });
 
     // Handle disconnection
@@ -43,4 +44,13 @@ const initiateCall = (callInitiateData) => {
   }
 };
 
-export { connectSocket, initiateCall };
+const disconnectSocket = () => {
+  if (socket) {
+    socket.disconnect();
+    console.log('Socket disconnected');
+    socket = null; // Resetting the socket variable
+  }
+};
+
+export { connectSocket, initiateCall, socket,disconnectSocket };
+

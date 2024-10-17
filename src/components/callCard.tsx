@@ -1,9 +1,17 @@
-import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { Swipeable } from "react-native-gesture-handler";
+import React, {useState} from 'react';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {Swipeable} from 'react-native-gesture-handler';
+import {initiateCall} from '../services/socketService';
 
-const CallCard = ({ name, timeAgo, profileImage, isCallIncoming, isVideoCall, onDelete }) => {
+const CallCard = ({
+  name,
+  timeAgo,
+  profileImage,
+  isCallIncoming,
+  isVideoCall,
+  onDelete,
+}) => {
   const [isSwiped, setIsSwiped] = useState(false);
 
   const renderRightActions = () => (
@@ -11,6 +19,18 @@ const CallCard = ({ name, timeAgo, profileImage, isCallIncoming, isVideoCall, on
       <FontAwesome name="trash" size={24} color="#FFF" />
     </TouchableOpacity>
   );
+
+  const handleInitiateCall = () => {
+    const callInitiateData = {
+      call_type: 'Video', // Dummy call data
+      caller_id: '507f191e810c19729de860ea',
+      participants: ['507f191e810c19729de860eb'],
+    };
+
+    console.log('call clicked', callInitiateData);
+    // Use the initiateCall function to start the call
+    initiateCall(callInitiateData);
+  };
 
   const handleSwipe = () => {
     setIsSwiped(true);
@@ -24,33 +44,33 @@ const CallCard = ({ name, timeAgo, profileImage, isCallIncoming, isVideoCall, on
     <Swipeable
       renderRightActions={renderRightActions}
       onSwipeableOpen={handleSwipe}
-      onSwipeableClose={handleSwipeClose}
-    >
+      onSwipeableClose={handleSwipeClose}>
       <View
         style={[
           styles.recentCallsCard,
           isSwiped && styles.swipedCard, // Apply conditional styling
-        ]}
-      >
+        ]}>
         <View style={styles.leftCard}>
           <Image source={profileImage} style={styles.profilePicture} />
           <View style={styles.callInfo}>
             <Text style={styles.nameText}>{name}</Text>
             <View style={styles.timeInfo}>
               <FontAwesome
-                name={isCallIncoming ? "arrow-down" : "arrow-up"}
+                name={isCallIncoming ? 'arrow-down' : 'arrow-up'}
                 size={14}
-                color={isCallIncoming ? "red" : "green"}
+                color={isCallIncoming ? 'red' : 'green'}
               />
               <Text style={styles.timeText}>{timeAgo}</Text>
             </View>
           </View>
         </View>
-        <FontAwesome
-          name={isVideoCall ? "video-camera" : "phone"}
-          size={20}
-          color="#415A77"
-        />
+        <TouchableOpacity onPress={handleInitiateCall}>
+          <FontAwesome
+            name={isVideoCall ? 'video-camera' : 'phone'}
+            size={20}
+            color="#415A77"
+          />
+        </TouchableOpacity>
       </View>
     </Swipeable>
   );
@@ -58,10 +78,10 @@ const CallCard = ({ name, timeAgo, profileImage, isCallIncoming, isVideoCall, on
 
 const styles = StyleSheet.create({
   recentCallsCard: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#D9D9D980",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#D9D9D980',
     padding: 15,
     borderRadius: 10, // Default borderRadius
     marginHorizontal: 20, // Default marginHorizontal
@@ -72,8 +92,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 0, // Remove marginHorizontal when swiped
   },
   leftCard: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   profilePicture: {
     width: 50,
@@ -82,28 +102,28 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   callInfo: {
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   nameText: {
     fontSize: 16,
-    fontWeight: "600",
-    color: "#1B263B",
+    fontWeight: '600',
+    color: '#1B263B',
   },
   timeInfo: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: 5,
   },
   timeText: {
     marginLeft: 5,
     fontSize: 14,
-    color: "#1B263B",
+    color: '#1B263B',
   },
   deleteButton: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 80,
-    backgroundColor: "#FB4040",
+    backgroundColor: '#FB4040',
     marginBottom: 20,
 
     // borderRadius: 10,

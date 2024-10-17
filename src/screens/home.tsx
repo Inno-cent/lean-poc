@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import NavigationTab from '../components/navigation-tab';
 import RecentCallsCard from '../components/callCard';
 import {useNavigation} from '@react-navigation/native';
+import {connectSocket, disconnectSocket} from '../services/socketService';
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('home'); // Default active tab
@@ -36,6 +37,17 @@ const HomePage = () => {
       profileImage: require('../assets/images/ll.png'),
     },
   ];
+
+  // useEffect(() => {
+  //   // Connect to the socket and join room after the component mounts
+  //   connectSocket(); // Use dummy ID
+  //   console.log('Socket connected and join-room event emitted');
+
+  //   // Optional: Cleanup on component unmount
+  //   return () => {
+  //     disconnectSocket();
+  //   };
+  // }, []);
 
   const handleTabPress = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
