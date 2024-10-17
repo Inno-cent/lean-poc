@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import NavigationTab from '../components/navigation-tab';
 import RecentCallsCard from '../components/callCard';
 import {useNavigation} from '@react-navigation/native';
+import {getUser} from './auth/auth';
 import {connectSocket, disconnectSocket} from '../services/socketService';
 
 const HomePage = () => {
@@ -38,16 +39,18 @@ const HomePage = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   // Connect to the socket and join room after the component mounts
-  //   connectSocket(); // Use dummy ID
-  //   console.log('Socket connected and join-room event emitted');
+  const [user, setUser] = useState(null);
 
-  //   // Optional: Cleanup on component unmount
-  //   return () => {
-  //     disconnectSocket();
-  //   };
-  // }, []);
+  useEffect(() => {
+    // Call getUser on component mount to fetch user details
+    const fetchUser = async () => {
+      const userData = await getUser();
+      console.log(userData);
+      setUser(userData);
+    };
+
+    fetchUser();
+  }, []);
 
   const handleTabPress = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
@@ -61,7 +64,7 @@ const HomePage = () => {
           <View style={styles.headerSectionInn}>
             <View style={styles.headerSectionInner}>
               <Text style={styles.headerText}>Onbrela</Text>
-              <Text style={styles.subText}>Hi, Janet</Text>
+              <Text style={styles.subText}>Hi, {user.username}</Text>
             </View>
 
             <View style={styles.profileSection}>
