@@ -77,14 +77,14 @@ const HomePage = () => {
           <View style={styles.headerSectionInn}>
             <View style={styles.headerSectionInner}>
               <Text style={styles.headerText}>Onbrela</Text>
-              <Text style={styles.subText}>Hi, Jane</Text>
+
               <View>
                 {loading ? (
                   <Text style={styles.subText}>Hi ...</Text> // Display loading text
                 ) : user ? (
                   <Text style={styles.subText}>Hi, {user.username}</Text> // Accessing username
                 ) : (
-                  <Text style={styles.subText}>User not found</Text> // Handle case where user is null
+                  <Text style={styles.subText}>?</Text> // Handle case where user is null
                 )}
               </View>
             </View>
