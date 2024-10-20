@@ -54,11 +54,15 @@ const HomePage = () => {
       try {
         const userData = await getUser();
         console.log(userData);
-        setUser(userData); // Update state with user data
+        setUser(userData); 
+         // Connect to the socket after fetching user data
+         if (userData) {
+          connectSocket(userData._id); // Pass user ID if needed
+        }
       } catch (error) {
         console.error('Error fetching user:', error); // Log any errors
       } finally {
-        setLoading(false); // Set loading to false when done
+        setLoading(false); 
       }
     };
 
@@ -84,7 +88,7 @@ const HomePage = () => {
                 ) : user ? (
                   <Text style={styles.subText}>Hi, {user.username}</Text> // Accessing username
                 ) : (
-                  <Text style={styles.subText}>?</Text> // Handle case where user is null
+                  <Text style={styles.subText}>Hi, ?</Text> // Handle case where user is null
                 )}
               </View>
             </View>
