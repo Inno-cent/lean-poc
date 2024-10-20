@@ -21,11 +21,11 @@ const CallCard = ({
   );
 
   const handleInitiateCall = () => {
-    // const callInitiateData = {
-    //   call_type: 'Video', // Dummy call data
-    //   caller_id: '507f191e810c19729de860ea',
-    //   participants: ['6711aa8f1710c51fc19e8a2e'],
-    // };
+    const callInitiateData = {
+      call_type: 'Video', // Dummy call data
+      caller_id: '507f191e810c19729de860ea',
+      participants: ['6711aa8f1710c51fc19e8a2e'],
+    };
 
     console.log('call clicked', callInitiateData);
     // Use the initiateCall function to start the call
