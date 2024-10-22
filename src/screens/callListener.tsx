@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { handleIncomingCall, connectSocket, disconnectSocket } from './socketService';
+import React, { useEffect } from 'react';
+import { handleIncomingCall } from "../services/socketService";
 
 const CallListener = () => {
-  const [callerInfo, setCallerInfo] = useState(null);
 
   useEffect(() => {
-    // Establish socket connection
-    connectSocket();
-
     // Listen for incoming calls
-    handleIncomingCall(setCallerInfo);
+    handleIncomingCall();
 
-    // Optionally clean up the socket when the component unmounts
-    return () => {
-      disconnectSocket();
-    };
+    // No need to disconnect the socket here since it's handled elsewhere
   }, []);
 
-  return null; // This component doesn't need to render anything
+  return null; // This component still doesn't need to render anything
 };
 
 export default CallListener;
