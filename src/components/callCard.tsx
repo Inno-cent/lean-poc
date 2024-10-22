@@ -24,7 +24,7 @@ const CallCard = ({
     const callInitiateData = {
       call_type: 'Video', // Dummy call data
       caller_id: '507f191e810c19729de860ea',
-      participants: ['6711aa8f1710c51fc19e8a2e'],
+      participants: ['6717f284bf03fa46df1bbfa5'],
     };
 
     console.log('call clicked', callInitiateData);

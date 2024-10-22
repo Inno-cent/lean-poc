@@ -19,6 +19,8 @@ import CallScreen from './src/screens/call'
 import ProfileScreen from './src/screens/profile'
 import SettingsScreen from './src/screens/settings';
 import Notifications from './src/screens/notification';
+import CallListener from './src/screens/callListener';
+import IncomingCall from './src/screens/incomingCall';
 // import EditProfileScreen from './src/screens/edit-profile'
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
@@ -32,6 +34,7 @@ export default function App() {
       <NavigationContainer>
         {/* <ThemeProvider> */}
         {/* <AuthProvider> */}
+        <CallListener />
         <AppNavigator />
         {/* </AuthProvider> */}
         {/* </ThemeProvider> */}
@@ -81,6 +84,10 @@ function AppNavigator() {
       <Stack.Screen name="Notification" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       {/* <Stack.Screen name="HelpSupport" component={HelpSupportScreen} /> */}
+
+
+      <Stack.Screen name="IncomingCall" component={IncomingCall} />
+
     </Stack.Navigator>
   );
 }

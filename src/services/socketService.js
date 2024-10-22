@@ -1,5 +1,4 @@
 import io from 'socket.io-client';
-import { useNavigation } from '@react-navigation/native'; 
 
 // Define the backend server URL
 const SOCKET_URL = 'http://10.0.2.2:8000/'; // Replace with your actual backend URL
@@ -47,17 +46,21 @@ const initiateCall = (callInitiateData) => {
 };
 
 // Function to handle incoming calls
-const handleIncomingCall = (setCallerInfo) => {
+// Pass `setCallerInfo` and `navigation` from the component
+const handleIncomingCall = (setCallerInfo, navigation) => {
   if (socket) {
     // Listen for the 'call-received' event
     socket.on('call-received', (callData) => {
       console.log('Incoming call received:', callData);
       
       // Set the caller information in the state
-      setCallerInfo(callData);
+      if (typeof setCallerInfo === 'function') {
+        setCallerInfo(callData);
+      } else {
+        console.error('setCallerInfo is not a function');
+      }
 
       // Navigate to the incoming call screen
-      const navigation = useNavigation();
       navigation.navigate('IncomingCall', { callerInfo: callData });
     });
   }
