@@ -1,50 +1,82 @@
+// SocketContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import { useNavigation } from '@react-navigation/native';
 
+// Define the backend server URL
 const SOCKET_URL = 'http://10.0.2.2:8000/'; // Replace with your actual backend URL
 
-// Create a context
+// Create the SocketContext
 const SocketContext = createContext();
 
-// Custom hook to use the SocketContext
-export const useSocket = () => {
-  return useContext(SocketContext);
-};
+// Custom hook to use SocketContext
+export const useSocket = () => useContext(SocketContext);
 
-// Socket provider component
+// SocketProvider component to wrap the app
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
+  const [callerInfo, setCallerInfo] = useState(null);
+  const navigation = useNavigation();
 
+  // Connect to socket when component mounts
   useEffect(() => {
-    // Connect to the Socket.IO server
-    const newSocket = io(SOCKET_URL);
+    const userId = 'your_user_id'; // Replace with actual userId from login
 
-    // Log connection success
-    newSocket.on('connect', () => {
-      const dummyUserId = 'dummyUser123'; // Replace with actual user ID if needed
-      console.log('Connected to Socket.IO server:', newSocket.id);
+    if (!socket) {
+      const newSocket = io(SOCKET_URL);
 
-      // Emit 'join-room' once connected
-      newSocket.emit('join-room', dummyUserId);
-      console.log(`Emitted 'join-room' for user ID: ${dummyUserId}`);
-    });
+      newSocket.on('connect', () => {
+        console.log('Connected to Socket.IO server:', newSocket.id);
+        newSocket.emit('join-room', userId);
+        console.log(`Emitted 'join-room' for user ID: ${userId}`);
+      });
 
-    // Log disconnection
-    newSocket.on('disconnect', () => {
-      console.log('Disconnected from Socket.IO server:', newSocket.id);
-    });
+      newSocket.on('disconnect', () => {
+        console.log('Disconnected from Socket.IO server:', newSocket.id);
+      });
 
-    // Save the socket instance
-    setSocket(newSocket);
+      // Handle incoming call
+      newSocket.on('call-received', callData => {
+        console.log('Incoming call received:', callData);
+        setCallerInfo(callData); // Update the caller info state
+        navigation.navigate('IncomingCall', { callerInfo: callData }); // Navigate to incoming call screen
+      });
 
-    // Clean up and disconnect the socket when component unmounts
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
+      setSocket(newSocket); // Set the socket instance in state
+
+      return () => {
+        newSocket.disconnect();
+        console.log('Socket disconnected');
+      };
+    }
+  }, [socket, navigation]);
+
+  // Function to initiate a call
+  const initiateCall = (callInitiateData) => {
+    if (socket) {
+      socket.emit('call-initiate', callInitiateData, (err, response) => {
+        if (err) {
+          console.error('Error during call initiation:', err);
+        } else {
+          console.log('Call initiated successfully:', response);
+        }
+      });
+    } else {
+      console.log('Socket is not connected');
+    }
+  };
+
+  // Function to disconnect socket
+  const disconnectSocket = () => {
+    if (socket) {
+      socket.disconnect();
+      setSocket(null); // Reset the socket state
+      console.log('Socket disconnected');
+    }
+  };
 
   return (
-    <SocketContext.Provider value={socket}>
+    <SocketContext.Provider value={{ socket, initiateCall, callerInfo, disconnectSocket }}>
       {children}
     </SocketContext.Provider>
   );

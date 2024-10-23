@@ -7,7 +7,7 @@ let socket;
 
 // Function to connect to the Socket.IO server and emit 'join-room'
 // Accept the userId (MongoDB _id) after login
-const connectSocket = (userId) => {
+const connectSocket = userId => {
   if (!socket) {
     // Establish connection to Socket.IO server
     socket = io(SOCKET_URL);
@@ -30,7 +30,7 @@ const connectSocket = (userId) => {
 
 // Function to emit 'call-initiate' event
 // Pass the userId as part of the callInitiateData if necessary
-const initiateCall = (callInitiateData) => {
+const initiateCall = callInitiateData => {
   if (socket) {
     // Emit the 'call-initiate' event
     socket.emit('call-initiate', callInitiateData, (err, response) => {
@@ -48,11 +48,14 @@ const initiateCall = (callInitiateData) => {
 // Function to handle incoming calls
 // Pass `setCallerInfo` and `navigation` from the component
 const handleIncomingCall = (setCallerInfo, navigation) => {
+  console.log('<<><><><><><>', socket);
+
   if (socket) {
     // Listen for the 'call-received' event
-    socket.on('call-received', (callData) => {
+    console.log('12121212');
+    socket.on('call-received', callData => {
       console.log('Incoming call received:', callData);
-      
+
       // Set the caller information in the state
       if (typeof setCallerInfo === 'function') {
         setCallerInfo(callData);
@@ -61,8 +64,9 @@ const handleIncomingCall = (setCallerInfo, navigation) => {
       }
 
       // Navigate to the incoming call screen
-      navigation.navigate('IncomingCall', { callerInfo: callData });
+      navigation.navigate('IncomingCall', {callerInfo: callData});
     });
+    // socket.on('call-received', (callData) => {
   }
 };
 
@@ -76,4 +80,10 @@ const disconnectSocket = () => {
 };
 
 // Export the necessary functions
-export { connectSocket, initiateCall, socket, disconnectSocket, handleIncomingCall };
+export {
+  connectSocket,
+  initiateCall,
+  socket,
+  disconnectSocket,
+  handleIncomingCall,
+};
