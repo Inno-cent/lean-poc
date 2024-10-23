@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {handleLogin} from './auth';
+import {useSocket} from '../../context/socketContext';
+
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -17,7 +19,7 @@ const LoginScreen = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState('');
-
+  const {connectSocket} = useSocket();
   const navigation = useNavigation();
 
   const displayMessage = msg => {
@@ -87,6 +89,7 @@ const LoginScreen = () => {
               setIsSuccess,
               setLoading,
               navigation,
+              connectSocket
             )
           }
           disabled={loading}>

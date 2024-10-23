@@ -1,18 +1,27 @@
 import React from 'react';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
 const IncomingCall = ({ route, navigation }) => {
   const { callerInfo } = route.params;
 
+  const handleAccept = () => {
+    // Logic to accept the call
+    console.log('Call accepted');
+    navigation.navigate('CallScreen', { callerInfo });
+  };
+
+  const handleReject = () => {
+    // Logic to reject the call
+    console.log('Call rejected');
+    navigation.goBack();
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Image source={{ uri: callerInfo.profilePicture }} style={{ width: 100, height: 100, borderRadius: 50 }} />
-      <Text>{callerInfo.caller_id}</Text>
-      
-      <View style={{ flexDirection: 'row', marginTop: 20 }}>
-        <Button title="Accept" color="green" onPress={() => {/* Handle call accept logic */}} />
-        <Button title="Reject" color="red" onPress={() => {/* Handle call reject logic */}} />
-      </View>
+      <Text>Incoming Call from {callerInfo.caller_id}</Text>
+      <Text>Call Type: {callerInfo.call_type}</Text>
+      <Button title="Accept Call" onPress={handleAccept} />
+      <Button title="Reject Call" onPress={handleReject} />
     </View>
   );
 };

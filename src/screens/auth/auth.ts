@@ -256,7 +256,7 @@
 // };
 
 import * as Keychain from 'react-native-keychain';
-import { connectSocket } from '../../services/socketService';
+import {useSocket} from '../context/socketContext';
 
 // Store the token securely using Keychain
 const storeToken = async (token: string): Promise<void> => {
@@ -361,6 +361,7 @@ export const handleLogin = async (
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
+  connectSocket: (userId: string) => void 
 ): Promise<void> => {
   if (!username || !password) {
     displayMessage('Please fill out both email and password');
@@ -383,8 +384,6 @@ export const handleLogin = async (
 
     const data = await response.json();
     if (response.ok) {
-      console.log(data);
-
       const token = data.token; // Assuming token is returned in the response
 
       if (!token) {
@@ -394,10 +393,20 @@ export const handleLogin = async (
       // Store token securely using Keychain
       await storeToken(token);
 
-      displayMessage('Login successful!');
-      setIsSuccess(true);
-      navigation.navigate('Home');
-      console.log('logged in');
+      // Fetch user details after successful login
+      const userData = await getUser();
+
+      if (userData && userData._id) {
+        console.log('loginconnect', userData);
+        connectSocket(userData._id); 
+        displayMessage('Login successful!');
+        setIsSuccess(true);
+        navigation.navigate('Home');
+        console.log('logged in');
+      } else {
+        displayMessage('Failed to fetch user details');
+        setIsSuccess(false);
+      }
     } else {
       console.error(data);
       displayMessage(data.message || 'Login failed.');
@@ -415,7 +424,7 @@ export const handleLogin = async (
 // Function to get the logged-in user details
 export const getUser = async (): Promise<any | null> => {
   try {
-    console.log("getttuserr")
+    console.log('getttuserr');
 
     // Retrieve the token securely from Keychain
     const token = await getToken();

@@ -59,7 +59,8 @@ const HomePage = () => {
         //   connectSocket(userData._id); 
         // }
       } catch (error) {
-        console.error('Error fetching user:', error); // Log any errors
+        console.error('Error fetching user:', error); 
+        navigation.navigate('Login')
       } finally {
         setLoading(false); 
       }

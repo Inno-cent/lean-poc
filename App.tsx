@@ -20,6 +20,7 @@ import CallScreen from './src/screens/call';
 import ProfileScreen from './src/screens/profile';
 import SettingsScreen from './src/screens/settings';
 import Notifications from './src/screens/notification';
+import OutgoingCallScreen from './src/screens/outgoingCall';
 import CallListener from './src/screens/callListener';
 import IncomingCall from './src/screens/incomingCall';
 // import EditProfileScreen from './src/screens/edit-profile'
@@ -92,6 +93,8 @@ function AppNavigator() {
       {/* <Stack.Screen name="HelpSupport" component={HelpSupportScreen} /> */}
 
       <Stack.Screen name="IncomingCall" component={IncomingCall} />
+      <Stack.Screen name="OutgoingCall" component={OutgoingCallScreen} />
+
     </Stack.Navigator>
   );
 }

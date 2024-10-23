@@ -33,7 +33,7 @@ export default function SplashScreen() {
   //   // Navigate to onboarding after a 2-second delay
   //   const timeout = setTimeout(() => {
   //     navigation.navigate('OnboardingPage');
-  //   }, 5000);
+  //   }, 1000);
 
   //   // Cleanup the timeout if the component unmounts
   //   return () => clearTimeout(timeout);

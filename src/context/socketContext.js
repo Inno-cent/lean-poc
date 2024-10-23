@@ -35,20 +35,23 @@ export const SocketProvider = ({ children }) => {
 
       setSocket(newSocket);
 
-      return () => {
-        newSocket.disconnect();
-        console.log('Socket disconnected');
-      };
+      // return () => {
+      //   newSocket.disconnect();
+      //   console.log('Socket disconnected');
+      // };
     }
   };
 
   const initiateCall = (callInitiateData) => {
+    console.log('first innitiate log');
     if (socket) {
+    console.log('second innitiate log');
       socket.emit('call-initiate', callInitiateData, (err, response) => {
         if (err) {
           console.error('Error during call initiation:', err);
         } else {
           console.log('Call initiated successfully:', response);
+          navigation.navigate('OutgoingCall');
         }
       });
     } else {
