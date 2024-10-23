@@ -55,10 +55,9 @@ const HomePage = () => {
         const userData = await getUser();
         console.log(userData);
         setUser(userData); 
-         // Connect to the socket after fetching user data
-         if (userData) {
-          connectSocket(userData._id); // Pass user ID if needed
-        }
+        //  if (userData) {
+        //   connectSocket(userData._id); 
+        // }
       } catch (error) {
         console.error('Error fetching user:', error); // Log any errors
       } finally {

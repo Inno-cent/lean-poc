@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Swipeable} from 'react-native-gesture-handler';
-import {initiateCall} from '../services/socketService';
+import { useSocket } from '../context/socketContext';
 
 const CallCard = ({
   name,
@@ -20,18 +20,17 @@ const CallCard = ({
     </TouchableOpacity>
   );
 
+  const { initiateCall } = useSocket();
+
   const handleInitiateCall = () => {
     const callInitiateData = {
       call_type: 'Video', // Dummy call data
       caller_id: '507f191e810c19729de860ea',
       participants: ['6717f284bf03fa46df1bbfa5'],
     };
-
     console.log('call clicked', callInitiateData);
-    // Use the initiateCall function to start the call
     initiateCall(callInitiateData);
   };
-
   const handleSwipe = () => {
     setIsSwiped(true);
   };

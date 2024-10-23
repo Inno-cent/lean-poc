@@ -415,6 +415,8 @@ export const handleLogin = async (
 // Function to get the logged-in user details
 export const getUser = async (): Promise<any | null> => {
   try {
+    console.log("getttuserr")
+
     // Retrieve the token securely from Keychain
     const token = await getToken();
 

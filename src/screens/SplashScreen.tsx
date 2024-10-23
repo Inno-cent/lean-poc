@@ -1,19 +1,43 @@
 import React, {useEffect} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
-import {useNavigation} from '@react-navigation/native'; 
+import {useNavigation} from '@react-navigation/native';
+import {getUser} from './auth/auth';
+import {useSocket} from '../context/socketContext';
 
 export default function SplashScreen() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
+  const {connectSocket} = useSocket();
 
-    useEffect(() => {
-      // Navigate to onboarding after a 2-second delay
-      const timeout = setTimeout(() => {
-        navigation.navigate('OnboardingPage');
-      }, 5000);
+  const initializeApp = async () => {
+    console.log('111111111');
+    try {
+      const user = await getUser();
+      if (user && user._id) {
+        console.log('splashscreenconnect', user);
+        connectSocket(user._id);
+        navigation.navigate('Home');
+      } else {
+        navigation.navigate('Login');
+      }
+    } catch (error) {
+      console.error('Error during initialization:', error);
+      navigation.navigate('Login');
+    }
+  };
 
-      // Cleanup the timeout if the component unmounts
-      return () => clearTimeout(timeout);
-    }, []);
+  useEffect(() => {
+    initializeApp(); // Initialize app on component mount
+  }, []);
+
+  // useEffect(() => {
+  //   // Navigate to onboarding after a 2-second delay
+  //   const timeout = setTimeout(() => {
+  //     navigation.navigate('OnboardingPage');
+  //   }, 5000);
+
+  //   // Cleanup the timeout if the component unmounts
+  //   return () => clearTimeout(timeout);
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -33,5 +57,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-
 });
