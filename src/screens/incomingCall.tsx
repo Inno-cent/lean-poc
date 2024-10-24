@@ -28,7 +28,13 @@ const IncomingCallScreen = ({ route }) => {
 
   return (
     <LinearGradient
-      colors={['#4c669f', '#3b5998', '#192f6a']}
+      colors={[ '#FF0000', // Red
+        '#FF7F00', // Orange
+        '#FFFF00', // Yellow
+        '#00FF00', // Green
+        '#0000FF', // Blue
+        '#4B0082', // Indigo
+        '#8B00FF' ]}
       style={styles.container}
     >
       <View style={[styles.contentContainer, { height: screenHeight * 0.6 }]}>
