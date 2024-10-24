@@ -6,8 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import { useSocket } from '../context/socketContext';
 
-const IncomingCallScreen = ({ route, navigation }) => {
+const IncomingCallScreen = ({ route }) => {
   const screenHeight = Dimensions.get('window').height;
+  const navigation = useNavigation();
 
   const { callerInfo } = route.params;  // Access the caller info passed via route
   const { acceptCall } = useSocket();  // Use acceptCall from the socket context
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 80,
+    paddingTop: 30,
   },
   callerName: {
     fontSize: 30,
