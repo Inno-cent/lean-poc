@@ -1,44 +1,52 @@
-
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Image
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import { useSocket } from '../context/socketContext';
+import {useSocket} from '../context/socketContext';
 
-const IncomingCallScreen = ({ route }) => {
+const IncomingCallScreen = ({route}) => {
   const screenHeight = Dimensions.get('window').height;
   const navigation = useNavigation();
 
-  const { callerInfo } = route.params;  // Access the caller info passed via route
-  const { acceptCall } = useSocket();  // Use acceptCall from the socket context
+  const {callerInfo} = route.params; // Access the caller info passed via route
+  const {acceptCall} = useSocket(); // Use acceptCall from the socket context
 
   // Handle call acceptance
   const handleAccept = () => {
-    console.log("accepted click", callerInfo.room_id)
-    acceptCall(callerInfo.room_id);  // Trigger acceptCall with the room_id
+    console.log('accepted click', callerInfo.room_id);
+    acceptCall(callerInfo.room_id); // Trigger acceptCall with the room_id
   };
 
   // Handle call rejection (if applicable)
   const handleReject = () => {
     // If you want to implement call rejection, you can define rejectCall in the context
     // rejectCall(callerInfo.room_id);
-    navigation.goBack();  // Navigate back on call rejection
+    navigation.goBack(); // Navigate back on call rejection
   };
 
   return (
-    <LinearGradient
-      colors={[ '#FF0000', // Red
-        '#FF7F00', // Orange
-        '#FFFF00', // Yellow
-        '#00FF00', // Green
-        '#0000FF', // Blue
-        '#4B0082', // Indigo
-        '#8B00FF' ]}
-      style={styles.container}
-    >
-      <View style={[styles.contentContainer, { height: screenHeight * 0.6 }]}>
-        <Text style={styles.callerName}>{callerInfo.caller_id || 'Unknown Caller'}</Text>
+    // <LinearGradient
+    //   colors={['#4c669f', '#3b5998', '#000']}
+    //   style={styles.container}
+    // >
+    <>
+      <View style={[styles.contentContainer, {height: screenHeight * 0.6}]}>
+        <Image
+          source={{uri: 'https://via.placeholder.com/150'}} // Placeholder image URL
+          style={styles.profilePicture}
+        />
+
+        <Text style={styles.callerName}>
+          {callerInfo.caller_id || 'Unknown Caller'}
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         {/* Decline Button */}
@@ -53,7 +61,8 @@ const IncomingCallScreen = ({ route }) => {
           <Text style={styles.buttonText}>Accept</Text>
         </TouchableOpacity>
       </View>
-    </LinearGradient>
+    </>
+    // </LinearGradient>
   );
 };
 
@@ -62,14 +71,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
+
   contentContainer: {
-    justifyContent: 'center',
+    flex: 1,
+    // justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
     paddingTop: 30,
   },
   callerName: {
     fontSize: 30,
-    color: 'white',
+    color: '#000',
     fontWeight: 'bold',
   },
   buttonContainer: {
@@ -84,6 +96,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+  },
+  profilePicture: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 40,
   },
   acceptButton: {
     backgroundColor: 'green',
