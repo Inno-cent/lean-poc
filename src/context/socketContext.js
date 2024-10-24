@@ -35,26 +35,14 @@ export const SocketProvider = ({children}) => {
         navigation.navigate('IncomingCall', {callerInfo: callData});
       });
 
-      newSocket.on('call-accept', message => {
-        console.log('Call accepted:', message);
-
-        const agoraCallDetails = {
-          room_id: message.room_id,
-          participant_id: message.participant_id,
-          app_id: message.app_id,
-          token: message.token,
-          uid: message.uid,
-        };
-
-        setCallDetails(agoraCallDetails);
+      newSocket.on('join-call', callData => {
+        console.log('Joined call:', callData);
+        setCallDetails(callData);  // Store call details
         setIsInCall(true);
-
-        // Navigate to CallScreen once the call is accepted
-        navigation.navigate('CallScreen');
+        navigation.navigate('CallScreen', { callDetails: callData });
       });
 
       setSocket(newSocket);
-
       // return () => {
       //   newSocket.disconnect();
       //   console.log('Socket disconnected');
@@ -79,6 +67,24 @@ export const SocketProvider = ({children}) => {
     }
   };
 
+  const acceptCall = roomId => {
+    if (socket) {
+      const message = {
+        room_id: roomId,
+        participant_id: socket.id,
+      };
+      socket.emit('call-accept', message, (err, response) => {
+        if (err) {
+          console.error('Error during call acceptance:', err);
+        } else {
+          console.log('Call accepted:', response);
+        }
+      });
+    } else {
+      console.log('Socket is not connected');
+    }
+  };
+
   const disconnectSocket = () => {
     if (socket) {
       socket.disconnect();
@@ -92,11 +98,12 @@ export const SocketProvider = ({children}) => {
       value={{
         socket,
         initiateCall,
+        acceptCall,
         callerInfo,
+        callDetails,
+        isInCall,
         disconnectSocket,
         connectSocket,
-        callDetails, 
-        isInCall,
       }}>
       {children}
     </SocketContext.Provider>

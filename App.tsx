@@ -16,13 +16,13 @@ import ForgetPasswordScreen from './src/screens/auth/forget-password';
 import SOS from './src/screens/sos';
 import HomePage from './src/screens/home';
 import ContactScreen from './src/screens/contact';
-import CallScreen from './src/screens/call';
 import ProfileScreen from './src/screens/profile';
 import SettingsScreen from './src/screens/settings';
 import Notifications from './src/screens/notification';
 import OutgoingCallScreen from './src/screens/outgoingCall';
-import CallListener from './src/screens/callListener';
+// import CallListener from './src/screens/callListener';
 import IncomingCall from './src/screens/incomingCall';
+import CallScreen from './src/screens/callScreen';
 // import EditProfileScreen from './src/screens/edit-profile'
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
@@ -94,6 +94,8 @@ function AppNavigator() {
 
       <Stack.Screen name="IncomingCall" component={IncomingCall} />
       <Stack.Screen name="OutgoingCall" component={OutgoingCallScreen} />
+      <Stack.Screen name="CallScreen" component={CallScreen} />
+
 
     </Stack.Navigator>
   );

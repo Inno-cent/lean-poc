@@ -1,19 +1,22 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
+import { useSocket } from '../context/socketContext';
 
 const IncomingCall = ({ route, navigation }) => {
-  const { callerInfo } = route.params;
+  const { callerInfo } = route.params;  // Access the caller info passed via route
+  const { acceptCall } = useSocket();  // Use acceptCall from the socket context
 
+  // Handle call acceptance
   const handleAccept = () => {
-    // Logic to accept the call
-    console.log('Call accepted');
-    navigation.navigate('CallScreen', { callerInfo });
+    console.log("accepted click", callerInfo.room_id)
+    acceptCall(callerInfo.room_id);  // Trigger acceptCall with the room_id
   };
 
+  // Handle call rejection (if applicable)
   const handleReject = () => {
-    // Logic to reject the call
-    console.log('Call rejected');
-    navigation.goBack();
+    // If you want to implement call rejection, you can define rejectCall in the context
+    // rejectCall(callerInfo.room_id);
+    navigation.goBack();  // Navigate back on call rejection
   };
 
   return (
