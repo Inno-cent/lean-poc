@@ -1,27 +1,12 @@
-import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { useSocket } from '../context/socketContext';
-
-const IncomingCall = ({ route, navigation }) => {
- 
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Incoming Call from {callerInfo.caller_id}</Text>
-      <Text>Call Type: {callerInfo.call_type}</Text>
-      <Button title="Accept Call" onPress={handleAccept} />
-      <Button title="Reject Call" onPress={handleReject} />
-    </View>
-  );
-};
-
-export default IncomingCall;
 
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useNavigation} from '@react-navigation/native';
+import { useSocket } from '../context/socketContext';
 
-const IncomingCallScreen = ({ callerName, onAccept, onDecline }) => {
+const IncomingCallScreen = ({ route, navigation }) => {
   const screenHeight = Dimensions.get('window').height;
 
   const { callerInfo } = route.params;  // Access the caller info passed via route
@@ -46,17 +31,17 @@ const IncomingCallScreen = ({ callerName, onAccept, onDecline }) => {
       style={styles.container}
     >
       <View style={[styles.contentContainer, { height: screenHeight * 0.6 }]}>
-        <Text style={styles.callerName}>{callerName || 'Unknown Caller'}</Text>
+        <Text style={styles.callerName}>{callerInfo.caller_id || 'Unknown Caller'}</Text>
       </View>
       <View style={styles.buttonContainer}>
         {/* Decline Button */}
-        <TouchableOpacity style={styles.declineButton} onPress={onDecline}>
+        <TouchableOpacity style={styles.declineButton} onPress={handleReject}>
           <Icon name="times" size={30} color="white" />
           <Text style={styles.buttonText}>Decline</Text>
         </TouchableOpacity>
 
         {/* Accept Button */}
-        <TouchableOpacity style={styles.acceptButton} onPress={onAccept}>
+        <TouchableOpacity style={styles.acceptButton} onPress={handleAccept}>
           <Icon name="phone" size={30} color="white" />
           <Text style={styles.buttonText}>Accept</Text>
         </TouchableOpacity>
