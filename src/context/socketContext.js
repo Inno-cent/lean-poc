@@ -37,9 +37,9 @@ export const SocketProvider = ({children}) => {
 
       newSocket.on('join-call', callData => {
         console.log('Joined call:', callData);
-        setCallDetails(callData);  // Store call details
+        setCallDetails(callData); // Store call details
         setIsInCall(true);
-        navigation.navigate('CallScreen', { callDetails: callData });
+        navigation.navigate('CallScreen', {callDetails: callData});
       });
 
       setSocket(newSocket);
@@ -50,20 +50,51 @@ export const SocketProvider = ({children}) => {
     }
   };
 
+  // const initiateCall = callInitiateData => {
+  //   try {
+  //     console.log('first innitiate log');
+  //     if (socket) {
+  //       console.log('second innitiate log');
+  //       socket.emit('call-initiate', callInitiateData, (err, response) => {
+  //         console.log('error:', err, 'response:', response);
+
+  //         // Route the user immediately after emitting the event
+  //         navigation.navigate('OutgoingCall');
+  //       });
+  //     } else {
+  //       console.log('Socket is not connected');
+  //     }
+  //   } catch (err) {
+  //     console.log('call initiate error', err);
+  //   }
+  // };
+
   const initiateCall = callInitiateData => {
-    console.log('first innitiate log');
-    if (socket) {
-      console.log('second innitiate log');
-      socket.emit('call-initiate', callInitiateData, (err, response) => {
-        if (err) {
-          console.error('Error during call initiation:', err);
-        } else {
-          console.log('Call initiated successfully:', response);
-          navigation.navigate('OutgoingCall');
-        }
-      });
-    } else {
-      console.log('Socket is not connected');
+    try {
+      console.log('first initiate log');
+
+      if (socket) {
+        console.log('second initiate log');
+
+        socket.emit('call-initiate', callInitiateData, (err, response) => {
+          if (err) {
+            console.error('Error during call initiation:', err);
+          } else {
+            console.log('Call initiated successfully:', response);
+
+            // Only navigate if the response is successful
+            if (response && response.success) {
+              navigation.navigate('OutgoingCall');
+            } else {
+              console.log('Failed to initiate call:', response);
+            }
+          }
+        });
+      } else {
+        console.log('Socket is not connected');
+      }
+    } catch (err) {
+      console.log('call initiate error', err);
     }
   };
 
