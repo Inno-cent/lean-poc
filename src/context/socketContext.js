@@ -78,16 +78,15 @@ export const SocketProvider = ({children}) => {
       console.log('first innitiate log');
       if (socket) {
         console.log('second innitiate log');
-        socket.emit('call-initiate', callInitiateData, response => {
+        socket.emit('call-initiate', callInitiateData, (err, response) => {
           console.log(callInitiateData);
-
-          // if (err) {
-          //   console.error('Error during call initiation:', err);
-          // } else {
-          //   console.log('Call initiated successfully:', response);
-          navigation.navigate('OutgoingCall');
-          // }
-          // console.log('error:', err, 'response :', response);
+          if (err) {
+            console.error('Error during call initiation:', err);
+          } else {
+            console.log('Call initiated successfully:', response);
+            navigation.navigate('OutgoingCall');
+          }
+          console.log('error:', err, 'response :', response);
         });
       } else {
         console.log('Socket is not connected');
@@ -96,6 +95,29 @@ export const SocketProvider = ({children}) => {
       console.log('call initiate error', err);
     }
   };
+
+  // const initiateCall = async callInitiateData => {
+  //   if (!socket) {
+  //     console.log('Socket is not connected');
+  //     return;
+  //   }
+
+  //   try {
+  //     console.log('Initiating call...');
+
+  //     await new Promise((resolve, reject) => {
+  //       socket.emit('call-initiate', callInitiateData, (err, response) => {
+  //         if (err) reject(err);
+  //         else resolve(response);
+  //       });
+  //     });
+
+  //     console.log('Call initiated successfully');
+  //     navigation.navigate('OutgoingCall');
+  //   } catch (error) {
+  //     console.error('Error during call initiation:', error);
+  //   }
+  // };
 
   const acceptCall = roomId => {
     if (socket) {
