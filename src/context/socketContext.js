@@ -89,7 +89,7 @@ export const SocketProvider = ({children}) => {
     }
   };
 
-  const acceptCall = (roomId,participants ) => {
+  const acceptCall = (roomId, participants) => {
     if (socket) {
       const message = {
         room_id: roomId,
