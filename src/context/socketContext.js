@@ -11,7 +11,7 @@ export const useSocket = () => useContext(SocketContext);
 export const SocketProvider = ({children}) => {
   const [socket, setSocket] = useState(null);
   const [callerInfo, setCallerInfo] = useState(null);
-  const [callDetails, setCallDetails] = useState(null); // Agora call details
+  const [callDetails, setCallDetails] = useState(null);
   const [isInCall, setIsInCall] = useState(false);
   const navigation = useNavigation();
 
@@ -22,24 +22,24 @@ export const SocketProvider = ({children}) => {
       newSocket.on('connect', () => {
         console.log('Connected to Socket.IO server:', newSocket.id);
         newSocket.emit('join-room', userId);
-        console.log(`Emitted 'join-room' for user ID: ${userId}`);
       });
 
       newSocket.on('disconnect', () => {
         console.log('Disconnected from Socket.IO server:', newSocket.id);
       });
 
-      newSocket.on('call-received', callData => {
+      newSocket.on('call-received', (callData, callback) => {
         console.log('Incoming call received:', callData);
         setCallerInfo(callData);
         navigation.navigate('IncomingCall', {callerInfo: callData});
+        callback({status: true, message: 'Call Received'});
       });
 
       newSocket.on('join-call', callData => {
-        console.log('Joined call:', callData);
-        setCallDetails(callData); // Store call details
-        setIsInCall(true);
-        navigation.navigate('CallScreen', {callDetails: callData});
+        console.log('Received call join details:', callData);
+        // setCallDetails(callData);
+        // setIsInCall(true);
+        // navigation.navigate('CallScreen', {callDetails: callData});
       });
 
       newSocket.on('call-reject', message => {
@@ -66,70 +66,47 @@ export const SocketProvider = ({children}) => {
       });
 
       setSocket(newSocket);
-      // return () => {
-      //   newSocket.disconnect();
-      //   console.log('Socket disconnected');
-      // };
     }
   };
 
   const initiateCall = callInitiateData => {
-    try {
-      console.log('first innitiate log');
-      if (socket) {
-        console.log('second innitiate log');
-        socket.emit('call-initiate', callInitiateData, (err, response) => {
-          console.log(callInitiateData);
-          if (err) {
-            console.error('Error during call initiation:', err);
-          } else {
-            console.log('Call initiated successfully:', response);
-            navigation.navigate('OutgoingCall');
-          }
-          console.log('error:', err, 'response :', response);
-        });
-      } else {
-        console.log('Socket is not connected');
-      }
-    } catch (err) {
-      console.log('call initiate error', err);
+    if (socket) {
+      socket.emit('call-initiate', callInitiateData, response => {
+        if (!response || !response.status) {
+          console.error(
+            'Error during call initiation:',
+            response?.message || 'Unknown error',
+          );
+        } else {
+          console.log('Call initiated successfully:', response);
+          navigation.navigate('OutgoingCall', {
+            participants: callInitiateData.participants,
+          });
+        }
+      });
+    } else {
+      console.log('Socket is not connected');
     }
   };
 
-  // const initiateCall = async callInitiateData => {
-  //   if (!socket) {
-  //     console.log('Socket is not connected');
-  //     return;
-  //   }
-
-  //   try {
-  //     console.log('Initiating call...');
-
-  //     await new Promise((resolve, reject) => {
-  //       socket.emit('call-initiate', callInitiateData, (err, response) => {
-  //         if (err) reject(err);
-  //         else resolve(response);
-  //       });
-  //     });
-
-  //     console.log('Call initiated successfully');
-  //     navigation.navigate('OutgoingCall');
-  //   } catch (error) {
-  //     console.error('Error during call initiation:', error);
-  //   }
-  // };
-
-  const acceptCall = roomId => {
+  const acceptCall = (roomId,participants ) => {
     if (socket) {
       const message = {
         room_id: roomId,
-        participant_id: socket.id,
+        participant_id: participants,
       };
-      socket.emit('call-accept', message, (err, response) => {
-        if (err) {
-          console.error('Error during call acceptance:', err);
+      socket.emit('call-accept', message, response => {
+        if (!response || !response.status) {
+          console.error(
+            'Error during call acceptance:',
+            response?.message || 'Unknown error',
+          );
         } else {
           console.log('Call accepted:', response);
+          const {data: callData} = response;
+          setCallDetails(callData);
+          setIsInCall(true);
+          navigation.navigate('CallScreen', {callDetails: callData});
         }
       });
     } else {
@@ -143,13 +120,16 @@ export const SocketProvider = ({children}) => {
         room_id: roomId,
         participant_id: socket.id,
       };
-      socket.emit('call-reject', message, (err, response) => {
-        if (err) {
-          console.error('Error during call rejection:', err);
+      socket.emit('call-reject', message, response => {
+        if (!response || !response.status) {
+          console.error(
+            'Error during call rejection:',
+            response?.message || 'Unknown error',
+          );
         } else {
           console.log('Call rejected:', response);
           setIsInCall(false);
-          navigation.navigate('Home'); // Navigate to home after rejecting the call
+          navigation.navigate('Home');
         }
       });
     } else {
@@ -162,17 +142,19 @@ export const SocketProvider = ({children}) => {
       const {room_id, participant_id} = callDetails;
       const message = {room_id, participant_id};
 
-      socket.emit('call-exit', message, (err, response) => {
-        if (err) {
-          console.error('Error ending the call:', err);
+      socket.emit('call-exit', message, response => {
+        if (!response || !response.status) {
+          console.error(
+            'Error ending the call:',
+            response?.message || 'Unknown error',
+          );
         } else {
           console.log('Call ended:', response);
+          setIsInCall(false);
+          setCallDetails(null);
+          navigation.navigate('Home');
         }
       });
-
-      setIsInCall(false);
-      setCallDetails(null);
-      navigation.navigate('Home');
     }
   };
 

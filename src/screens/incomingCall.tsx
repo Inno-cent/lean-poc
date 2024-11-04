@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  Image
+  Image,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -21,14 +21,12 @@ const IncomingCallScreen = ({route}) => {
 
   // Handle call acceptance
   const handleAccept = () => {
-    console.log('accepted click', callerInfo.room_id);
-    acceptCall(callerInfo.room_id); // Trigger acceptCall with the room_id
+    console.log('accepted click', callerInfo);
+    acceptCall(callerInfo.room_id, callerInfo.participants);
   };
 
   // Handle call rejection (if applicable)
   const handleReject = () => {
-    // If you want to implement call rejection, you can define rejectCall in the context
-    // rejectCall(callerInfo.room_id);
     navigation.goBack(); // Navigate back on call rejection
   };
 
@@ -51,13 +49,13 @@ const IncomingCallScreen = ({route}) => {
       <View style={styles.buttonContainer}>
         {/* Decline Button */}
         <TouchableOpacity style={styles.declineButton} onPress={handleReject}>
-          <Icon name="times" size={30} color="white" />
+          {/* <Icon name="times" size={30} color="white" /> */}
           <Text style={styles.buttonText}>Decline</Text>
         </TouchableOpacity>
 
         {/* Accept Button */}
         <TouchableOpacity style={styles.acceptButton} onPress={handleAccept}>
-          <Icon name="phone" size={30} color="white" />
+          {/* <Icon name="phone" size={30} color="white" /> */}
           <Text style={styles.buttonText}>Accept</Text>
         </TouchableOpacity>
       </View>
@@ -80,9 +78,10 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   callerName: {
-    fontSize: 30,
+    fontSize: 20,
     color: '#000',
-    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 5,
   },
   buttonContainer: {
     flexDirection: 'row',
