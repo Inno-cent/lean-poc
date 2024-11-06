@@ -1,6 +1,6 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const SOCKET_URL = 'http://10.0.2.2:8000/';
 
@@ -8,7 +8,7 @@ const SocketContext = createContext();
 
 export const useSocket = () => useContext(SocketContext);
 
-export const SocketProvider = ({children}) => {
+export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [callerInfo, setCallerInfo] = useState(null);
   const [callDetails, setCallDetails] = useState(null);
@@ -28,31 +28,30 @@ export const SocketProvider = ({children}) => {
         console.log('Disconnected from Socket.IO server:', newSocket.id);
       });
 
+      // Navigate to IncomingCall screen when a call is received
       newSocket.on('call-received', (callData, callback) => {
         console.log('Incoming call received:', callData);
         setCallerInfo(callData);
-        navigation.navigate('IncomingCall', {callerInfo: callData});
-        callback({status: true, message: 'Call Received'});
+        navigation.navigate('IncomingCall', { callerInfo: callData });
+        callback({ status: true, message: 'Call Received' });
       });
 
+      // Listen for 'join-call' event and navigate to CallScreen if not already in a call
       newSocket.on('join-call', callData => {
         console.log('Received call join details:', callData);
-        // setCallDetails(callData);
-        // setIsInCall(true);
-        // navigation.navigate('CallScreen', {callDetails: callData});
+        navigateToCallScreen(callData);
       });
 
+      // Handle call rejection
       newSocket.on('call-reject', message => {
-        console.log(
-          'Call was rejected by a participant:',
-          message.participant_id,
-        );
+        console.log('Call was rejected by a participant:', message.participant_id);
         if (message.participant_id === socket.id) {
           setIsInCall(false);
           navigation.navigate('Home');
         }
       });
 
+      // Handle participant exiting the call
       newSocket.on('call-exit', message => {
         console.log('Participant exited the call:', message.participant_id);
         if (message.participant_id === socket.id) {
@@ -61,11 +60,21 @@ export const SocketProvider = ({children}) => {
         }
       });
 
+      // Notify when a participant joins the call
       newSocket.on('call-joined', message => {
         console.log('Participant joined the call:', message.participant_id);
       });
 
       setSocket(newSocket);
+    }
+  };
+
+  // Helper function to navigate to CallScreen only if not already in a call
+  const navigateToCallScreen = callData => {
+    if (!isInCall) {
+      setCallDetails(callData);
+      setIsInCall(true);
+      navigation.navigate('CallScreen', { callDetails: callData });
     }
   };
 
@@ -75,7 +84,7 @@ export const SocketProvider = ({children}) => {
         if (!response || !response.status) {
           console.error(
             'Error during call initiation:',
-            response?.message || 'Unknown error',
+            response?.message || 'Unknown error'
           );
         } else {
           console.log('Call initiated successfully:', response);
@@ -99,14 +108,12 @@ export const SocketProvider = ({children}) => {
         if (!response || !response.status) {
           console.error(
             'Error during call acceptance:',
-            response?.message || 'Unknown error',
+            response?.message || 'Unknown error'
           );
         } else {
           console.log('Call accepted:', response);
-          const {data: callData} = response;
-          setCallDetails(callData);
-          setIsInCall(true);
-          navigation.navigate('CallScreen', {callDetails: callData});
+          const { data: callData } = response;
+          navigateToCallScreen(callData); // Use the shared function here
         }
       });
     } else {
@@ -124,7 +131,7 @@ export const SocketProvider = ({children}) => {
         if (!response || !response.status) {
           console.error(
             'Error during call rejection:',
-            response?.message || 'Unknown error',
+            response?.message || 'Unknown error'
           );
         } else {
           console.log('Call rejected:', response);
@@ -139,14 +146,14 @@ export const SocketProvider = ({children}) => {
 
   const endCall = () => {
     if (socket && callDetails) {
-      const {room_id, participant_id} = callDetails;
-      const message = {room_id, participant_id};
+      const { room_id, participant_id } = callDetails;
+      const message = { room_id, participant_id };
 
       socket.emit('call-exit', message, response => {
         if (!response || !response.status) {
           console.error(
             'Error ending the call:',
-            response?.message || 'Unknown error',
+            response?.message || 'Unknown error'
           );
         } else {
           console.log('Call ended:', response);
@@ -179,7 +186,8 @@ export const SocketProvider = ({children}) => {
         connectSocket,
         rejectCall,
         endCall,
-      }}>
+      }}
+    >
       {children}
     </SocketContext.Provider>
   );
