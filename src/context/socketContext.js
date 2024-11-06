@@ -15,6 +15,15 @@ export const SocketProvider = ({ children }) => {
   const [isInCall, setIsInCall] = useState(false);
   const navigation = useNavigation();
 
+   // Helper function to navigate to CallScreen only if not already in a call
+   const navigateToCallScreen = callData => {
+    // if (!isInCall) {
+      setCallDetails(callData);
+      setIsInCall(true);
+      navigation.navigate('CallScreen', { callDetails: callData });
+    // }
+  };
+
   const connectSocket = userId => {
     if (!socket) {
       const newSocket = io(SOCKET_URL);
@@ -69,14 +78,7 @@ export const SocketProvider = ({ children }) => {
     }
   };
 
-  // Helper function to navigate to CallScreen only if not already in a call
-  const navigateToCallScreen = callData => {
-    if (!isInCall) {
-      setCallDetails(callData);
-      setIsInCall(true);
-      navigation.navigate('CallScreen', { callDetails: callData });
-    }
-  };
+ 
 
   const initiateCall = callInitiateData => {
     if (socket) {

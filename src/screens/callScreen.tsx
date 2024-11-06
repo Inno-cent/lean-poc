@@ -21,9 +21,9 @@ const CallScreen = () => {
     channel: callDetails.room_id, // Channel name
     token: callDetails.token, // Token for the session
     uid: callDetails.uid, // User ID for Agora
-    // onEndCall: () => {
-    //   setIsInCall(false);
-    // },
+    onEndCall: () => {
+      setIsInCall(false);
+    },
   };
 
   const rtcCallbacks = {
@@ -32,13 +32,12 @@ const CallScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} /> */}
-<Text>{connectionData.appId}</Text>
+      <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
+      {/* <Text>{connectionData.appId}</Text>
 <Text>{connectionData.appId}</Text>
 <Text>{connectionData.channel}</Text>
 <Text>{connectionData.token}</Text>
-<Text>{connectionData.uid}</Text>
-
+<Text>{connectionData.uid}</Text> */}
     </View>
   );
 };
