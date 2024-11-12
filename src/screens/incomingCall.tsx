@@ -31,10 +31,6 @@ const IncomingCallScreen = ({route}) => {
   };
 
   return (
-    // <LinearGradient
-    //   colors={['#4c669f', '#3b5998', '#000']}
-    //   style={styles.container}
-    // >
     <>
       <View style={[styles.contentContainer, {height: screenHeight * 0.6}]}>
         <Image
@@ -60,7 +56,6 @@ const IncomingCallScreen = ({route}) => {
         </TouchableOpacity>
       </View>
     </>
-    // </LinearGradient>
   );
 };
 
