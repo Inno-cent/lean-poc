@@ -25,9 +25,8 @@ const IncomingCallScreen = ({route}) => {
     acceptCall(callerInfo.room_id, callerInfo.participants);
   };
 
-  // Handle call rejection (if applicable)
   const handleReject = () => {
-    navigation.goBack(); // Navigate back on call rejection
+    navigation.goBack(); 
   };
 
   return (
