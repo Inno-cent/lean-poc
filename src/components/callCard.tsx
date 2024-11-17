@@ -35,9 +35,9 @@ const CallCard = ({
     setIsSwiped(true);
   };
 
-  const handleSwipeClose = () => {
-    setIsSwiped(false);
-  };
+  // const handleSwipeClose = () => {
+  //   setIsSwiped(false);
+  // };
 
   return (
     <Swipeable
