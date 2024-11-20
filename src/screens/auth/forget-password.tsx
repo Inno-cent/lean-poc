@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     backgroundColor: "#fff",
+    color: '#1B263BE5',
   },
   link: {
     fontSize: 16,
