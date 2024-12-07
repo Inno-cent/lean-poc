@@ -58,7 +58,7 @@
 
 //   setLoading(true);
 //   try {
-//     const response = await fetch('http://10.0.2.2:8000/v1/session/signup', {
+//     const response = await fetch('http://3.86.186.237/v1/session/signup', {
 //       method: 'POST',
 //       headers: {
 //         'Content-Type': 'application/json',
@@ -104,7 +104,7 @@
 
 //   setLoading(true);
 //   try {
-//     const response = await fetch('http://10.0.2.2:8000/v1/session', {
+//     const response = await fetch('http://3.86.186.237/v1/session', {
 //       method: 'POST',
 //       headers: {
 //         'Content-Type': 'application/json',
@@ -158,7 +158,7 @@
 //     }
 
 //     // Fetch user details from the backend
-//     const response = await fetch('http://10.0.2.2:8000/v1/session', {
+//     const response = await fetch('http://3.86.186.237/v1/session', {
 //       method: 'GET',
 //       headers: {
 //         'Content-Type': 'application/json',
@@ -189,7 +189,7 @@
 //   setLoading(true);
 //   try {
 //     const response = await fetch(
-//       'http://10.0.2.2:8000/v1/google/oauth/redirect',
+//       'http://3.86.186.237/v1/google/oauth/redirect',
 //       {
 //         method: 'POST',
 //         headers: {
@@ -227,7 +227,7 @@
 // ) => {
 //   setLoading(true);
 //   try {
-//     const response = await fetch('http://10.0.2.2:8000/v1/google/oauth', {
+//     const response = await fetch('http://3.86.186.237/v1/google/oauth', {
 //       method: 'POST',
 //       headers: {
 //         'Content-Type': 'application/json',
@@ -273,7 +273,7 @@ const getToken = async (): Promise<string | null> => {
   try {
     const credentials = await Keychain.getGenericPassword();
     if (credentials) {
-      return credentials.password; // token is stored as password
+      return credentials.password; 
     } else {
       throw new Error('No token found');
     }
@@ -323,7 +323,7 @@ export const handleSignup = async (
 
   setLoading(true);
   try {
-    const response = await fetch('http://10.0.2.2:8000/v1/session/signup', {
+    const response = await fetch('http://3.86.186.237/v1/session/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -370,7 +370,7 @@ export const handleLogin = async (
 
   setLoading(true);
   try {
-    const response = await fetch('http://10.0.2.2:8000/v1/session', {
+    const response = await fetch('http://3.86.186.237/v1/session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -434,7 +434,7 @@ export const getUser = async (): Promise<any | null> => {
     }
 
     // Fetch user details from the backend
-    const response = await fetch('http://10.0.2.2:8000/v1/session', {
+    const response = await fetch('http://3.86.186.237/v1/session', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -465,7 +465,7 @@ export const handleGoogleSignup = async (
   setLoading(true);
   try {
     const response = await fetch(
-      'http://10.0.2.2:8000/v1/google/oauth/redirect',
+      'http://3.86.186.237/v1/google/oauth/redirect',
       {
         method: 'POST',
         headers: {
@@ -503,7 +503,7 @@ export const handleGoogleCallback = async (
 ): Promise<void> => {
   setLoading(true);
   try {
-    const response = await fetch('http://10.0.2.2:8000/v1/google/oauth', {
+    const response = await fetch('http://3.86.186.237/v1/google/oauth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
