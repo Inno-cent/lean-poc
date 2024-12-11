@@ -5,7 +5,7 @@ import { getToken } from '../screens/auth/auth'; // Adjust the path to the auth.
 // Base URL of your server
 const API_BASE_URL = 'http://3.86.186.237/v1/call';
 
-const ApiService = {
+const CallService = {
   /**
    * Fetch call logs
    * @param {number} offset - Offset for pagination
@@ -37,4 +37,4 @@ const ApiService = {
   },
 };
 
-export default ApiService;
+export default CallService;

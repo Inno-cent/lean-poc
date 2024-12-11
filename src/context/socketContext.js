@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { useNavigation } from '@react-navigation/native';
 
-const SOCKET_URL = 'http://10.0.2.2:8000/';
+const SOCKET_URL = 'http://3.86.186.237/';
 
 const SocketContext = createContext();
 

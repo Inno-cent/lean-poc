@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,9 +12,26 @@ import {
 import Entypo from 'react-native-vector-icons/Entypo';
 import NavigationTab from '../components/navigation-tab';
 import RecentCallsCard from '../components/callCard';
+import CallService from '../services/callLogs';
 
 const Call = () => {
+  const [logs, setLogs] = useState([]);
+  const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('call');
+
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const data = await CallService.getCallLogs(0, 15);
+        setLogs(data);
+        console.log('callll llogggsss', data);
+      } catch (err) {
+        setError('Failed to fetch call logs');
+      }
+    };
+
+    fetchLogs();
+  }, []);
 
   const recentCallsData: any[] = [
     {
@@ -81,6 +98,8 @@ const Call = () => {
             <Text style={styles.headerText}>Call logs</Text>
             <Entypo name="dots-three-vertical" size={24} color="#415A77" />
           </View>
+
+          {error && <Text style={styles.emptyStateSubtext}>{error}</Text>}
 
           {/* Conditional rendering */}
           {recentCallsData.length === 0 ? (

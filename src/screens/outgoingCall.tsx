@@ -12,10 +12,11 @@ const OutgoingCallScreen = ({route}) => {
   useEffect(() => {
     // Update call status to "Ringing" when 'call-received' event is emitted
     const handleCallReceived = data => {
-      setCallStatus('Ringing');
+      setCallStatus('Ringing...');
     };
 
     if (socket) {
+      console.log("call-recieved",handleCallReceived)
       socket.on('call-received', handleCallReceived);
     }
 
