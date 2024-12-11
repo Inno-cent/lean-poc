@@ -11,7 +11,7 @@ const OutgoingCallScreen = ({route}) => {
 
   useEffect(() => {
     // Update call status to "Ringing" when 'call-received' event is emitted
-    const handleCallReceived = data => {
+    const handleCallReceived = (_data: any) => {
       setCallStatus('Ringing...');
     };
 
