@@ -147,7 +147,7 @@ const SignupScreen = ({navigation}) => {
           </View>
 
 
-          <View style={styles.inputGroup}>
+          {/* <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
             <TextInput
               style={styles.input}
@@ -169,7 +169,7 @@ const SignupScreen = ({navigation}) => {
               placeholderTextColor="#1B263BE5"
               onChangeText={setConfirmPassword}
             />
-          </View>
+          </View> */}
 
           <View style={styles.bottomTextContainer}>
             <TouchableOpacity>
