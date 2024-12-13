@@ -1,16 +1,11 @@
 // PhoneInput.js
 import React, { useState } from 'react';
-import { View, Text, Picker, TextInput, StyleSheet } from 'react-native';
-
-const countryCodes = [
-  { name: 'United States', code: '+1' },
-  { name: 'India', code: '+91' },
-  { name: 'United Kingdom', code: '+44' },
-  // Add other countries as needed
-];
+import { View, Text, TextInput, StyleSheet } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+import { countryCodes } from '../utils/countryCode';
 
 const PhoneInput = ({ label, placeholder, value, onChangeText }) => {
-  const [countryCode, setCountryCode] = useState('+1'); // Default country code
+  const [countryCode, setCountryCode] = useState('+234'); // Default country code
 
   return (
     <View style={styles.inputGroup}>
@@ -18,12 +13,12 @@ const PhoneInput = ({ label, placeholder, value, onChangeText }) => {
       <View style={styles.phoneInputWrapper}>
         <Picker
           selectedValue={countryCode}
-          onValueChange={itemValue => setCountryCode(itemValue)}
+          onValueChange={(itemValue: React.SetStateAction<string>) => setCountryCode(itemValue)}
           style={styles.countryCodeDropdown}>
           {countryCodes.map(country => (
             <Picker.Item
               key={country.code}
-              label={` (${country.code}) ${country.name}`} // Display country name and code in the dropdown
+              label={` (${country.code}) ${country.country}`} // Display country name and code in the dropdown
               value={country.code}
             />
           ))}
@@ -31,7 +26,7 @@ const PhoneInput = ({ label, placeholder, value, onChangeText }) => {
         <TextInput
           style={styles.phoneInput}
           placeholder={placeholder}
-          value={`${countryCode} ${value}`} // Show the selected country code followed by the number
+          value={` ${value}`} // Show the selected country code followed by the number
           placeholderTextColor="#1B263BE5"
           onChangeText={onChangeText}
         />
