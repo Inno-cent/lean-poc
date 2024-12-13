@@ -100,7 +100,7 @@ const SignupScreen = ({navigation}) => {
             onCountryCodeChange={setCountryCode}
           />
 
-<View style={styles.inputGroup}>
+          <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
             <View style={styles.passwordInputWrapper}>
               <TextInput
@@ -145,7 +145,6 @@ const SignupScreen = ({navigation}) => {
               </TouchableOpacity>
             </View>
           </View>
-
 
           {/* <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
@@ -278,9 +277,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#1B263B',
   },
-  
+
   eyeIcon: {
-    padding: 5,
+    position: 'absolute',
+    right: 10, // Position the icon inside the input field
   },
   messageBox: {
     padding: 10,
@@ -304,6 +304,7 @@ const styles = StyleSheet.create({
     color: '#1B263B',
   },
   input: {
+    flex: 1,
     height: 44,
     padding: 12,
     fontSize: 14,
