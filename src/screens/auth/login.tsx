@@ -12,15 +12,13 @@ import {useNavigation} from '@react-navigation/native';
 import {countryCodes} from '../../utils/countryCode';
 import {handleLogin, handleGoogleOAuth} from './auth';
 import {useSocket} from '../../context/socketContext';
+import PhoneInput from '../../components/phoneInput';
 import {Picker} from '@react-native-picker/picker';
-import PhoneInput from 'react-native-phone-number-input';
 
 const LoginScreen = () => {
-  const phoneInput = useRef(null);
   const [username, setUsername] = useState('');
   const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [countryCode, setCountryCode] = useState('+234');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState('');
@@ -63,44 +61,13 @@ const LoginScreen = () => {
           />
         </View>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Phone number</Text>
-          <View style={styles.phoneInputWrapper}>
-            <Picker
-              selectedValue={countryCode}
-              onValueChange={itemValue => setCountryCode(itemValue)}
-              style={styles.countryCodeDropdown}>
-              {countryCodes.map(country => (
-                <Picker.Item
-                  key={country.code}
-                  label={` (${country.code}) ${country.country}`} // Display country name and code in the dropdown
-                  value={country.code}
-                />
-              ))}
-            </Picker>
-            <TextInput
-              style={styles.phoneInput}
-              placeholder="7017215999"
-              value={`${number}`} // Show the selected country code followed by the number
-              placeholderTextColor="#1B263BE5"
-              onChangeText={setNumber}
-            />
-          </View>
-        </View>
+        <PhoneInput
+          label="Phone number"
+          placeholder="7017215999"
+          value={number}
+          onChangeText={setNumber}
+        />
 
-        {/* <PhoneInput
-          ref={phoneInput}
-          defaultValue={number}
-          defaultCode="NG" // Default to Nigeria
-          layout="first"
-          onChangeText={text => setNumber(text)}
-          onChangeFormattedText={formattedText => {
-            console.log('Formatted:', formattedText);
-          }}
-          withDarkTheme
-          withShadow
-          autoFocus
-        /> */}
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
           <TextInput
@@ -279,7 +246,7 @@ const styles = StyleSheet.create({
   },
   countryCodeDropdown: {
     flex: 0.4,
-    
+
     // height: 40,
   },
   phoneInput: {
