@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -9,16 +9,18 @@ import {
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import { countryCodes } from '../../utils/countrycode';
+import {countryCodes} from '../../utils/countryCode';
 import {handleLogin, handleGoogleOAuth} from './auth';
 import {useSocket} from '../../context/socketContext';
-import { Picker } from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
+import PhoneInput from 'react-native-phone-number-input';
 
 const LoginScreen = () => {
+  const phoneInput = useRef(null);
   const [username, setUsername] = useState('');
   const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [countryCode, setCountryCode] = useState("+234");
+  const [countryCode, setCountryCode] = useState('+234');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState('');
@@ -71,21 +73,34 @@ const LoginScreen = () => {
               {countryCodes.map(country => (
                 <Picker.Item
                   key={country.code}
-                  label={`${country.country} (${country.code})`}
+                  label={` (${country.code}) ${country.country}`} // Display country name and code in the dropdown
                   value={country.code}
                 />
               ))}
             </Picker>
             <TextInput
               style={styles.phoneInput}
-              placeholder=""
-              value={number}
+              placeholder="7017215999"
+              value={`${number}`} // Show the selected country code followed by the number
               placeholderTextColor="#1B263BE5"
               onChangeText={setNumber}
             />
           </View>
         </View>
 
+        {/* <PhoneInput
+          ref={phoneInput}
+          defaultValue={number}
+          defaultCode="NG" // Default to Nigeria
+          layout="first"
+          onChangeText={text => setNumber(text)}
+          onChangeFormattedText={formattedText => {
+            console.log('Formatted:', formattedText);
+          }}
+          withDarkTheme
+          withShadow
+          autoFocus
+        /> */}
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
           <TextInput
@@ -250,20 +265,28 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   phoneInputWrapper: {
+    height: 44,
+    padding: 12,
+    fontSize: 14,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+    backgroundColor: '#fff',
+    color: '#1B263BE5',
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#1B263B',
+    // borderBottomWidth: 1,
   },
   countryCodeDropdown: {
-    flex: 0.3, // Adjust width to fit country name
-    height: 40,
+    flex: 0.4,
+    // height: 40,
   },
   phoneInput: {
-    flex: 0.7,
-    height: 40,
-    paddingHorizontal: 10,
-    fontSize: 16,
+    flex: 0.6,
+    fontSize: 14,
+    color: '#1B263BE5',
+    // height: 40,
+    // paddingHorizontal: 10,
   },
   rememberText: {
     fontSize: 13,
