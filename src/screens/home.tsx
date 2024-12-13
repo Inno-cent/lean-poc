@@ -94,7 +94,7 @@ const HomePage = () => {
 
             <View style={styles.profileSection}>
               <Image
-                source={require('../assets/images/ll.png')
+                source={require('../assets/images/ll.png')}
                 style={styles.profilePicture}
               />
             </View>
