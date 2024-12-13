@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
 
   eyeIcon: {
     position: 'absolute',
-    right: 10, // Position the icon inside the input field
+    right: 10,
   },
   messageBox: {
     padding: 10,
