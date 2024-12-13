@@ -278,12 +278,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#1B263B',
   },
-  input: {
-    
-    height: 40,
-    fontSize: 16,
-    color: '#000',
-  },
+  
   eyeIcon: {
     padding: 5,
   },
