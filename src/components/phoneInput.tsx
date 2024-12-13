@@ -1,8 +1,7 @@
-// PhoneInput.js
-import React, {useState} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
-import {Picker} from '@react-native-picker/picker';
-import {countryCodes} from '../utils/countryCode';
+import React from 'react';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { countryCodes } from '../utils/countryCode';
 
 // Define the types for the props
 interface PhoneInputProps {
@@ -10,6 +9,8 @@ interface PhoneInputProps {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
+  countryCode: string;
+  onCountryCodeChange: (code: string) => void; // Function to update country code
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
@@ -17,18 +18,16 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   placeholder,
   value,
   onChangeText,
+  countryCode,
+  onCountryCodeChange,
 }) => {
-  const [countryCode, setCountryCode] = useState('+234');
-
   return (
     <View style={styles.inputGroup}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.phoneInputWrapper}>
         <Picker
           selectedValue={countryCode}
-          onValueChange={(itemValue: React.SetStateAction<string>) =>
-            setCountryCode(itemValue)
-          }
+          onValueChange={onCountryCodeChange} // Use the function passed from the parent to update the country code
           style={styles.countryCodeDropdown}>
           {countryCodes.map(country => (
             <Picker.Item
@@ -41,7 +40,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         <TextInput
           style={styles.phoneInput}
           placeholder={placeholder}
-          value={` ${value}`}
+          value={`${value}`}
           placeholderTextColor="#1B263BE5"
           onChangeText={onChangeText}
         />
@@ -60,7 +59,6 @@ const styles = StyleSheet.create({
   },
   phoneInputWrapper: {
     height: 44,
-    // padding: 12,
     fontSize: 14,
     borderColor: '#ccc',
     borderWidth: 1,
@@ -69,12 +67,9 @@ const styles = StyleSheet.create({
     color: '#1B263BE5',
     flexDirection: 'row',
     alignItems: 'center',
-    // borderBottomWidth: 1,
   },
   countryCodeDropdown: {
     flex: 0.4,
-
-    // height: 40,
   },
   phoneInput: {
     flex: 0.6,
@@ -82,8 +77,6 @@ const styles = StyleSheet.create({
     color: '#1B263BE5',
     borderLeftWidth: 0.5,
     borderRightColor: '#ccc',
-    // height: 40,
-    // paddingHorizontal: 10,
   },
 });
 

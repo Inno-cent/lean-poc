@@ -292,17 +292,18 @@ type NavigationFunction = {
 };
 
 export const handleSignup = async (
-  email: string,
+  countryCode: string,
+  phoneNumber: string,
+  username: string,
   password: string,
   confirmPassword: string,
-  username: string,
   displayMessage: DisplayMessageFunction,
   isPasswordStrong: (password: string) => boolean,
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
 ): Promise<void> => {
-  if (!email || !password || !confirmPassword || !username) {
+  if (!countryCode || !phoneNumber || !username || !password || !confirmPassword) {
     displayMessage('Please fill out all fields');
     return;
   }
@@ -330,8 +331,9 @@ export const handleSignup = async (
         accept: 'application/json',
       },
       body: JSON.stringify({
+        idc: countryCode, // Send country code (international dialing code)
+        phone_number: phoneNumber,
         username,
-        email,
         password,
         confirmPassword,
       }),
@@ -355,7 +357,8 @@ export const handleSignup = async (
 };
 
 export const handleLogin = async (
-  username: string,
+  countryCode: string,
+  phoneNumber: string,
   password: string,
   displayMessage: DisplayMessageFunction,
   setIsSuccess: SetSuccessFunction,
@@ -377,7 +380,8 @@ export const handleLogin = async (
         accept: 'application/json',
       },
       body: JSON.stringify({
-        username,
+        idc: countryCode,  // Pass the country code
+        phone_number: phoneNumber,
         password,
       }),
     });
@@ -524,3 +528,5 @@ export const handleGoogleOAuth = async (
     setLoading(false);
   }
 };
+
+

@@ -10,13 +10,15 @@ import {
   ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {handleSignup,handleGoogleSignup } from './auth';
+import PhoneInput from '../../components/phoneInput';
+import {handleSignup } from './auth';
 
 const SignupScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  const [countryCode, setCountryCode] = useState('+234');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -75,7 +77,7 @@ const SignupScreen = ({navigation}) => {
             />
           </View>
 
-          <View style={styles.inputGroup}>
+          {/* <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>
             <TextInput
               style={styles.input}
@@ -84,7 +86,16 @@ const SignupScreen = ({navigation}) => {
               placeholderTextColor="#1B263BE5"
               onChangeText={setEmail}
             />
-          </View>
+          </View> */}
+
+          <PhoneInput
+            label="Phone number"
+            placeholder="7017215999"
+            value={phoneNumber}
+            countryCode={countryCode}
+            onChangeText={setPhoneNumber}
+            onCountryCodeChange={setCountryCode} 
+          />
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
@@ -123,7 +134,8 @@ const SignupScreen = ({navigation}) => {
             style={[styles.formSubmitButton, loading && styles.disabledButton]} // Add disabled style
             onPress={() =>
               handleSignup(
-                email,
+                countryCode, 
+                phoneNumber,
                 password,
                 confirmPassword,
                 username,
@@ -151,7 +163,6 @@ const SignupScreen = ({navigation}) => {
 
           <TouchableOpacity
             style={styles.googleSignupWrapper}
-            
             disabled={loading}>
             <View style={styles.innerContainer}>
               <Image

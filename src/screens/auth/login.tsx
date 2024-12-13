@@ -9,15 +9,12 @@ import {
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {countryCodes} from '../../utils/countryCode';
 import {handleLogin, handleGoogleOAuth} from './auth';
 import {useSocket} from '../../context/socketContext';
 import PhoneInput from '../../components/phoneInput';
-import {Picker} from '@react-native-picker/picker';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
-  const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -61,12 +58,12 @@ const LoginScreen = () => {
           />
         </View>
 
-        <PhoneInput
+        {/* <PhoneInput
           label="Phone number"
           placeholder="7017215999"
           value={number}
           onChangeText={setNumber}
-        />
+        /> */}
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
