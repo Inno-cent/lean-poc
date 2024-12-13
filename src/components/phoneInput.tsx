@@ -1,11 +1,24 @@
 // PhoneInput.js
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import { countryCodes } from '../utils/countryCode';
+import {countryCodes} from '../utils/countryCode';
 
-const PhoneInput = ({ label, placeholder, value, onChangeText }) => {
-  const [countryCode, setCountryCode] = useState('+234'); // Default country code
+// Define the types for the props
+interface PhoneInputProps {
+  label: string;
+  placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
+}
+
+const PhoneInput: React.FC<PhoneInputProps> = ({
+  label,
+  placeholder,
+  value,
+  onChangeText,
+}) => {
+  const [countryCode, setCountryCode] = useState('+234');
 
   return (
     <View style={styles.inputGroup}>
@@ -13,12 +26,14 @@ const PhoneInput = ({ label, placeholder, value, onChangeText }) => {
       <View style={styles.phoneInputWrapper}>
         <Picker
           selectedValue={countryCode}
-          onValueChange={(itemValue: React.SetStateAction<string>) => setCountryCode(itemValue)}
+          onValueChange={(itemValue: React.SetStateAction<string>) =>
+            setCountryCode(itemValue)
+          }
           style={styles.countryCodeDropdown}>
           {countryCodes.map(country => (
             <Picker.Item
               key={country.code}
-              label={` (${country.code}) ${country.country}`} // Display country name and code in the dropdown
+              label={` (${country.code}) ${country.country}`}
               value={country.code}
             />
           ))}
@@ -26,7 +41,7 @@ const PhoneInput = ({ label, placeholder, value, onChangeText }) => {
         <TextInput
           style={styles.phoneInput}
           placeholder={placeholder}
-          value={` ${value}`} // Show the selected country code followed by the number
+          value={` ${value}`}
           placeholderTextColor="#1B263BE5"
           onChangeText={onChangeText}
         />
@@ -58,7 +73,7 @@ const styles = StyleSheet.create({
   },
   countryCodeDropdown: {
     flex: 0.4,
-    
+
     // height: 40,
   },
   phoneInput: {
