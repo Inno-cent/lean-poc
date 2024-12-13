@@ -271,6 +271,22 @@ const styles = StyleSheet.create({
   inputGroup: {
     marginBottom: 15,
   },
+
+  passwordInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#1B263B',
+  },
+  input: {
+    
+    height: 40,
+    fontSize: 16,
+    color: '#000',
+  },
+  eyeIcon: {
+    padding: 5,
+  },
   messageBox: {
     padding: 10,
     marginBottom: 10,
