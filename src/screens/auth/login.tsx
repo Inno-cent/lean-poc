@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
   },
   phoneInputWrapper: {
     height: 44,
-    padding: 12,
+    // padding: 12,
     fontSize: 14,
     borderColor: '#ccc',
     borderWidth: 1,
@@ -279,12 +279,15 @@ const styles = StyleSheet.create({
   },
   countryCodeDropdown: {
     flex: 0.4,
+    
     // height: 40,
   },
   phoneInput: {
     flex: 0.6,
     fontSize: 14,
     color: '#1B263BE5',
+    borderLeftWidth: 0.5,
+    borderRightColor: '#ccc',
     // height: 40,
     // paddingHorizontal: 10,
   },
