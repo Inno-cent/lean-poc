@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import { countryCodes } from '../../utils/countrycode';
 import {handleLogin, handleGoogleOAuth} from './auth';
 import {useSocket} from '../../context/socketContext';
 import { Picker } from '@react-native-picker/picker';
@@ -70,7 +71,7 @@ const LoginScreen = () => {
               {countryCodes.map(country => (
                 <Picker.Item
                   key={country.code}
-                  label={`${country.name} (${country.code})`}
+                  label={`${country.country} (${country.code})`}
                   value={country.code}
                 />
               ))}
