@@ -100,6 +100,53 @@ const SignupScreen = ({navigation}) => {
             onCountryCodeChange={setCountryCode}
           />
 
+<View style={styles.inputGroup}>
+            <Text style={styles.label}>Password</Text>
+            <View style={styles.passwordInputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="........"
+                secureTextEntry={!showPassword}
+                value={password}
+                placeholderTextColor="#1B263BE5"
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={styles.eyeIcon}>
+                <Icon
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={20}
+                  color="#1B263B"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Confirm Password</Text>
+            <View style={styles.passwordInputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="........"
+                secureTextEntry={!showConfirmPassword}
+                value={confirmPassword}
+                placeholderTextColor="#1B263BE5"
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                style={styles.eyeIcon}>
+                <Icon
+                  name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={20}
+                  color="#1B263B"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
             <TextInput
