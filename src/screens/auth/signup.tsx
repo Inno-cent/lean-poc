@@ -10,8 +10,9 @@ import {
   ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import PhoneInput from '../../components/phoneInput';
-import {handleSignup } from './auth';
+import {handleSignup} from './auth';
 
 const SignupScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -22,6 +23,8 @@ const SignupScreen = ({navigation}) => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Manage password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Manage confirm password visibility
 
   // const navigation = useNavigation();
 
@@ -94,7 +97,7 @@ const SignupScreen = ({navigation}) => {
             value={phoneNumber}
             countryCode={countryCode}
             onChangeText={setPhoneNumber}
-            onCountryCodeChange={setCountryCode} 
+            onCountryCodeChange={setCountryCode}
           />
 
           <View style={styles.inputGroup}>
@@ -134,7 +137,7 @@ const SignupScreen = ({navigation}) => {
             style={[styles.formSubmitButton, loading && styles.disabledButton]} // Add disabled style
             onPress={() =>
               handleSignup(
-                countryCode, 
+                countryCode,
                 phoneNumber,
                 password,
                 confirmPassword,
