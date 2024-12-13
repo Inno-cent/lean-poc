@@ -454,78 +454,72 @@ export const getUser = async (): Promise<any | null> => {
   }
 };
 
-// Google OAuth Signup Flow
-export const handleGoogleSignup = async (
+// Function to initiate Google OAuth redirect
+export const handleGoogleOAuthRedirect = async (
   redirectUrl: string,
-  displayMessage: DisplayMessageFunction,
-  setIsSuccess: SetSuccessFunction,
-  setLoading: SetLoadingFunction,
-  navigation: NavigationFunction,
+  displayMessage: (message: string) => void
 ): Promise<void> => {
-  setLoading(true);
   try {
-    const response = await fetch(
-      'http://3.86.186.237/v1/google/oauth/redirect',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          accept: 'application/json',
-        },
-        body: JSON.stringify({
-          redirect_url: 'http://localhost:8081/oauth/callback',
-        }),
-      },
-    );
-
-    const data = await response.json();
-    if (response.ok) {
-      window.location.href = data.url;
-    } else {
-      displayMessage(data.message || 'Failed to start Google OAuth process.');
-      setIsSuccess(false);
-    }
-  } catch (error) {
-    displayMessage('Network error. Please try again.');
-    setIsSuccess(false);
-  } finally {
-    setLoading(false);
-  }
-};
-
-// Handle the Google OAuth callback (called after Google OAuth redirects back)
-export const handleGoogleCallback = async (
-  oauthCode: string,
-  displayMessage: DisplayMessageFunction,
-  setIsSuccess: SetSuccessFunction,
-  setLoading: SetLoadingFunction,
-  navigation: NavigationFunction,
-): Promise<void> => {
-  setLoading(true);
-  try {
-    const response = await fetch('http://3.86.186.237/v1/google/oauth', {
+    const response = await fetch(`http://3.86.186.237/v1/google/oauth/redirect`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
       },
-      body: JSON.stringify({
-        code: oauthCode,
-      }),
+      body: JSON.stringify({ redirect_url: redirectUrl }),
     });
 
     const data = await response.json();
     if (response.ok) {
-      displayMessage('Google signup successful!');
-      setIsSuccess(true);
-      navigation.navigate('Home');
+      const { url } = data;
+      console.log('Redirect URL:', url);
+
+      // Redirect to the returned URL
+      window.open(url, '_blank');
     } else {
-      displayMessage(data.message || 'Google signup failed.');
-      setIsSuccess(false);
+      console.error(data);
+      displayMessage(data.message || 'Failed to initiate Google OAuth.');
     }
   } catch (error) {
+    console.error('Error during Google OAuth Redirect:', error);
     displayMessage('Network error. Please try again.');
-    setIsSuccess(false);
+  }
+};
+
+// Function to handle Google OAuth
+export const handleGoogleOAuth = async (
+  request: { token: string },
+  displayMessage: (message: string) => void,
+  setLoading: (loading: boolean) => void,
+  navigation: { navigate: (screen: string) => void }
+): Promise<void> => {
+  setLoading(true);
+  try {
+    const response = await fetch(`http://3.86.186.237/v1/google/oauth`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      const { token } = data;
+
+      // Store the session token securely
+      await storeToken(token);
+
+      displayMessage('Google OAuth successful!');
+      navigation.navigate('Home'); // Navigate to the home screen
+    } else {
+      console.error(data);
+      displayMessage(data.message || 'Failed to complete Google OAuth.');
+    }
+  } catch (error) {
+    console.error('Error during Google OAuth:', error);
+    displayMessage('Network error. Please try again.');
   } finally {
     setLoading(false);
   }

@@ -9,13 +9,15 @@ import {
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {handleLogin} from './auth';
+import {handleLogin, handleGoogleOAuth} from './auth';
 import {useSocket} from '../../context/socketContext';
-
+import { Picker } from '@react-native-picker/picker';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
+  const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [countryCode, setCountryCode] = useState("+234");
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState('');
@@ -48,15 +50,41 @@ const LoginScreen = () => {
         ) : null}
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Email</Text>
+          <Text style={styles.label}>Username</Text>
           <TextInput
             style={styles.input}
-            placeholder="PeachAlda@gmail.com"
+            placeholder="PeachAlda"
             value={username}
             placeholderTextColor="#1B263BE5"
             onChangeText={setUsername}
           />
         </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Phone number</Text>
+          <View style={styles.phoneInputWrapper}>
+            <Picker
+              selectedValue={countryCode}
+              onValueChange={itemValue => setCountryCode(itemValue)}
+              style={styles.countryCodeDropdown}>
+              {countryCodes.map(country => (
+                <Picker.Item
+                  key={country.code}
+                  label={`${country.name} (${country.code})`}
+                  value={country.code}
+                />
+              ))}
+            </Picker>
+            <TextInput
+              style={styles.phoneInput}
+              placeholder=""
+              value={number}
+              placeholderTextColor="#1B263BE5"
+              onChangeText={setNumber}
+            />
+          </View>
+        </View>
+
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
           <TextInput
@@ -75,7 +103,8 @@ const LoginScreen = () => {
             </TouchableOpacity>
             <Text style={styles.rememberText}>Remember me for 30 days</Text>
           </View>
-          <TouchableOpacity  onPress={() => navigation.navigate("ForgetPassword")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forget password?</Text>
           </TouchableOpacity>
         </View>
@@ -89,7 +118,7 @@ const LoginScreen = () => {
               setIsSuccess,
               setLoading,
               navigation,
-              connectSocket
+              connectSocket,
             )
           }
           disabled={loading}>
@@ -104,7 +133,11 @@ const LoginScreen = () => {
           <Text style={styles.dividerText}>OR</Text>
           <View style={styles.dividerLine}></View>
         </View>
-        <TouchableOpacity style={styles.googleSignupWrapper}>
+        <TouchableOpacity
+          style={styles.googleSignupWrapper}
+          onPress={() =>
+            handleGoogleOAuth(displayMessage, setLoading, navigation)
+          }>
           <View style={styles.innerContainer}>
             <Image
               source={require('../../assets/images/Google.png')}
@@ -128,10 +161,10 @@ const LoginScreen = () => {
           </Text>
         </View>
         <TouchableOpacity
-        style={styles.nextButton}
-        onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.nextButtonText}>Home</Text>
-      </TouchableOpacity>
+          style={styles.nextButton}
+          onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.nextButtonText}>Home</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -214,6 +247,22 @@ const styles = StyleSheet.create({
   },
   checkboxWrapper: {
     marginRight: 10,
+  },
+  phoneInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#1B263B',
+  },
+  countryCodeDropdown: {
+    flex: 0.3, // Adjust width to fit country name
+    height: 40,
+  },
+  phoneInput: {
+    flex: 0.7,
+    height: 40,
+    paddingHorizontal: 10,
+    fontSize: 16,
   },
   rememberText: {
     fontSize: 13,

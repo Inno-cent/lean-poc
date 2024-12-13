@@ -13,7 +13,6 @@ import NavigationTab from '../components/navigation-tab';
 import RecentCallsCard from '../components/callCard';
 import {useNavigation} from '@react-navigation/native';
 import {getUser} from './auth/auth';
-import {connectSocket, disconnectSocket} from '../services/socketService';
 
 // Define a type for the user object
 interface User {
@@ -432,3 +431,29 @@ const styles = StyleSheet.create({
 });
 
 export default HomePage;
+
+
+
+
+// import React, {useState} from 'react';
+// import {Text} from 'react-native';
+// import AgoraUIKit from 'agora-rn-uikit';
+
+// const App = () => {
+//   const [videoCall, setVideoCall] = useState(true);
+//   const connectionData = {
+//     appId: '4f3e2bbec8e64405a07bdea5e7cd6ee0',
+//     channel: 'test',
+//     token: '007eJxTYDhfe5ft6ZYJLI8P9k1eLrw1zEf57WmbFy97+bJOpKqHPXmmwGCSZpxqlJSUmmyRamZiYmCaaGCelJKaaJpqnpxilppqsJg1Kr0hkJHBqW8zAyMUgvgsDCWpxSUMDAAMKCHY'
+//   };
+//   const rtcCallbacks = {
+//     EndCall: () => setVideoCall(false),
+//   };
+//   return videoCall ? (
+//     <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
+//   ) : (
+//     <Text onPress={() => setVideoCall(true)}>Start Call</Text>
+//   );
+// };
+
+// export default App;
