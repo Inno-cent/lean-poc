@@ -11,10 +11,12 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {handleSignup,handleGoogleSignup } from './auth';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const SignupScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  const [idc, setIdc] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -75,15 +77,29 @@ const SignupScreen = ({navigation}) => {
             />
           </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="peachalda@gmail.com"
-              value={email}
-              placeholderTextColor="#1B263BE5"
-              onChangeText={setEmail}
-            />
+          <View style={styles.phoneWrapper}>
+            <Text style={styles.label}>Phone Number</Text>
+            <View style={styles.specialInput}>
+              <View style={styles.inputWrapper1}>
+                <TextInput
+                  placeholder="+234"
+                  placeholderTextColor="#1B263BE5"
+                  style={styles.input}
+                  value={idc}
+                  onChangeText={setIdc}
+                />
+              </View>
+
+            <View style={styles.inputWrapper2}>
+              <TextInput
+                placeholder="Phone"
+                placeholderTextColor="#1B263BE5"
+                style={styles.input}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+              />
+              </View>
+            </View>
           </View>
 
           <View style={styles.inputGroup}>
@@ -123,7 +139,8 @@ const SignupScreen = ({navigation}) => {
             style={[styles.formSubmitButton, loading && styles.disabledButton]} // Add disabled style
             onPress={() =>
               handleSignup(
-                email,
+                idc,
+                phoneNumber,
                 password,
                 confirmPassword,
                 username,
@@ -144,14 +161,14 @@ const SignupScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <View style={styles.divider}>
-            <View style={styles.dividerLine}></View>
+            <View style={styles.dividerLine} />
             <Text style={styles.dividerText}>OR</Text>
-            <View style={styles.dividerLine}></View>
+            <View style={styles.dividerLine} />
           </View>
 
           <TouchableOpacity
             style={styles.googleSignupWrapper}
-            
+
             disabled={loading}>
             <View style={styles.innerContainer}>
               <Image
@@ -209,6 +226,26 @@ const styles = StyleSheet.create({
   },
   inputGroup: {
     marginBottom: 15,
+  },
+  phoneWrapper: {
+    width: '100%',
+  },
+  inputInnerWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  inputWrapper1: {
+    width: '25%',
+    marginBottom: 20,
+  },
+  inputWrapper2: {
+    width: '75%',
+    marginBottom: 20,
+  },
+  specialInput: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: '5%',
   },
   messageBox: {
     padding: 10,

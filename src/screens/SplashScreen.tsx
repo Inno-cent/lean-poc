@@ -17,12 +17,12 @@ export default function SplashScreen() {
         connectSocket(user._id);
         navigation.navigate('Home');
       } else {
-        // navigation.navigate('Login');
-        navigation.navigate('Home');
+        navigation.navigate('Login');
+        // navigation.navigate('Home');
       }
     } catch (error) {
       console.error('Error during initialization:', error);
-      navigation.navigate('Login');
+      // navigation.navigate('Login');
     }
   };
 

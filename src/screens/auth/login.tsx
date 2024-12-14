@@ -14,7 +14,8 @@ import {useSocket} from '../../context/socketContext';
 
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState('');
+  const [idc, setIdc] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -47,16 +48,30 @@ const LoginScreen = () => {
           </View>
         ) : null}
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="PeachAlda@gmail.com"
-            value={username}
-            placeholderTextColor="#1B263BE5"
-            onChangeText={setUsername}
-          />
-        </View>
+        <View style={styles.phoneWrapper}>
+            <Text style={styles.label}>Phone Number</Text>
+            <View style={styles.specialInput}>
+              <View style={styles.inputWrapper1}>
+                <TextInput
+                  placeholder="+234"
+                  placeholderTextColor="#1B263BE5"
+                  style={styles.input}
+                  value={idc}
+                  onChangeText={setIdc}
+                />
+              </View>
+
+            <View style={styles.inputWrapper2}>
+              <TextInput
+                placeholder="Phone"
+                placeholderTextColor="#1B263BE5"
+                style={styles.input}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+              />
+              </View>
+            </View>
+          </View>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
           <TextInput
@@ -75,7 +90,7 @@ const LoginScreen = () => {
             </TouchableOpacity>
             <Text style={styles.rememberText}>Remember me for 30 days</Text>
           </View>
-          <TouchableOpacity  onPress={() => navigation.navigate("ForgetPassword")}>
+          <TouchableOpacity  onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forget password?</Text>
           </TouchableOpacity>
         </View>
@@ -83,7 +98,8 @@ const LoginScreen = () => {
           style={styles.formSubmitButton}
           onPress={() =>
             handleLogin(
-              username,
+              idc,
+              phoneNumber,
               password,
               displayMessage,
               setIsSuccess,
@@ -100,9 +116,9 @@ const LoginScreen = () => {
           )}
         </TouchableOpacity>
         <View style={styles.divider}>
-          <View style={styles.dividerLine}></View>
+          <View style={styles.dividerLine} />
           <Text style={styles.dividerText}>OR</Text>
-          <View style={styles.dividerLine}></View>
+          <View style={styles.dividerLine} />
         </View>
         <TouchableOpacity style={styles.googleSignupWrapper}>
           <View style={styles.innerContainer}>
@@ -167,6 +183,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     lineHeight: 27,
+  },
+    phoneWrapper: {
+    width: '100%',
+  },
+  inputInnerWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  inputWrapper1: {
+    width: '25%',
+    marginBottom: 20,
+  },
+  inputWrapper2: {
+    width: '75%',
+    marginBottom: 20,
+  },
+  specialInput: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: '5%',
   },
   inputGroup: {
     marginBottom: 15,

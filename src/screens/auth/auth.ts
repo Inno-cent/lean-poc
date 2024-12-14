@@ -256,6 +256,7 @@
 // };
 
 import * as Keychain from 'react-native-keychain';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSocket} from '../context/socketContext';
 
 // Store the token securely using Keychain
@@ -269,7 +270,7 @@ const storeToken = async (token: string): Promise<void> => {
 };
 
 // Retrieve the token securely from Keychain
-const getToken = async (): Promise<string | null> => {
+export const getToken = async (): Promise<string | null> => {
   try {
     const credentials = await Keychain.getGenericPassword();
     if (credentials) {
@@ -292,7 +293,8 @@ type NavigationFunction = {
 };
 
 export const handleSignup = async (
-  email: string,
+  idc: string,
+  phoneNumber: string,
   password: string,
   confirmPassword: string,
   username: string,
@@ -302,7 +304,7 @@ export const handleSignup = async (
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
 ): Promise<void> => {
-  if (!email || !password || !confirmPassword || !username) {
+  if (!idc || !phoneNumber || !password || !confirmPassword || !username) {
     displayMessage('Please fill out all fields');
     return;
   }
@@ -323,7 +325,7 @@ export const handleSignup = async (
 
   setLoading(true);
   try {
-    const response = await fetch('http://10.0.2.2:8000/v1/session/signup', {
+    const response = await fetch('http://3.86.186.237/v1/session/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -331,7 +333,8 @@ export const handleSignup = async (
       },
       body: JSON.stringify({
         username,
-        email,
+        idc,
+        phone_number: phoneNumber,
         password,
         confirmPassword,
       }),
@@ -355,29 +358,31 @@ export const handleSignup = async (
 };
 
 export const handleLogin = async (
-  username: string,
+  idc: string,
+  phoneNumber: string,
   password: string,
   displayMessage: DisplayMessageFunction,
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
-  connectSocket: (userId: string) => void 
+  connectSocket: (userId: string) => void
 ): Promise<void> => {
-  if (!username || !password) {
+  if (!idc || !phoneNumber || !password) {
     displayMessage('Please fill out both email and password');
     return;
   }
 
   setLoading(true);
   try {
-    const response = await fetch('http://10.0.2.2:8000/v1/session', {
+    const response = await fetch('http://3.86.186.237/v1/session/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
       },
       body: JSON.stringify({
-        username,
+        idc,
+        phone_number: phoneNumber,
         password,
       }),
     });
@@ -434,7 +439,8 @@ export const getUser = async (): Promise<any | null> => {
     }
 
     // Fetch user details from the backend
-    const response = await fetch('http://10.0.2.2:8000/v1/session', {
+    // const response = await fetch('http://10.0.2.2:8000/v1/session', {
+    const response = await fetch('http://3.86.186.237/v1/session/', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
