@@ -23,8 +23,8 @@ const SignupScreen = ({navigation}) => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // Manage password visibility
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Manage confirm password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // const navigation = useNavigation();
 
@@ -145,30 +145,6 @@ const SignupScreen = ({navigation}) => {
               </TouchableOpacity>
             </View>
           </View>
-
-          {/* <View style={styles.inputGroup}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="........"
-              secureTextEntry
-              value={password}
-              placeholderTextColor="#1B263BE5"
-              onChangeText={setPassword}
-            />
-          </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="........"
-              secureTextEntry
-              value={confirmPassword}
-              placeholderTextColor="#1B263BE5"
-              onChangeText={setConfirmPassword}
-            />
-          </View> */}
 
           <View style={styles.bottomTextContainer}>
             <TouchableOpacity>

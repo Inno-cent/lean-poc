@@ -273,7 +273,7 @@ const getToken = async (): Promise<string | null> => {
   try {
     const credentials = await Keychain.getGenericPassword();
     if (credentials) {
-      return credentials.password; 
+      return credentials.password;
     } else {
       throw new Error('No token found');
     }
@@ -303,17 +303,23 @@ export const handleSignup = async (
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
 ): Promise<void> => {
-  if (!countryCode || !phoneNumber || !username || !password || !confirmPassword) {
+  if (
+    !countryCode ||
+    !phoneNumber ||
+    !username ||
+    !password ||
+    !confirmPassword
+  ) {
     displayMessage('Please fill out all fields');
     return;
   }
+  console.log(countryCode, phoneNumber, username, password, confirmPassword);
 
-  if (password !== confirmPassword) {
-    setIsSuccess(false);
-    displayMessage('Passwords do not match');
-    return;
-  }
-
+  // if (password.trim() !== confirmPassword.trim()) {
+  //   setIsSuccess(false);
+  //   displayMessage('Passwords do not match');
+  //   return;
+  // }
   if (!isPasswordStrong(password)) {
     setIsSuccess(false);
     displayMessage(
@@ -331,7 +337,7 @@ export const handleSignup = async (
         accept: 'application/json',
       },
       body: JSON.stringify({
-        idc: countryCode, // Send country code (international dialing code)
+        idc: countryCode,
         phone_number: phoneNumber,
         username,
         password,
@@ -364,9 +370,9 @@ export const handleLogin = async (
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
-  connectSocket: (userId: string) => void 
+  connectSocket: (userId: string) => void,
 ): Promise<void> => {
-  if (!username || !password) {
+  if (!phoneNumber || !password) {
     displayMessage('Please fill out both email and password');
     return;
   }
@@ -380,7 +386,7 @@ export const handleLogin = async (
         accept: 'application/json',
       },
       body: JSON.stringify({
-        idc: countryCode,  // Pass the country code
+        idc: countryCode, // Pass the country code
         phone_number: phoneNumber,
         password,
       }),
@@ -402,7 +408,7 @@ export const handleLogin = async (
 
       if (userData && userData._id) {
         console.log('loginconnect', userData);
-        connectSocket(userData._id); 
+        connectSocket(userData._id);
         displayMessage('Login successful!');
         setIsSuccess(true);
         navigation.navigate('Home');
@@ -461,21 +467,24 @@ export const getUser = async (): Promise<any | null> => {
 // Function to initiate Google OAuth redirect
 export const handleGoogleOAuthRedirect = async (
   redirectUrl: string,
-  displayMessage: (message: string) => void
+  displayMessage: (message: string) => void,
 ): Promise<void> => {
   try {
-    const response = await fetch(`http://3.86.186.237/v1/google/oauth/redirect`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
+    const response = await fetch(
+      `http://3.86.186.237/v1/google/oauth/redirect`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: JSON.stringify({redirect_url: redirectUrl}),
       },
-      body: JSON.stringify({ redirect_url: redirectUrl }),
-    });
+    );
 
     const data = await response.json();
     if (response.ok) {
-      const { url } = data;
+      const {url} = data;
       console.log('Redirect URL:', url);
 
       // Redirect to the returned URL
@@ -492,10 +501,10 @@ export const handleGoogleOAuthRedirect = async (
 
 // Function to handle Google OAuth
 export const handleGoogleOAuth = async (
-  request: { token: string },
+  request: {token: string},
   displayMessage: (message: string) => void,
   setLoading: (loading: boolean) => void,
-  navigation: { navigate: (screen: string) => void }
+  navigation: {navigate: (screen: string) => void},
 ): Promise<void> => {
   setLoading(true);
   try {
@@ -510,7 +519,7 @@ export const handleGoogleOAuth = async (
 
     const data = await response.json();
     if (response.ok) {
-      const { token } = data;
+      const {token} = data;
 
       // Store the session token securely
       await storeToken(token);
@@ -528,5 +537,3 @@ export const handleGoogleOAuth = async (
     setLoading(false);
   }
 };
-
-
