@@ -47,7 +47,7 @@ const LoginScreen = () => {
           </View>
         ) : null}
 
-        <View style={styles.inputGroup}>
+        {/* <View style={styles.inputGroup}>
           <Text style={styles.label}>Username</Text>
           <TextInput
             style={styles.input}
@@ -56,7 +56,7 @@ const LoginScreen = () => {
             placeholderTextColor="#1B263BE5"
             onChangeText={setUsername}
           />
-        </View>
+        </View> */}
 
         {/* <PhoneInput
           label="Phone number"

@@ -161,9 +161,9 @@ const SignupScreen = ({navigation}) => {
               handleSignup(
                 countryCode,
                 phoneNumber,
+                username,
                 password,
                 confirmPassword,
-                username,
                 displayMessage,
                 isPasswordStrong,
                 setIsSuccess,
