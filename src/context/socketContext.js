@@ -13,6 +13,7 @@ export const SocketProvider = ({ children }) => {
   const [callerInfo, setCallerInfo] = useState(null);
   const [callDetails, setCallDetails] = useState(null);
   const [isInCall, setIsInCall] = useState(false);
+  const [callStatus, setCallStatus] = useState('Connecting...');
   const navigation = useNavigation();
 
    // Helper function to navigate to CallScreen only if not already in a call
@@ -24,7 +25,9 @@ export const SocketProvider = ({ children }) => {
     // }
   };
 
-  const connectSocket = userId => {
+  
+  const connectSocket = ({ dialingCode, phoneNumber }) => {
+    const userId = dialingCode + phoneNumber;
     if (!socket) {
       const newSocket = io(SOCKET_URL);
 
@@ -40,6 +43,7 @@ export const SocketProvider = ({ children }) => {
       // Navigate to IncomingCall screen when a call is received
       newSocket.on('call-received', (callData, callback) => {
         console.log('Incoming call received:', callData);
+        setCallStatus('Ringing...');
         setCallerInfo(callData);
         navigation.navigate('IncomingCall', { callerInfo: callData });
         callback({ status: true, message: 'Call Received' });
@@ -188,6 +192,7 @@ export const SocketProvider = ({ children }) => {
         connectSocket,
         rejectCall,
         endCall,
+        callStatus
       }}
     >
       {children}

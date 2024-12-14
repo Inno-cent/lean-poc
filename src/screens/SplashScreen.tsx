@@ -14,7 +14,10 @@ export default function SplashScreen() {
       const user = await getUser();
       if (user && user._id) {
         console.log('splashscreenconnect', user);
-        connectSocket(user._id);
+        connectSocket({
+          dialingCode: user.international_dialing_code,
+          phoneNumber: user.phone_number,
+        });
         navigation.navigate('Home');
       } else {
         // navigation.navigate('Login');

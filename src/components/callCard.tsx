@@ -25,8 +25,8 @@ const CallCard = ({
   const handleInitiateCall = () => {
     const callInitiateData = {
       call_type: 'Video',
-      caller_id: '6758fbe4ae9ec02f1952a261',
-      participants: ['6758fc34ae9ec02f1952a266'],
+      caller_id: '+2347017915991',
+      participants: ['+2347017915993'],
     };
     console.log('call clicked', callInitiateData);
     initiateCall(callInitiateData);

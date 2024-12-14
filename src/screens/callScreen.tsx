@@ -32,11 +32,11 @@ const CallScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} /> */}
-      <Text>{connectionData.appId}</Text>
+      <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
+      {/* <Text>{connectionData.appId}</Text>
       <Text>{connectionData.channel}</Text>
       <Text>{connectionData.token}</Text>
-      <Text>{connectionData.uid}</Text>
+      <Text>{connectionData.uid}</Text> */}
 
     </View>
   );

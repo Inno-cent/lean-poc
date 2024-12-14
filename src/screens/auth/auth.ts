@@ -293,15 +293,15 @@ type NavigationFunction = {
 };
 export const handleSignup = async (
   countryCode: string,
-    phoneNumber: string,
-    username: string,
-    password: string,
-    confirmPassword: string,
-    displayMessage: DisplayMessageFunction,
-    isPasswordStrong: (password: string) => boolean,
-    setIsSuccess: SetSuccessFunction,
-    setLoading: SetLoadingFunction,
-    navigation: NavigationFunction,
+  phoneNumber: string,
+  username: string,
+  password: string,
+  confirmPassword: string,
+  displayMessage: DisplayMessageFunction,
+  isPasswordStrong: (password: string) => boolean,
+  setIsSuccess: SetSuccessFunction,
+  setLoading: SetLoadingFunction,
+  navigation: NavigationFunction,
 ) => {
   if (
     !countryCode ||
@@ -314,7 +314,13 @@ export const handleSignup = async (
     return;
   }
 
-  console.log('Before validation:', { countryCode, phoneNumber, username, password, confirmPassword });
+  console.log('Before validation:', {
+    countryCode,
+    phoneNumber,
+    username,
+    password,
+    confirmPassword,
+  });
 
   if (password.trim() !== confirmPassword.trim()) {
     setIsSuccess(false);
@@ -491,7 +497,10 @@ export const handleLogin = async (
 
       if (userData && userData._id) {
         console.log('loginconnect', userData);
-        connectSocket(userData._id);
+        connectSocket({
+          dialingCode: userData.international_dialing_code,
+          phoneNumber: userData.phone_number,
+        });
         displayMessage('Login successful!');
         setIsSuccess(true);
         navigation.navigate('Home');

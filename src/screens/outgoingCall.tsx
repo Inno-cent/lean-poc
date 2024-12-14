@@ -4,28 +4,35 @@ import {useSocket} from '../context/socketContext';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const OutgoingCallScreen = ({route}) => {
-  const {socket} = useSocket();
+  const { callStatus } = useSocket(); 
   const {participants} = route.params;
 
-  const [callStatus, setCallStatus] = useState('Connecting...');
+  // const [callStatus, setCallStatus] = useState('Connecting...');
 
-  useEffect(() => {
-    // Update call status to "Ringing" when 'call-received' event is emitted
-    const handleCallReceived = (_data: any) => {
-      setCallStatus('Ringing...');
-    };
+  // useEffect(() => {
+  //   // Handle the call-received event
+  //   const handleCallReceived = (_data: any) => {
+  //     console.log("Call received event data:", _data);
+  //     setCallStatus('Ringing...');
+  //   };
 
-    if (socket) {
-      console.log("call-recieved",handleCallReceived)
-      socket.on('call-received', handleCallReceived);
-    }
+  //   if (socket) {
+  //     console.log("Listening for call-received event...");
+  //     socket.on('call-received', handleCallReceived);
+  //   }
 
-    return () => {
-      if (socket) {
-        socket.off('call-received', handleCallReceived);
-      }
-    };
-  }, [socket]);
+  //   // Cleanup: Remove the event listener when the component unmounts
+  //   return () => {
+  //     if (socket) {
+  //       socket.off('call-received', handleCallReceived);
+  //     }
+  //   };
+  // }, [socket]);
+
+  // // Optional: Log the call status to check for changes
+  // useEffect(() => {
+  //   console.log("Current call status:", callStatus);
+  // }, [callStatus]);
 
   return (
     <View style={styles.container}>
