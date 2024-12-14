@@ -10,16 +10,20 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {handleLogin, handleGoogleOAuth} from './auth';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {useSocket} from '../../context/socketContext';
 import PhoneInput from '../../components/phoneInput';
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState('');
+  const [countryCode, setCountryCode] = useState('+234');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
   const {connectSocket} = useSocket();
+
   const navigation = useNavigation();
 
   const displayMessage = msg => {
@@ -46,6 +50,14 @@ const LoginScreen = () => {
             <Text style={styles.messageText}>{message}</Text>
           </View>
         ) : null}
+        <PhoneInput
+          label="Phone number"
+          placeholder="7017215999"
+          value={phoneNumber}
+          countryCode={countryCode}
+          onChangeText={setPhoneNumber}
+          onCountryCodeChange={setCountryCode}
+        />
 
         {/* <View style={styles.inputGroup}>
           <Text style={styles.label}>Username</Text>
@@ -58,23 +70,27 @@ const LoginScreen = () => {
           />
         </View> */}
 
-        {/* <PhoneInput
-          label="Phone number"
-          placeholder="7017215999"
-          value={number}
-          onChangeText={setNumber}
-        /> */}
-
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="........"
-            secureTextEntry
-            value={password}
-            placeholderTextColor="#1B263BE5"
-            onChangeText={setPassword}
-          />
+          <View style={styles.passwordInputWrapper}>
+            <TextInput
+              style={styles.input}
+              placeholder="........"
+              secureTextEntry={!showPassword}
+              value={password}
+              placeholderTextColor="#1B263BE5"
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity
+              onPress={() => setShowPassword(!showPassword)}
+              style={styles.eyeIcon}>
+              <Icon
+                name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                size={20}
+                color="#1B263B"
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.bottomTextContainer}>
           <View style={styles.rememberTextInner}>
@@ -92,7 +108,8 @@ const LoginScreen = () => {
           style={styles.formSubmitButton}
           onPress={() =>
             handleLogin(
-              username,
+              countryCode,
+              phoneNumber,
               password,
               displayMessage,
               setIsSuccess,
@@ -173,6 +190,18 @@ const styles = StyleSheet.create({
     color: '#1b263b',
     textAlign: 'center',
   },
+  
+  passwordInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#1B263B',
+  },
+
+  eyeIcon: {
+    position: 'absolute',
+    right: 10,
+  },
   subText: {
     fontSize: 18,
     fontWeight: '400',
@@ -206,6 +235,7 @@ const styles = StyleSheet.create({
     color: '#1B263B',
   },
   input: {
+    flex: 1,
     height: 44,
     padding: 12,
     fontSize: 14,

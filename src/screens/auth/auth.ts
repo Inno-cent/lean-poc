@@ -292,16 +292,16 @@ type NavigationFunction = {
   navigate: (screen: string) => void;
 };
 export const handleSignup = async (
-  countryCode,
-  phoneNumber,
-  username,
-  password,
-  confirmPassword,
-  displayMessage,
-  isPasswordStrong,
-  setIsSuccess,
-  setLoading,
-  navigation,
+  countryCode: string,
+    phoneNumber: string,
+    username: string,
+    password: string,
+    confirmPassword: string,
+    displayMessage: DisplayMessageFunction,
+    isPasswordStrong: (password: string) => boolean,
+    setIsSuccess: SetSuccessFunction,
+    setLoading: SetLoadingFunction,
+    navigation: NavigationFunction,
 ) => {
   if (
     !countryCode ||
@@ -456,7 +456,7 @@ export const handleLogin = async (
   connectSocket: (userId: string) => void,
 ): Promise<void> => {
   if (!phoneNumber || !password) {
-    displayMessage('Please fill out both email and password');
+    displayMessage('Please fill out both Phone number and password');
     return;
   }
 
