@@ -256,6 +256,7 @@
 // };
 
 import * as Keychain from 'react-native-keychain';
+import { API_BASE_URL } from '@env';
 import {useSocket} from '../context/socketContext';
 
 // Store the token securely using Keychain
@@ -320,6 +321,10 @@ export const handleSignup = async (
   //   displayMessage('Passwords do not match');
   //   return;
   // }
+
+  if (password != confirmPassword){
+    console.log("<><><><><>unPassed")
+  }
   if (!isPasswordStrong(password)) {
     setIsSuccess(false);
     displayMessage(
@@ -330,7 +335,7 @@ export const handleSignup = async (
 
   setLoading(true);
   try {
-    const response = await fetch('http://3.86.186.237/v1/session/signup', {
+    const response = await fetch(`${API_BASE_URL}/v1/session/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -250,8 +250,8 @@ const styles = StyleSheet.create({
   passwordInputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#1B263B',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#1B263B',
   },
 
   eyeIcon: {
