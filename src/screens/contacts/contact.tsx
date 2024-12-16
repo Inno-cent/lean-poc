@@ -11,7 +11,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
   TouchableWithoutFeedback,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -19,7 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import NavigationTab from '../../components/navigation-tab';
 import ContactCard from '../../components/contactCard';
 import { useNavigation } from '@react-navigation/native';
-import useContacts from './api';
+import { useContacts, deleteContact } from './api';
 import ConfirmationModal from './ConfirmationModal';
 
 interface Contact {
@@ -34,14 +33,28 @@ interface Contact {
 const Contact = () => {
   const [activeTab, setActiveTab] = useState('contact');
   const [searchQuery, setSearchQuery] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
-  const { contacts, loading, error } = useContacts() as { contacts: Contact[], loading: boolean, error: any };
+  const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [contactIdToDelete, setContactIdToDelete] = useState<string | null>(null);
+  const [tickContacts, setTickContacts] = useState<string[]>([]);
 
-
+  const { contacts, error } = useContacts() as { contacts: Contact[], loading: boolean, error: any };
 
   const navigation = useNavigation();
+
+  const displayMessage = (msg: string) => {
+    setMessage(msg);
+    // Automatically clear the message after 5 seconds
+    setTimeout(() => {
+      setMessage('');
+    }, 5000);
+  };
+
+
 
   // const contacts = [
   //   {
@@ -123,20 +136,31 @@ const Contact = () => {
         return [...prevSelected, contact];
       }
     });
+      setTickContacts(prevTick => {
+      if (prevTick.includes(contact._id)) {
+        return prevTick.filter(id => id !== contact._id);
+      } else {
+        return [...prevTick, contact._id];
+      }
+    });
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
-      setModalVisible(true);
+  const handleDelete = (contactId: string) => {
+     setContactIdToDelete(contactId);
+     setModalVisible(true);
   };
 
-  const handleCancelDelete = () => {
+  const confirmDelete = () => {
+    if (contactIdToDelete) {
+      deleteContact(contactIdToDelete, displayMessage, setLoading, setIsSuccess, navigation);
+      setSelectedContacts([]);
+      setModalVisible(false);
+    }
+ };
+
+  const cancelDelete = () => {
     setModalVisible(false);
-    setSelectedContacts([]);
-  };
-    const handleConfirm = () => {
-    Alert.alert('Contact deleted successfully!');
-    setModalVisible(false);
+    setContactIdToDelete(null);
   };
 
   const handleEdit = () => {
@@ -148,6 +172,7 @@ const Contact = () => {
 
   const handleTouchOutside = () => {
     setSelectedContacts([]);
+    setTickContacts([]);
   };
 
   //   const handleToggleStarred = (contact: Contact) => {
@@ -179,8 +204,11 @@ const Contact = () => {
                     <TouchableOpacity onPress={handleEdit}>
                       <Icon name="edit" size={24} color="#415A77" style={styles.headerIcon} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleDelete}>
+                    <TouchableOpacity onPress={() => handleDelete(selectedContacts[0]._id)}>
                       <Icon name="trash" size={24} color="#415A77" style={styles.headerIcon} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Entypo name="dots-three-vertical" size={24} color="#415A77" />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -284,7 +312,8 @@ const Contact = () => {
                   phone_number={contact.phone_number}
                   profileImage={contact.profileImage}
                   isSelected={expandedCardIndex === index}
-                  onExpand={() => handleToggleExpand(index)} // Pass toggle function
+                  isTick={tickContacts.includes(contact._id)}
+                  onExpand={() => handleToggleExpand(index)}
                   onLongPress={() => handleLongPress(contact)}
                 />
               ))}
@@ -297,8 +326,8 @@ const Contact = () => {
       </View>
       <ConfirmationModal
         visible={modalVisible}
-        onClose={handleCancelDelete}
-        onConfirm={handleConfirm}
+        onClose={cancelDelete}
+        onConfirm={confirmDelete}
       />
    </SafeAreaView>
   </TouchableWithoutFeedback>

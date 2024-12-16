@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 interface ContactCardProps {
@@ -12,6 +14,7 @@ interface ContactCardProps {
   international_dialing_code: string;
   profileImage: string;
   isSelected: boolean;
+  isTick: boolean;
   onExpand: () => void;
   onLongPress: () => void;
 }
@@ -24,6 +27,7 @@ const ContactCard: React.FC<ContactCardProps> = ({
   international_dialing_code,
   profileImage,
   isSelected,
+  isTick,
   onExpand,
   onLongPress,
 }) => {
@@ -64,6 +68,9 @@ const ContactCard: React.FC<ContactCardProps> = ({
             <Text style={styles.name}>{first_name} {last_name}</Text>
             <Text style={styles.phoneNumber}>{international_dialing_code}{phone_number}</Text>
           </View>
+          {isTick && (
+            <Ionicons name="checkmark-sharp" size={24} color="#415A77" style={styles.tickIcon}/>
+          )}
         </View>
       </TouchableOpacity>
 
@@ -91,15 +98,12 @@ const styles = StyleSheet.create({
   expandedBackground: {
     backgroundColor: '#778DA980', // Expanded background color covering profile and icons
     borderRadius: 50,
-    // paddingHorizontal: 10,
-    // paddingVertical: 5,
     marginRight: 15,
   },
   profileImage: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    // marginRight: 5,
   },
   expandedImage: {
     width: 50,
@@ -108,7 +112,6 @@ const styles = StyleSheet.create({
 
   iconsContainer: {
     flexDirection: 'row',
-    // marginLeft: 3,
   },
   iconButton: {
     backgroundColor: '#1B263B',
@@ -129,6 +132,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#778DA9',
     marginTop: 4,
+  },
+  tickIcon: {
+    marginLeft: 'auto',
   },
   borderLine: {
     height: 1,

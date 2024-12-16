@@ -143,59 +143,48 @@ export const updateContact = async (
 };
 
 export const deleteContact = async (
-  contactId: string,
-  idc: string,
-  phoneNumber: string,
-  lastName: string,
-  firstName: string,
+  contactIdToDelete: string,
   displayMessage: DisplayMessageFunction,
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
 ): Promise<void> => {
-  if (!idc || !phoneNumber || !lastName || !firstName) {
-    displayMessage('Please fill out all fields');
-    return;
-  }
 
   setLoading(true);
   try {
     const token = await getToken();
-    const response = await fetch(`http://3.86.186.237/v1/contact/${contactId}`, {
-      method: 'PUT',
+    const response = await fetch('http://3.86.186.237/v1/contact/', {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
         accept: 'application/json',
       },
       body: JSON.stringify({
-        first_name: firstName,
-        last_name: lastName,
-        idc,
-        phone_number: phoneNumber,
+        ids: contactIdToDelete,
       }),
     });
 
     const data = await response.json();
-    console.log(data);
+    console.log("data", data);
     if (response.ok) {
-      displayMessage('Contact updated successful!');
+      displayMessage('Contact deleted successful!');
       setIsSuccess(true);
       navigation.navigate('Contact');
     } else {
-      displayMessage(data.message || 'Failed to update contact');
+      displayMessage(data.message || 'Failed to delete contact');
       setIsSuccess(false);
     }
   } catch (error) {
     console.error('Error updating contact:', error);
-    displayMessage('An error occurred while updating the contact');
+    displayMessage('An error occurred while delecting the contact');
     setIsSuccess(false);
   } finally {
     setLoading(false);
   }
 };
 
-const useContacts = () => {
+export const useContacts = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
