@@ -14,11 +14,19 @@ export default function SplashScreen() {
       const user = await getUser();
       if (user && user._id) {
         console.log('splashscreenconnect', user);
-        connectSocket(user._id);
+        connectSocket({
+          dialingCode: user.international_dialing_code,
+          phoneNumber: user.phone_number,
+        });
         navigation.navigate('Home');
       } else {
+<<<<<<< HEAD
         navigation.navigate('Login');
         // navigation.navigate('Home');
+=======
+        // navigation.navigate('Login');
+        navigation.navigate('Login');
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
       }
     } catch (error) {
       console.error('Error during initialization:', error);

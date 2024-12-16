@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+<<<<<<< HEAD
 import {handleSignup,handleGoogleSignup } from './auth';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -17,11 +18,23 @@ const SignupScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [idc, setIdc] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+=======
+import Icon from 'react-native-vector-icons/Ionicons';
+import PhoneInput from '../../components/phoneInput';
+import {handleSignup} from './auth';
+
+const SignupScreen = ({navigation}) => {
+  const [username, setUsername] = useState('');
+  const [countryCode, setCountryCode] = useState('+234');
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // const navigation = useNavigation();
 
@@ -77,6 +90,7 @@ const SignupScreen = ({navigation}) => {
             />
           </View>
 
+<<<<<<< HEAD
           <View style={styles.phoneWrapper}>
             <Text style={styles.label}>Phone Number</Text>
             <View style={styles.specialInput}>
@@ -101,29 +115,72 @@ const SignupScreen = ({navigation}) => {
               </View>
             </View>
           </View>
+=======
+          {/* <View style={styles.inputGroup}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="peachalda@gmail.com"
+              value={email}
+              placeholderTextColor="#1B263BE5"
+              onChangeText={setEmail}
+            />
+          </View> */}
+
+          <PhoneInput
+            label="Phone number"
+            placeholder="7017215999"
+            value={phoneNumber}
+            countryCode={countryCode}
+            onChangeText={setPhoneNumber}
+            onCountryCodeChange={setCountryCode}
+          />
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="........"
-              secureTextEntry
-              value={password}
-              placeholderTextColor="#1B263BE5"
-              onChangeText={setPassword}
-            />
+            <View style={styles.passwordInputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="........"
+                secureTextEntry={!showPassword}
+                value={password}
+                placeholderTextColor="#1B263BE5"
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={styles.eyeIcon}>
+                <Icon
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={20}
+                  color="#1B263B"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="........"
-              secureTextEntry
-              value={confirmPassword}
-              placeholderTextColor="#1B263BE5"
-              onChangeText={setConfirmPassword}
-            />
+            <View style={styles.passwordInputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="........"
+                secureTextEntry={!showConfirmPassword}
+                value={confirmPassword}
+                placeholderTextColor="#1B263BE5"
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                style={styles.eyeIcon}>
+                <Icon
+                  name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={20}
+                  color="#1B263B"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.bottomTextContainer}>
@@ -139,11 +196,16 @@ const SignupScreen = ({navigation}) => {
             style={[styles.formSubmitButton, loading && styles.disabledButton]} // Add disabled style
             onPress={() =>
               handleSignup(
+<<<<<<< HEAD
                 idc,
                 phoneNumber,
+=======
+                countryCode,
+                phoneNumber,
+                username,
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
                 password,
                 confirmPassword,
-                username,
                 displayMessage,
                 isPasswordStrong,
                 setIsSuccess,
@@ -168,7 +230,10 @@ const SignupScreen = ({navigation}) => {
 
           <TouchableOpacity
             style={styles.googleSignupWrapper}
+<<<<<<< HEAD
 
+=======
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
             disabled={loading}>
             <View style={styles.innerContainer}>
               <Image
@@ -227,6 +292,7 @@ const styles = StyleSheet.create({
   inputGroup: {
     marginBottom: 15,
   },
+<<<<<<< HEAD
   phoneWrapper: {
     width: '100%',
   },
@@ -246,6 +312,19 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     gap: '5%',
+=======
+
+  passwordInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#1B263B',
+  },
+
+  eyeIcon: {
+    position: 'absolute',
+    right: 10,
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
   },
   messageBox: {
     padding: 10,
@@ -269,6 +348,7 @@ const styles = StyleSheet.create({
     color: '#1B263B',
   },
   input: {
+    flex: 1,
     height: 44,
     padding: 12,
     fontSize: 14,

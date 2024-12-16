@@ -55,7 +55,6 @@ const Contact = () => {
   };
 
 
-
   // const contacts = [
   //   {
   //     name: 'Aloye',

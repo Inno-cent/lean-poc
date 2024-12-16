@@ -26,6 +26,7 @@ import OutgoingCallScreen from './src/screens/outgoingCall';
 // import CallListener from './src/screens/callListener';
 import IncomingCall from './src/screens/incomingCall';
 import CallScreen from './src/screens/callScreen';
+import CallLogs from './src/screens/call'
 // import EditProfileScreen from './src/screens/edit-profile'
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
@@ -86,6 +87,8 @@ function AppNavigator() {
       <Stack.Screen name="CreateContact" component={CreateContactScreen} />
       <Stack.Screen name="UpdateContact" component={UpdateContactScreen} />
       <Stack.Screen name="Call" component={CallScreen} />
+      <Stack.Screen name="CallLogs" component={CallLogs} />
+
       <Stack.Screen name="SOS" component={SOS} />
 
       {/* Additional Screens */}

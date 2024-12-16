@@ -11,7 +11,7 @@
     "jsx": "react",
     "typeRoots": ["./node_modules/@types", "./@types"],
     "paths": {
-      "@env": ["/env.d.ts"]
+      "@env": ["env.d.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "App.tsx"],

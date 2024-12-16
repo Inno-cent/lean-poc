@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -9,18 +9,25 @@ import {
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {handleLogin} from './auth';
+import {handleLogin, handleGoogleOAuth} from './auth';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {useSocket} from '../../context/socketContext';
-
+import PhoneInput from '../../components/phoneInput';
 
 const LoginScreen = () => {
+<<<<<<< HEAD
   const [idc, setIdc] = useState('');
+=======
+  const [countryCode, setCountryCode] = useState('+234');
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
   const {connectSocket} = useSocket();
+
   const navigation = useNavigation();
 
   const displayMessage = msg => {
@@ -47,7 +54,16 @@ const LoginScreen = () => {
             <Text style={styles.messageText}>{message}</Text>
           </View>
         ) : null}
+        <PhoneInput
+          label="Phone number"
+          placeholder="7017215999"
+          value={phoneNumber}
+          countryCode={countryCode}
+          onChangeText={setPhoneNumber}
+          onCountryCodeChange={setCountryCode}
+        />
 
+<<<<<<< HEAD
         <View style={styles.phoneWrapper}>
             <Text style={styles.label}>Phone Number</Text>
             <View style={styles.specialInput}>
@@ -72,16 +88,40 @@ const LoginScreen = () => {
               </View>
             </View>
           </View>
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Password</Text>
+=======
+        {/* <View style={styles.inputGroup}>
+          <Text style={styles.label}>Username</Text>
           <TextInput
             style={styles.input}
-            placeholder="........"
-            secureTextEntry
-            value={password}
+            placeholder="PeachAlda"
+            value={username}
             placeholderTextColor="#1B263BE5"
-            onChangeText={setPassword}
+            onChangeText={setUsername}
           />
+        </View> */}
+
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Password</Text>
+          <View style={styles.passwordInputWrapper}>
+            <TextInput
+              style={styles.input}
+              placeholder="........"
+              secureTextEntry={!showPassword}
+              value={password}
+              placeholderTextColor="#1B263BE5"
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity
+              onPress={() => setShowPassword(!showPassword)}
+              style={styles.eyeIcon}>
+              <Icon
+                name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                size={20}
+                color="#1B263B"
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.bottomTextContainer}>
           <View style={styles.rememberTextInner}>
@@ -90,7 +130,12 @@ const LoginScreen = () => {
             </TouchableOpacity>
             <Text style={styles.rememberText}>Remember me for 30 days</Text>
           </View>
+<<<<<<< HEAD
           <TouchableOpacity  onPress={() => navigation.navigate('ForgetPassword')}>
+=======
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgetPassword')}>
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
             <Text style={styles.forgetPassword}>Forget password?</Text>
           </TouchableOpacity>
         </View>
@@ -98,14 +143,18 @@ const LoginScreen = () => {
           style={styles.formSubmitButton}
           onPress={() =>
             handleLogin(
+<<<<<<< HEAD
               idc,
+=======
+              countryCode,
+>>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
               phoneNumber,
               password,
               displayMessage,
               setIsSuccess,
               setLoading,
               navigation,
-              connectSocket
+              connectSocket,
             )
           }
           disabled={loading}>
@@ -120,7 +169,11 @@ const LoginScreen = () => {
           <Text style={styles.dividerText}>OR</Text>
           <View style={styles.dividerLine} />
         </View>
-        <TouchableOpacity style={styles.googleSignupWrapper}>
+        <TouchableOpacity
+          style={styles.googleSignupWrapper}
+          onPress={() =>
+            handleGoogleOAuth(displayMessage, setLoading, navigation)
+          }>
           <View style={styles.innerContainer}>
             <Image
               source={require('../../assets/images/Google.png')}
@@ -144,10 +197,10 @@ const LoginScreen = () => {
           </Text>
         </View>
         <TouchableOpacity
-        style={styles.nextButton}
-        onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.nextButtonText}>Home</Text>
-      </TouchableOpacity>
+          style={styles.nextButton}
+          onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.nextButtonText}>Home</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -175,6 +228,18 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1b263b',
     textAlign: 'center',
+  },
+  
+  passwordInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#1B263B',
+  },
+
+  eyeIcon: {
+    position: 'absolute',
+    right: 10,
   },
   subText: {
     fontSize: 18,
@@ -229,6 +294,7 @@ const styles = StyleSheet.create({
     color: '#1B263B',
   },
   input: {
+    flex: 1,
     height: 44,
     padding: 12,
     fontSize: 14,
@@ -250,6 +316,33 @@ const styles = StyleSheet.create({
   },
   checkboxWrapper: {
     marginRight: 10,
+  },
+  phoneInputWrapper: {
+    height: 44,
+    // padding: 12,
+    fontSize: 14,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+    backgroundColor: '#fff',
+    color: '#1B263BE5',
+    flexDirection: 'row',
+    alignItems: 'center',
+    // borderBottomWidth: 1,
+  },
+  countryCodeDropdown: {
+    flex: 0.4,
+
+    // height: 40,
+  },
+  phoneInput: {
+    flex: 0.6,
+    fontSize: 14,
+    color: '#1B263BE5',
+    borderLeftWidth: 0.5,
+    borderRightColor: '#ccc',
+    // height: 40,
+    // paddingHorizontal: 10,
   },
   rememberText: {
     fontSize: 13,

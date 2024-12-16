@@ -81,7 +81,7 @@ const ProfilePage = () => {
         // onPress={() => router.replace("/change-password")}
       >
         <View style={styles.listItemContent}>
-          <FontAwesome name="lock" size={24} color="#1B263B" />
+          <Icon name="lock" size={24} color="#1B263B" />
           <Text style={styles.listItemText}>Change Password</Text>
         </View>
         <Entypo name="chevron-right" size={24} color="#778DA9" />
