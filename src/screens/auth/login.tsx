@@ -159,7 +159,7 @@ const LoginScreen = () => {
         </View>
         <TouchableOpacity
           style={styles.nextButton}
-          onPress={() => navigation.navigate('Home')}>
+          onPress={() => navigation.navigate('CallScreen')}>
           <Text style={styles.nextButtonText}>Home</Text>
         </TouchableOpacity>
       </View>
