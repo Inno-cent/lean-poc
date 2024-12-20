@@ -15,11 +15,7 @@ import {useSocket} from '../../context/socketContext';
 import PhoneInput from '../../components/phoneInput';
 
 const LoginScreen = () => {
-<<<<<<< HEAD
-  const [idc, setIdc] = useState('');
-=======
   const [countryCode, setCountryCode] = useState('+234');
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -63,8 +59,7 @@ const LoginScreen = () => {
           onCountryCodeChange={setCountryCode}
         />
 
-<<<<<<< HEAD
-        <View style={styles.phoneWrapper}>
+        {/* <View style={styles.phoneWrapper}>
             <Text style={styles.label}>Phone Number</Text>
             <View style={styles.specialInput}>
               <View style={styles.inputWrapper1}>
@@ -77,7 +72,7 @@ const LoginScreen = () => {
                 />
               </View>
 
-            <View style={styles.inputWrapper2}>
+              <View style={styles.inputWrapper2}>
               <TextInput
                 placeholder="Phone"
                 placeholderTextColor="#1B263BE5"
@@ -87,20 +82,7 @@ const LoginScreen = () => {
               />
               </View>
             </View>
-          </View>
-=======
-        {/* <View style={styles.inputGroup}>
-          <Text style={styles.label}>Username</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="PeachAlda"
-            value={username}
-            placeholderTextColor="#1B263BE5"
-            onChangeText={setUsername}
-          />
-        </View> */}
-
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
+          </View> */}
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
           <View style={styles.passwordInputWrapper}>
@@ -130,12 +112,7 @@ const LoginScreen = () => {
             </TouchableOpacity>
             <Text style={styles.rememberText}>Remember me for 30 days</Text>
           </View>
-<<<<<<< HEAD
           <TouchableOpacity  onPress={() => navigation.navigate('ForgetPassword')}>
-=======
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ForgetPassword')}>
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
             <Text style={styles.forgetPassword}>Forget password?</Text>
           </TouchableOpacity>
         </View>
@@ -143,11 +120,7 @@ const LoginScreen = () => {
           style={styles.formSubmitButton}
           onPress={() =>
             handleLogin(
-<<<<<<< HEAD
-              idc,
-=======
               countryCode,
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
               phoneNumber,
               password,
               displayMessage,

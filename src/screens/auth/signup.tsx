@@ -10,15 +10,6 @@ import {
   ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-<<<<<<< HEAD
-import {handleSignup,handleGoogleSignup } from './auth';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-
-const SignupScreen = ({navigation}) => {
-  const [username, setUsername] = useState('');
-  const [idc, setIdc] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-=======
 import Icon from 'react-native-vector-icons/Ionicons';
 import PhoneInput from '../../components/phoneInput';
 import {handleSignup} from './auth';
@@ -26,7 +17,6 @@ import {handleSignup} from './auth';
 const SignupScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [countryCode, setCountryCode] = useState('+234');
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -90,32 +80,6 @@ const SignupScreen = ({navigation}) => {
             />
           </View>
 
-<<<<<<< HEAD
-          <View style={styles.phoneWrapper}>
-            <Text style={styles.label}>Phone Number</Text>
-            <View style={styles.specialInput}>
-              <View style={styles.inputWrapper1}>
-                <TextInput
-                  placeholder="+234"
-                  placeholderTextColor="#1B263BE5"
-                  style={styles.input}
-                  value={idc}
-                  onChangeText={setIdc}
-                />
-              </View>
-
-            <View style={styles.inputWrapper2}>
-              <TextInput
-                placeholder="Phone"
-                placeholderTextColor="#1B263BE5"
-                style={styles.input}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-              />
-              </View>
-            </View>
-          </View>
-=======
           {/* <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>
             <TextInput
@@ -135,7 +99,6 @@ const SignupScreen = ({navigation}) => {
             onChangeText={setPhoneNumber}
             onCountryCodeChange={setCountryCode}
           />
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
@@ -196,14 +159,9 @@ const SignupScreen = ({navigation}) => {
             style={[styles.formSubmitButton, loading && styles.disabledButton]} // Add disabled style
             onPress={() =>
               handleSignup(
-<<<<<<< HEAD
-                idc,
-                phoneNumber,
-=======
                 countryCode,
                 phoneNumber,
                 username,
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
                 password,
                 confirmPassword,
                 displayMessage,
@@ -230,10 +188,6 @@ const SignupScreen = ({navigation}) => {
 
           <TouchableOpacity
             style={styles.googleSignupWrapper}
-<<<<<<< HEAD
-
-=======
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
             disabled={loading}>
             <View style={styles.innerContainer}>
               <Image
@@ -292,27 +246,6 @@ const styles = StyleSheet.create({
   inputGroup: {
     marginBottom: 15,
   },
-<<<<<<< HEAD
-  phoneWrapper: {
-    width: '100%',
-  },
-  inputInnerWrapper: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  inputWrapper1: {
-    width: '25%',
-    marginBottom: 20,
-  },
-  inputWrapper2: {
-    width: '75%',
-    marginBottom: 20,
-  },
-  specialInput: {
-    width: '100%',
-    flexDirection: 'row',
-    gap: '5%',
-=======
 
   passwordInputWrapper: {
     flexDirection: 'row',
@@ -324,7 +257,6 @@ const styles = StyleSheet.create({
   eyeIcon: {
     position: 'absolute',
     right: 10,
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
   },
   messageBox: {
     padding: 10,

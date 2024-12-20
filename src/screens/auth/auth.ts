@@ -256,11 +256,7 @@
 // };
 
 import * as Keychain from 'react-native-keychain';
-<<<<<<< HEAD
-import AsyncStorage from '@react-native-async-storage/async-storage';
-=======
 import {API_BASE_URL} from '@env';
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
 import {useSocket} from '../context/socketContext';
 
 // Store the token securely using Keychain
@@ -296,14 +292,9 @@ type NavigationFunction = {
   navigate: (screen: string) => void;
 };
 export const handleSignup = async (
-<<<<<<< HEAD
-  idc: string,
-  phoneNumber: string,
-=======
   countryCode: string,
   phoneNumber: string,
   username: string,
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
   password: string,
   confirmPassword: string,
   displayMessage: DisplayMessageFunction,
@@ -311,10 +302,6 @@ export const handleSignup = async (
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
-<<<<<<< HEAD
-): Promise<void> => {
-  if (!idc || !phoneNumber || !password || !confirmPassword || !username) {
-=======
 ) => {
   if (
     !countryCode ||
@@ -323,7 +310,6 @@ export const handleSignup = async (
     !password ||
     !confirmPassword
   ) {
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
     displayMessage('Please fill out all fields');
     return;
   }
@@ -353,9 +339,6 @@ export const handleSignup = async (
   setLoading(true);
 
   try {
-<<<<<<< HEAD
-    const response = await fetch('http://3.86.186.237/v1/session/signup', {
-=======
     const payload = {
       idc: countryCode,
       phone_number: phoneNumber,
@@ -366,23 +349,12 @@ export const handleSignup = async (
     console.log('Payload before POST:', payload);
 
     const response = await fetch(`${API_BASE_URL}/v1/session/signup`, {
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
       },
-<<<<<<< HEAD
-      body: JSON.stringify({
-        username,
-        idc,
-        phone_number: phoneNumber,
-        password,
-        confirmPassword,
-      }),
-=======
       body: JSON.stringify(payload),
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
     });
 
     const data = await response.json();
@@ -480,49 +452,30 @@ export const handleSignup = async (
 // };
 
 export const handleLogin = async (
-<<<<<<< HEAD
-  idc: string,
-=======
   countryCode: string,
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
   phoneNumber: string,
   password: string,
   displayMessage: DisplayMessageFunction,
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
-<<<<<<< HEAD
-  connectSocket: (userId: string) => void
-): Promise<void> => {
-  if (!idc || !phoneNumber || !password) {
-    displayMessage('Please fill out both email and password');
-=======
   connectSocket: (userId: string) => void,
 ): Promise<void> => {
-  if (!phoneNumber || !password) {
+  if (!countryCode || !phoneNumber || !password) {
     displayMessage('Please fill out both Phone number and password');
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
     return;
   }
 
   setLoading(true);
   try {
-<<<<<<< HEAD
-    const response = await fetch('http://3.86.186.237/v1/session/', {
-=======
     const response = await fetch(`${API_BASE_URL}/v1/session`, {
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
       },
       body: JSON.stringify({
-<<<<<<< HEAD
-        idc,
-=======
         idc: countryCode, // Pass the country code
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
         phone_number: phoneNumber,
         password,
       }),
@@ -538,7 +491,7 @@ export const handleLogin = async (
 
       // Store token securely using Keychain
       await storeToken(token);
-
+      console.log('User was here');
       // Fetch user details after successful login
       const userData = await getUser();
 
@@ -557,6 +510,7 @@ export const handleLogin = async (
         setIsSuccess(false);
       }
     } else {
+      console.log('logged in failed');
       console.error(data);
       displayMessage(data.message || 'Login failed.');
       setIsSuccess(false);
@@ -583,12 +537,7 @@ export const getUser = async (): Promise<any | null> => {
     }
 
     // Fetch user details from the backend
-<<<<<<< HEAD
-    // const response = await fetch('http://10.0.2.2:8000/v1/session', {
-    const response = await fetch('http://3.86.186.237/v1/session/', {
-=======
-    const response = await fetch('http://3.86.186.237/v1/session', {
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
+    const response = await fetch(`${API_BASE_URL}/v1/session`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -615,7 +564,7 @@ export const handleGoogleOAuthRedirect = async (
 ): Promise<void> => {
   try {
     const response = await fetch(
-      `http://3.86.186.237/v1/google/oauth/redirect`,
+      `${API_BASE_URL}/v1/google/oauth/redirect`,
       {
         method: 'POST',
         headers: {
@@ -652,7 +601,7 @@ export const handleGoogleOAuth = async (
 ): Promise<void> => {
   setLoading(true);
   try {
-    const response = await fetch(`http://3.86.186.237/v1/google/oauth`, {
+    const response = await fetch(`${API_BASE_URL}/v1/google/oauth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

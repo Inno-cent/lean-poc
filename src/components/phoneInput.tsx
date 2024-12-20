@@ -28,12 +28,15 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         <Picker
           selectedValue={countryCode}
           onValueChange={onCountryCodeChange} // Use the function passed from the parent to update the country code
-          style={styles.countryCodeDropdown}>
+          style={styles.countryCodeDropdown}
+          itemStyle={styles.pickerItem}
+        >
           {countryCodes.map(country => (
             <Picker.Item
               key={country.code}
               label={` (${country.code}) ${country.country}`}
               value={country.code}
+              style={styles.pickerItem}
             />
           ))}
         </Picker>
@@ -56,9 +59,10 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 5,
+    color: '#1B263BE5',
   },
   phoneInputWrapper: {
-    height: 44,
+    height: 54,
     fontSize: 14,
     borderColor: '#ccc',
     borderWidth: 1,
@@ -70,6 +74,12 @@ const styles = StyleSheet.create({
   },
   countryCodeDropdown: {
     flex: 0.4,
+  },
+   pickerItem: {
+     color: '#1B263B',
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
+     borderWidth: 0.5,
   },
   phoneInput: {
     flex: 0.6,

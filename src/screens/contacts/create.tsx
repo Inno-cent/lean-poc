@@ -12,17 +12,21 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { createContact } from './api';
+import PhoneInput from '../../components/phoneInput';
 
 
-const CreateContact = () => {
+const CreateContact = ({route}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [countryCode, setCountryCode] = useState('+234');
   const [idc, setIdc] = useState('');
   const navigation = useNavigation();
+  const { setRefreshContacts } = route.params;
+
 
   const displayMessage = (msg: string) => {
     setMessage(msg);
@@ -83,43 +87,22 @@ const CreateContact = () => {
               onChangeText={setLastName}
             />
             </View>
-            <Text style={styles.label}>Phone Number</Text>
-            <View style={styles.inputWrapperFlex}>
-            <View style={[styles.inputWrapper, styles.specialInput]}>
-              <AntDesign
-                name="phone"
-                size={20}
-                color="#1B263B"
-                style={styles.icon}
-              />
-              <View style={styles.inputInnerWrapper}>
-                <TextInput
-                  placeholder="+234"
-                  placeholderTextColor="#1B263BE5"
-                  style={styles.inputWithIcon}
-                  value={idc}
-                  onChangeText={setIdc}
-                />
-              </View>
-            </View>
 
-            <View style={styles.inputWrapper}>
-              <TextInput
-                placeholder="Phone"
-                placeholderTextColor="#1B263BE5"
-                style={styles.inputWithIcon}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-              />
-            </View>
-          </View>
+            <PhoneInput
+              label="Phone number"
+              placeholder="7017215999"
+              value={phoneNumber}
+              countryCode={countryCode}
+              onChangeText={setPhoneNumber}
+              onCountryCodeChange={setCountryCode}
+            />
         </View>
       </ScrollView>
       <TouchableOpacity
             style={[styles.formSubmitButton, loading && styles.disabledButton]}
             onPress={() =>
               createContact(
-                idc,
+                countryCode,
                 phoneNumber,
                 lastName,
                 firstName,
@@ -127,6 +110,7 @@ const CreateContact = () => {
                 setIsSuccess,
                 setLoading,
                 navigation,
+                setRefreshContacts
               )
             }
             disabled={loading} // Disable the button when loading

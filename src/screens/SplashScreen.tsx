@@ -20,13 +20,8 @@ export default function SplashScreen() {
         });
         navigation.navigate('Home');
       } else {
-<<<<<<< HEAD
-        navigation.navigate('Login');
-        // navigation.navigate('Home');
-=======
         // navigation.navigate('Login');
         navigation.navigate('Login');
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
       }
     } catch (error) {
       console.error('Error during initialization:', error);

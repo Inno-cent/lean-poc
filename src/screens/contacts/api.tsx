@@ -1,6 +1,8 @@
 /* eslint-disable no-catch-shadow */
 import { useState, useEffect } from 'react';
 import { getToken } from '../auth/auth';
+import {API_BASE_URL} from '@env';
+
 
 // Define types for function parameters
 type DisplayMessageFunction = (message: string) => void;
@@ -18,7 +20,7 @@ export const fetchContacts = async () => {
         throw new Error('No token found');
         }
 
-        const response = await fetch('http://3.86.186.237/v1/contact/', {
+        const response = await fetch(`${API_BASE_URL}/v1/contact/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,7 +40,7 @@ export const fetchContacts = async () => {
 };
 
 export const createContact = async (
-  idc: string,
+  countryCode: string,
   phoneNumber: string,
   lastName: string,
   firstName: string,
@@ -46,8 +48,9 @@ export const createContact = async (
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
+  setRefreshContacts: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
-  if (!idc || !phoneNumber || !lastName || !firstName) {
+  if (!countryCode || !phoneNumber || !lastName || !firstName) {
     displayMessage('Please fill out all fields');
     return;
   }
@@ -55,7 +58,7 @@ export const createContact = async (
   setLoading(true);
   try {
     const token = await getToken();
-    const response = await fetch('http://3.86.186.237/v1/contact', {
+    const response = await fetch(`${API_BASE_URL}/v1/contact`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,17 +68,18 @@ export const createContact = async (
       body: JSON.stringify({
         first_name: firstName,
         last_name: lastName,
-        idc,
+        idc: countryCode,
         phone_number: phoneNumber,
       }),
     });
 
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     if (response.ok) {
       displayMessage('Contact Added successful!');
       setIsSuccess(true);
       navigation.navigate('Contact');
+      setRefreshContacts(prev => !prev);
     } else {
       displayMessage(data.message || 'Contact adding failed.');
       setIsSuccess(false);
@@ -91,7 +95,7 @@ export const createContact = async (
 
 export const updateContact = async (
   contactId: string,
-  idc: string,
+  countryCode: string,
   phoneNumber: string,
   lastName: string,
   firstName: string,
@@ -99,8 +103,9 @@ export const updateContact = async (
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
+  setRefreshContacts: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
-  if (!idc || !phoneNumber || !lastName || !firstName) {
+  if (!countryCode || !phoneNumber || !lastName || !firstName) {
     displayMessage('Please fill out all fields');
     return;
   }
@@ -108,7 +113,7 @@ export const updateContact = async (
   setLoading(true);
   try {
     const token = await getToken();
-    const response = await fetch(`http://3.86.186.237/v1/contact/${contactId}`, {
+    const response = await fetch(`${API_BASE_URL}/v1/contact/${contactId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -118,7 +123,7 @@ export const updateContact = async (
       body: JSON.stringify({
         first_name: firstName,
         last_name: lastName,
-        idc,
+        idc: countryCode,
         phone_number: phoneNumber,
       }),
     });
@@ -129,6 +134,7 @@ export const updateContact = async (
       displayMessage('Contact updated successful!');
       setIsSuccess(true);
       navigation.navigate('Contact');
+      setRefreshContacts(prev => !prev);
     } else {
       displayMessage(data.message || 'Failed to update contact');
       setIsSuccess(false);
@@ -143,17 +149,18 @@ export const updateContact = async (
 };
 
 export const deleteContact = async (
-  contactIdToDelete: string,
+  contactIdsToDelete: string[],
   displayMessage: DisplayMessageFunction,
   setIsSuccess: SetSuccessFunction,
-  setLoading: SetLoadingFunction,
+  // setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
+  setRefreshContacts: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
 
-  setLoading(true);
+  // setLoading(true);
   try {
     const token = await getToken();
-    const response = await fetch('http://3.86.186.237/v1/contact/', {
+    const response = await fetch(`${API_BASE_URL}/v1/contact/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -161,16 +168,17 @@ export const deleteContact = async (
         accept: 'application/json',
       },
       body: JSON.stringify({
-        ids: contactIdToDelete,
+        ids: contactIdsToDelete,
       }),
     });
 
     const data = await response.json();
-    console.log("data", data);
+    // console.log("data", data);
     if (response.ok) {
       displayMessage('Contact deleted successful!');
       setIsSuccess(true);
       navigation.navigate('Contact');
+      setRefreshContacts(prev => !prev);
     } else {
       displayMessage(data.message || 'Failed to delete contact');
       setIsSuccess(false);
@@ -180,11 +188,11 @@ export const deleteContact = async (
     displayMessage('An error occurred while delecting the contact');
     setIsSuccess(false);
   } finally {
-    setLoading(false);
+    // setLoading(false);
   }
 };
 
-export const useContacts = () => {
+export const useContacts = (refreshContacts: boolean) => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
@@ -203,7 +211,7 @@ export const useContacts = () => {
     };
 
     loadContacts();
-  }, []);
+  }, [refreshContacts]);
 
   return { contacts, loading, error };
 };

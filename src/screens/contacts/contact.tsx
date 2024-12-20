@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -39,10 +39,10 @@ const Contact = () => {
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [contactIdToDelete, setContactIdToDelete] = useState<string | null>(null);
+  const [contactIdsToDelete, setContactIdsToDelete] = useState<string[] | null>([]);
   const [tickContacts, setTickContacts] = useState<string[]>([]);
-
-  const { contacts, error } = useContacts() as { contacts: Contact[], loading: boolean, error: any };
+  const [refreshContacts, setRefreshContacts] = useState(false);
+  const { contacts, error } = useContacts(refreshContacts) as { contacts: Contact[], loading: boolean, error: any };
 
   const navigation = useNavigation();
 
@@ -54,54 +54,6 @@ const Contact = () => {
     }, 5000);
   };
 
-
-  // const contacts = [
-  //   {
-  //     name: 'Aloye',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  //   {
-  //     name: 'Sam',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  //   {
-  //     name: 'David',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  //   {
-  //     name: 'Tunde',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  //   {
-  //     name: 'Alex',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  //   {
-  //     name: 'Chris',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  //   {
-  //     name: 'Dan',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  //   {
-  //     name: 'Anita',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  //   {
-  //     name: 'Nelly',
-  //     phoneNumber: '+234 567 564 765',
-  //     profileImage: require('../../assets/images/ll.png'),
-  //   },
-  // ];
 
   const favouriteContacts: any[] = [
     // {name: 'Alice', profileImage: require('../../assets/images/ll.png')},
@@ -144,14 +96,15 @@ const Contact = () => {
     });
   };
 
-  const handleDelete = (contactId: string) => {
-     setContactIdToDelete(contactId);
+  const handleDelete = () => {
+    const idsToDelete = selectedContacts.map(contact => contact._id);
+     setContactIdsToDelete(idsToDelete);
      setModalVisible(true);
   };
 
   const confirmDelete = () => {
-    if (contactIdToDelete) {
-      deleteContact(contactIdToDelete, displayMessage, setLoading, setIsSuccess, navigation);
+    if (contactIdsToDelete && contactIdsToDelete.length > 0) {
+      deleteContact(contactIdsToDelete, displayMessage, setIsSuccess, navigation, setRefreshContacts);
       setSelectedContacts([]);
       setModalVisible(false);
     }
@@ -159,13 +112,13 @@ const Contact = () => {
 
   const cancelDelete = () => {
     setModalVisible(false);
-    setContactIdToDelete(null);
+    setContactIdsToDelete([]);
   };
 
   const handleEdit = () => {
     if (selectedContacts.length > 0) {
       const contact = selectedContacts[0];
-      navigation.navigate('UpdateContact', { contact });
+      navigation.navigate('UpdateContact', { contact, setRefreshContacts });
     }
   };
 
@@ -203,7 +156,7 @@ const Contact = () => {
                     <TouchableOpacity onPress={handleEdit}>
                       <Icon name="edit" size={24} color="#415A77" style={styles.headerIcon} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleDelete(selectedContacts[0]._id)}>
+                    <TouchableOpacity onPress={handleDelete}>
                       <Icon name="trash" size={24} color="#415A77" style={styles.headerIcon} />
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -260,7 +213,7 @@ const Contact = () => {
         {/* Add New Section */}
         <TouchableOpacity
           style={styles.addNewSection}
-          onPress={() => navigation.navigate('CreateContact' as never)}>
+          onPress={() => navigation.navigate('CreateContact' as never, { setRefreshContacts })}>
           <View style={styles.addButton}>
             <Icon name="plus" size={16} color="#1B263B" />
           </View>
@@ -283,7 +236,7 @@ const Contact = () => {
               Try to add more contacts from your personal account
             </Text>
             <TouchableOpacity style={styles.startCallButton}
-              onPress={()=> navigation.navigate('CreateContact' as never)}>
+              onPress={()=> navigation.navigate('CreateContact', { setRefreshContacts })}>
               <Text style={styles.startCallButtonText}>Add contact</Text>
             </TouchableOpacity>
           </View>

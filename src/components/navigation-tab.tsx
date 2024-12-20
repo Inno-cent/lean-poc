@@ -61,13 +61,8 @@ const NavigationTab = ({ activeTab, handleTabPress }) => {
         </TouchableOpacity> */}
 
         <TouchableOpacity
-<<<<<<< HEAD
-          style={[styles.navItem, activeTab === 'call' && styles.activeTab]}
-          onPress={() => handleNavigation('Call')}
-=======
           style={[styles.navItem, activeTab === "call" && styles.activeTab]}
           onPress={() => handleNavigation("CallLogs")}
->>>>>>> c377fd017cf4276b5b10605ec99176926ee2eed1
         >
           <View style={styles.navContent}>
             <FontAwesome
