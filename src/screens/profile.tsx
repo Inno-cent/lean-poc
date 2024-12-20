@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
   StyleSheet,
-  TouchableWithoutFeedback,
   Modal,
-} from "react-native";
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import NavigationTab from "../components/navigation-tab";
+import NavigationTab from '../components/navigation-tab';
 import {useNavigation} from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState("profile");
+  const [activeTab, setActiveTab] = useState('profile');
   const handleTabPress = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
   };
@@ -34,7 +34,7 @@ const ProfilePage = () => {
     <View style={styles.container}>
       {/* Profile Picture */}
       <Image
-        source={require("../assets/images/profilepic.png")} // Replace with your profile image
+        source={require('../assets/images/profilepic.png')} // Replace with your profile image
         style={styles.profilePicture}
       />
 
@@ -44,7 +44,7 @@ const ProfilePage = () => {
 
       <TouchableOpacity
         style={styles.formSubmitButton}
-        onPress={() => navigation.navigate("EditProfile")}
+        onPress={() => navigation.navigate('EditProfile')}
       >
         <Feather name="edit-2" size={20} color="#FFF" style={styles.icon} />
         <Text style={styles.buttonText}>Edit Profile</Text>
@@ -150,8 +150,8 @@ const ProfilePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#fff",
+    alignItems: 'center',
+    backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingTop: 80,
   },
@@ -163,22 +163,22 @@ const styles = StyleSheet.create({
   },
   headName: {
     fontSize: 20,
-    fontWeight: "700",
-    color: "#1B263B",
+    fontWeight: '700',
+    color: '#1B263B',
     marginBottom: 5,
     lineHeight: 30,
   },
   username: {
     fontSize: 16,
-    color: "#1B263BE5",
+    color: '#1B263BE5',
     marginBottom: 20,
     fontWeight: 400,
     lineHeight: 27,
   },
   horizontalLine: {
-    width: "100%",
+    width: '100%',
     borderBottomWidth: 2,
-    borderBottomColor: "#D9D9D9",
+    borderBottomColor: '#D9D9D9',
     marginVertical: 20,
   },
 
@@ -187,99 +187,99 @@ const styles = StyleSheet.create({
   },
 
   formSubmitButton: {
-    flexDirection: "row",
-    backgroundColor: "#415a77",
+    flexDirection: 'row',
+    backgroundColor: '#415a77',
     padding: 12,
     borderRadius: 10,
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 25,
   },
   buttonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 15,
   },
   optionText: {
     fontSize: 18,
-    color: "#1B263B",
+    color: '#1B263B',
   },
   settingsList: {
     marginTop: 10,
   },
   listItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 15,
-    width: "100%",
-    borderBottomColor: "#D9D9D9",
+    width: '100%',
+    borderBottomColor: '#D9D9D9',
     // borderBottomWidth: 1,
   },
   listItemContent: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   listItemText: {
     marginLeft: 10,
     fontSize: 18,
-    color: "#1B263B",
-    fontWeight: "400",
+    color: '#1B263B',
+    fontWeight: '400',
   },
   modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background with blur effect
-    backdropFilter: "blur(10px)", // Blurring effect (for web, add equivalent for mobile)
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent background with blur effect
+    backdropFilter: 'blur(10px)', // Blurring effect (for web, add equivalent for mobile)
   },
   modalContent: {
-    width: "90%",
+    width: '90%',
     maxWidth: 390,
     height: 300,
-    backgroundColor: "#0D1B2A",
+    backgroundColor: '#0D1B2A',
     borderRadius: 20,
     padding: 20,
     // alignItems: "center",
-    justifyContent: "center",
+    justifyContent: 'center',
     marginHorizontal: 20,
   },
   modalTitle: {
     fontSize: 24,
-    fontWeight: "bold",
-    color: "#fff",
+    fontWeight: 'bold',
+    color: '#fff',
     marginBottom: 10,
   },
   modalText: {
     fontSize: 16,
-    color: "#fff",
+    color: '#fff',
     // textAlign: "center",
     marginBottom: 30,
   },
   modalButtons: {
-    flexDirection: "column", // Arrange buttons in a column
-    justifyContent: "space-between",
-    width: "100%",
+    flexDirection: 'column', // Arrange buttons in a column
+    justifyContent: 'space-between',
+    width: '100%',
   },
   cancelButton: {
-    borderWidth: 1, 
-    borderColor: "#D9D9D9", 
+    borderWidth: 1,
+    borderColor: '#D9D9D9',
     borderRadius: 25,
     padding: 15,
     marginBottom: 10, 
-    alignItems: "center",
+    alignItems: 'center',
   },
   cancelButtonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 15,
   },
   logoutButton: {
-    backgroundColor: "#415a77",
+    backgroundColor: '#415a77',
     padding: 15,
     borderRadius: 25,
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 25,
   },
   logoutButtonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 15,
   },
 });

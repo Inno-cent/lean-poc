@@ -25,7 +25,7 @@ export default function SplashScreen() {
       }
     } catch (error) {
       console.error('Error during initialization:', error);
-      navigation.navigate('Login');
+      // navigation.navigate('Login');
     }
   };
 

@@ -181,9 +181,9 @@ const SignupScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <View style={styles.divider}>
-            <View style={styles.dividerLine}></View>
+            <View style={styles.dividerLine} />
             <Text style={styles.dividerText}>OR</Text>
-            <View style={styles.dividerLine}></View>
+            <View style={styles.dividerLine} />
           </View>
 
           <TouchableOpacity

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -15,7 +16,9 @@ import CongratsMailScreen from './src/screens/auth/congrats';
 import ForgetPasswordScreen from './src/screens/auth/forget-password';
 import SOS from './src/screens/sos';
 import HomePage from './src/screens/home';
-import ContactScreen from './src/screens/contact';
+import ContactScreen from './src/screens/contacts/contact';
+import CreateContactScreen from './src/screens/contacts/create';
+import UpdateContactScreen from './src/screens/contacts/update';
 import ProfileScreen from './src/screens/profile';
 import SettingsScreen from './src/screens/settings';
 import Notifications from './src/screens/notification';
@@ -33,7 +36,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1}}>
       <NavigationContainer>
         {/* <ThemeProvider> */}
         {/* <AuthProvider> */}
@@ -81,7 +84,8 @@ function AppNavigator() {
       <Stack.Screen name="Home" component={HomePage} />
 
       <Stack.Screen name="Contact" component={ContactScreen} />
-      {/* <Stack.Screen name="CreateContact" component={CreateContactScreen} /> */}
+      <Stack.Screen name="CreateContact" component={CreateContactScreen} />
+      <Stack.Screen name="UpdateContact" component={UpdateContactScreen} />
       <Stack.Screen name="Call" component={CallScreen} />
       <Stack.Screen name="CallLogs" component={CallLogs} />
 

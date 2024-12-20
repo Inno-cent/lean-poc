@@ -270,7 +270,7 @@ const storeToken = async (token: string): Promise<void> => {
 };
 
 // Retrieve the token securely from Keychain
-const getToken = async (): Promise<string | null> => {
+export const getToken = async (): Promise<string | null> => {
   try {
     const credentials = await Keychain.getGenericPassword();
     if (credentials) {
@@ -461,7 +461,7 @@ export const handleLogin = async (
   navigation: NavigationFunction,
   connectSocket: (userId: string) => void,
 ): Promise<void> => {
-  if (!phoneNumber || !password) {
+  if (!countryCode || !phoneNumber || !password) {
     displayMessage('Please fill out both Phone number and password');
     return;
   }
@@ -491,7 +491,7 @@ export const handleLogin = async (
 
       // Store token securely using Keychain
       await storeToken(token);
-
+      console.log('User was here');
       // Fetch user details after successful login
       const userData = await getUser();
 
@@ -510,6 +510,7 @@ export const handleLogin = async (
         setIsSuccess(false);
       }
     } else {
+      console.log('logged in failed');
       console.error(data);
       displayMessage(data.message || 'Login failed.');
       setIsSuccess(false);
@@ -536,7 +537,7 @@ export const getUser = async (): Promise<any | null> => {
     }
 
     // Fetch user details from the backend
-    const response = await fetch('http://3.86.186.237/v1/session', {
+    const response = await fetch(`${API_BASE_URL}/v1/session`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -563,7 +564,7 @@ export const handleGoogleOAuthRedirect = async (
 ): Promise<void> => {
   try {
     const response = await fetch(
-      `http://3.86.186.237/v1/google/oauth/redirect`,
+      `${API_BASE_URL}/v1/google/oauth/redirect`,
       {
         method: 'POST',
         headers: {
@@ -600,7 +601,7 @@ export const handleGoogleOAuth = async (
 ): Promise<void> => {
   setLoading(true);
   try {
-    const response = await fetch(`http://3.86.186.237/v1/google/oauth`, {
+    const response = await fetch(`${API_BASE_URL}/v1/google/oauth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
