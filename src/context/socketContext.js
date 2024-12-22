@@ -104,6 +104,29 @@ export const SocketProvider = ({ children }) => {
     }
   };
 
+  const inviteToCall = (roomId, participantId) => {
+    if (socket) {
+      const message = {
+        room_id: roomId,
+        participant_id: participantId,
+      };
+      socket.emit('call-join', message, response => {
+        if (!response || !response.status) {
+          console.error(
+            'Error during call invitation:',
+            response?.message || 'Unknown error'
+          );
+        } else {
+          console.log('Call invitation sent:', response);
+          const { data: callData } = response;
+          navigation.navigate('OutgoingCall', { callDetails: callData });
+        }
+      });
+    } else {
+      console.log('Socket is not connected');
+    }
+  };
+
   const acceptCall = (roomId, participants) => {
     if (socket) {
       const message = {
@@ -192,7 +215,8 @@ export const SocketProvider = ({ children }) => {
         connectSocket,
         rejectCall,
         endCall,
-        callStatus
+        callStatus,
+        inviteToCall
       }}
     >
       {children}

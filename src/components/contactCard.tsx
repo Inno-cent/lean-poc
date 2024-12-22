@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useSocket } from '../context/socketContext';
-
+import {useSocket} from '../context/socketContext';
 
 interface ContactCardProps {
   id: string;
@@ -20,8 +19,6 @@ interface ContactCardProps {
   onLongPress: () => void;
 }
 
-
-
 const ContactCard: React.FC<ContactCardProps> = ({
   id,
   first_name,
@@ -34,7 +31,7 @@ const ContactCard: React.FC<ContactCardProps> = ({
   onExpand,
   onLongPress,
 }) => {
-  const { initiateCall } = useSocket();
+  const {initiateCall} = useSocket();
 
   // Function to handle call initiation
   const handleInitiateCall = (type: 'Audio' | 'Video') => {
@@ -47,7 +44,7 @@ const ContactCard: React.FC<ContactCardProps> = ({
     initiateCall(callData);
   };
   const defaultImage = require('../assets/images/ll.png');
-  const userImage = profileImage ? { uri: profileImage } : defaultImage;
+  const userImage = profileImage ? {uri: profileImage} : defaultImage;
 
   return (
     <View style={[styles.cardContainer, isSelected && styles.selectedCard]}>
@@ -58,8 +55,7 @@ const ContactCard: React.FC<ContactCardProps> = ({
             style={[
               styles.expandedContainer,
               isSelected && styles.expandedBackground,
-            ]}
-          >
+            ]}>
             <Image
               source={userImage}
               style={[styles.profileImage, isSelected && styles.expandedImage]}
@@ -67,10 +63,14 @@ const ContactCard: React.FC<ContactCardProps> = ({
 
             {isSelected && (
               <View style={styles.iconsContainer}>
-                <TouchableOpacity style={styles.iconButton}>
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => handleInitiateCall('Audio')}>
                   <Icon name="phone" size={18} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconButton}  onPress={() => handleInitiateCall('Video')} >
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => handleInitiateCall('Video')}>
                   <Icon name="video-camera" size={18} color="white" />
                 </TouchableOpacity>
               </View>
@@ -78,12 +78,22 @@ const ContactCard: React.FC<ContactCardProps> = ({
           </View>
 
           {/* Contact Info */}
-          <View style={[styles.cardContent, isSelected && { marginLeft: 10 }]}>
-            <Text style={styles.name}>{first_name} {last_name}</Text>
-            <Text style={styles.phoneNumber}>{international_dialing_code}{phone_number}</Text>
+          <View style={[styles.cardContent, isSelected && {marginLeft: 10}]}>
+            <Text style={styles.name}>
+              {first_name} {last_name}
+            </Text>
+            <Text style={styles.phoneNumber}>
+              {international_dialing_code}
+              {phone_number}
+            </Text>
           </View>
           {isTick && (
-            <Ionicons name="checkmark-sharp" size={24} color="#415A77" style={styles.tickIcon}/>
+            <Ionicons
+              name="checkmark-sharp"
+              size={24}
+              color="#415A77"
+              style={styles.tickIcon}
+            />
           )}
         </View>
       </TouchableOpacity>
