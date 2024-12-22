@@ -20,6 +20,7 @@ import ContactCard from '../../components/contactCard';
 import { useNavigation } from '@react-navigation/native';
 import { useContacts, deleteContact } from './api';
 import ConfirmationModal from './ConfirmationModal';
+import { useSocket } from '../../context/socketContext';
 
 interface Contact {
     _id: string;
@@ -45,6 +46,19 @@ const Contact = () => {
   const { contacts, error } = useContacts(refreshContacts) as { contacts: Contact[], loading: boolean, error: any };
 
   const navigation = useNavigation();
+  const { initiateCall } = useSocket();
+
+
+  const handleInitiateCall = (dialingCode: string, phoneNumber: string) => {
+    const fullNumber = `${dialingCode}${phoneNumber}`;
+    const callInitiateData = {
+      call_type: 'Video',
+      caller_id: '+2347017915991', // Replace with the current user's number or dynamically set it
+      participants: [fullNumber],
+    };
+    console.log('Call initiated:', callInitiateData);
+    initiateCall(callInitiateData);
+  };
 
   const displayMessage = (msg: string) => {
     setMessage(msg);
