@@ -70,7 +70,7 @@ const ContactCard: React.FC<ContactCardProps> = ({
                 <TouchableOpacity style={styles.iconButton}>
                   <Icon name="phone" size={18} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconButton} >
+                <TouchableOpacity style={styles.iconButton}  onPress={() => handleInitiateCall('Video')} >
                   <Icon name="video-camera" size={18} color="white" />
                 </TouchableOpacity>
               </View>
