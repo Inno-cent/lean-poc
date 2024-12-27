@@ -284,6 +284,28 @@ export const getToken = async (): Promise<string | null> => {
   }
 };
 
+// Remove the token securely from Keychain during logout
+export const removeToken = async (): Promise<void> => {
+  try {
+    await Keychain.resetGenericPassword();
+    console.log('Token removed securely');
+  } catch (error) {
+    console.error('Error removing the token:', error);
+  }
+};
+
+// Example logout function
+export const logout = async (navigation: NavigationFunction): Promise<void> => {
+  try {
+    await removeToken();
+    navigation.navigate('Login');
+    // Perform any additional logout logic here, such as navigating to the login screen
+    console.log('User logged out successfully');
+  } catch (error) {
+    console.error('Error during logout:', error);
+  }
+};
+
 // Define types for function parameters
 type DisplayMessageFunction = (message: string) => void;
 type SetSuccessFunction = (success: boolean) => void;
@@ -491,7 +513,6 @@ export const handleLogin = async (
 
       // Store token securely using Keychain
       await storeToken(token);
-      console.log('User was here');
       // Fetch user details after successful login
       const userData = await getUser();
 

@@ -202,14 +202,10 @@ const styles = StyleSheet.create({
     color: '#1b263b',
     textAlign: 'center',
   },
-  
   passwordInputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#1B263B',
   },
-
   eyeIcon: {
     position: 'absolute',
     right: 10,
@@ -258,7 +254,6 @@ const styles = StyleSheet.create({
   },
   messageText: {
     color: '#fff',
-    // textAlign: 'center',
   },
   label: {
     fontSize: 14,

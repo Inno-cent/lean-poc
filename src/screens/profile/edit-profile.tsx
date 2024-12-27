@@ -126,7 +126,15 @@ const EditProfile = () => {
           </TouchableOpacity>
           <Text style={styles.headerText}>Edit Profile</Text>
         </View>
-
+        {message ? (
+          <View
+            style={[
+              styles.messageBox,
+              isSuccess ? styles.success : styles.error,
+            ]}>
+            <Text style={styles.messageText}>{message}</Text>
+          </View>
+        ) : null}
         <View style={styles.profileSection}>
           <View style={styles.profilePictureContainer}>
             <Image
@@ -370,6 +378,20 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 15,
+  },
+    messageBox: {
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 4,
+  },
+  success: {
+    backgroundColor: 'green',
+  },
+  error: {
+    backgroundColor: '#c13515',
+  },
+  messageText: {
+    color: '#fff',
   },
 });
 

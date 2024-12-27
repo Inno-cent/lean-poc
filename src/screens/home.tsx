@@ -52,8 +52,8 @@ const HomePage = () => {
     const fetchUser = async () => {
       try {
         const userData = await getUser();
-        console.log(userData);
-        setUser(userData); 
+        console.log(userData.username);
+        setUser(userData);
         //  if (userData) {
         //   connectSocket(userData._id); 
         // }

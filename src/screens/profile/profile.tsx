@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Modal,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -15,7 +16,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NavigationTab from '../../components/navigation-tab';
 import { useNavigation } from '@react-navigation/native';
 import { getProfile } from './api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { logout } from '../auth/auth';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface User {
   username: string;
@@ -50,12 +52,13 @@ const ProfilePage = () => {
   };
 
   const handleLogout = () => {
-    setModalVisible(false);
+    logout(navigation);
   };
 
   const navigation = useNavigation();
 
   return (
+     <SafeAreaView style={styles.safeArea}>
     <ScrollView contentContainerStyle={styles.container}>
       {/* Profile Picture */}
       <View style={styles.fixedPart}>
@@ -134,36 +137,6 @@ const ProfilePage = () => {
           </View>
           <Entypo name="chevron-right" size={24} color="#778DA9" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listItem}>
-          <View style={styles.listItemContent}>
-            <MaterialIcons name="help-outline" size={24} color="#1B263B" />
-            <Text style={styles.listItemText}>Help & Support</Text>
-          </View>
-          <Entypo name="chevron-right" size={24} color="#778DA9" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.listItem} onPress={() => setModalVisible(true)}>
-          <View style={styles.listItemContent}>
-            <Icon name="sign-out" size={24} color="#1B263B" />
-            <Text style={styles.listItemText}>Log Out</Text>
-          </View>
-          <Entypo name="chevron-right" size={24} color="#778DA9" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.listItem}>
-          <View style={styles.listItemContent}>
-            <MaterialIcons name="help-outline" size={24} color="#1B263B" />
-            <Text style={styles.listItemText}>Help & Support</Text>
-          </View>
-          <Entypo name="chevron-right" size={24} color="#778DA9" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.listItem} onPress={() => setModalVisible(true)}>
-          <View style={styles.listItemContent}>
-            <Icon name="sign-out" size={24} color="#1B263B" />
-            <Text style={styles.listItemText}>Log Out</Text>
-          </View>
-          <Entypo name="chevron-right" size={24} color="#778DA9" />
-        </TouchableOpacity>
       </View>
 
       {/* Logout Modal */}
@@ -197,12 +170,16 @@ const ProfilePage = () => {
         </View>
       </Modal>
 
+      </ScrollView>
       <NavigationTab activeTab={activeTab} handleTabPress={handleTabPress} />
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: '#fff',
@@ -241,7 +218,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   scrollablePart: {
-    padding: 16,
+    paddingHorizontal: 20,
   },
   icon: {
     marginRight: 10,

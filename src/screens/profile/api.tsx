@@ -1,5 +1,4 @@
 /* eslint-disable no-catch-shadow */
-import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getToken } from '../auth/auth';
 import {API_BASE_URL} from '@env';
@@ -97,16 +96,15 @@ export const updateProfile = async (
 };
 
 export const updatePassword = async (
-  fullName: string,
-  email: string,
-  birthday: string,
-  gender: string,
+  oldPassword: string,
+  newPassword: string,
+  confirmPassword: string,
   displayMessage: DisplayMessageFunction,
   setIsSuccess: SetSuccessFunction,
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
 ): Promise<void> => {
-  if (!fullName || !email || !birthday || !gender) {
+  if (!oldPassword || !newPassword || !confirmPassword) {
     displayMessage('Please fill out all fields');
     return;
   }
@@ -114,7 +112,7 @@ export const updatePassword = async (
   setLoading(true);
   try {
     const token = await getToken();
-    const response = await fetch(`${API_BASE_URL}/v1/user`, {
+    const response = await fetch(`${API_BASE_URL}/v1/user/password`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -122,28 +120,37 @@ export const updatePassword = async (
         accept: 'application/json',
       },
       body: JSON.stringify({
-        full_name: fullName,
-        email: email,
-        dob: birthday,
-        gender: gender,
+        old_password: oldPassword,
+        password: newPassword,
+        confirm_password: confirmPassword,
       }),
     });
 
     const data = await response.json();
-    console.log('Updated profile', data);
+    console.log('Updated password', data);
     if (response.ok) {
-      displayMessage('Profile updated successful!');
+      displayMessage('Password updated successful!');
       setIsSuccess(true);
       navigation.navigate('Profile');
     } else {
-      displayMessage(data.message || 'Failed to update profile');
+      displayMessage(data.message || 'Failed to update password');
       setIsSuccess(false);
     }
   } catch (error) {
-    console.error('Error updating profile:', error);
-    displayMessage('An error occurred while updating the profile');
+    console.error('Error updating password:', error);
+    displayMessage('An error occurred while updating the password');
     setIsSuccess(false);
   } finally {
     setLoading(false);
   }
 };
+
+// export const handlelogout = async () => {
+//   try {
+//     await AsyncStorage.removeItem('token');
+//     await AsyncStorage.removeItem('userProfile');
+//     navigation.navigate('Login');
+//   } catch (error) {
+//     console.error('Error logging out:', error);
+//   }
+// }
