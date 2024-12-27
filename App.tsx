@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext, useEffect} from 'react';
+import React, { useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -19,15 +19,16 @@ import HomePage from './src/screens/home';
 import ContactScreen from './src/screens/contacts/contact';
 import CreateContactScreen from './src/screens/contacts/create';
 import UpdateContactScreen from './src/screens/contacts/update';
-import ProfileScreen from './src/screens/profile';
+import ProfileScreen from './src/screens/profile/profile';
 import SettingsScreen from './src/screens/settings';
 import Notifications from './src/screens/notification';
 import OutgoingCallScreen from './src/screens/outgoingCall';
 // import CallListener from './src/screens/callListener';
 import IncomingCall from './src/screens/incomingCall';
 import CallScreen from './src/screens/callScreen';
-import CallLogs from './src/screens/call'
-// import EditProfileScreen from './src/screens/edit-profile'
+import CallLogs from './src/screens/call';
+import EditProfileScreen from './src/screens/profile/edit-profile';
+import ChangePasswordScreen from './src/screens/profile/change-password';
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
 // import { ThemeProvider } from '../navigation/ThemeProvider';
@@ -93,8 +94,8 @@ function AppNavigator() {
 
       {/* Additional Screens */}
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      {/* <Stack.Screen name="EditProfile" component={EditProfileScreen} /> */}
-      {/* <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} /> */}
+      <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
       <Stack.Screen name="Notification" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       {/* <Stack.Screen name="HelpSupport" component={HelpSupportScreen} /> */}

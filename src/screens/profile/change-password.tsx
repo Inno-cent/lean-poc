@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Image,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
@@ -16,7 +15,9 @@ import {SafeAreaView} from 'react-native';
 const EditProfile = ({}) => {
   const navigation = useNavigation();
 
-  const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -42,8 +43,8 @@ const EditProfile = ({}) => {
               style={styles.inputWithIcon}
               placeholder="Enter your password"
               secureTextEntry={!isPasswordVisible}
-              value={password}
-              onChangeText={setPassword}
+              value={oldPassword}
+              onChangeText={setOldPassword}
             />
             <TouchableOpacity
               style={styles.eyeIcon}
@@ -62,8 +63,8 @@ const EditProfile = ({}) => {
               style={styles.inputWithIcon}
               placeholder="Enter your password"
               secureTextEntry={!isPasswordVisible}
-              value={password}
-              onChangeText={setPassword}
+              value={newPassword}
+              onChangeText={setNewPassword}
             />
             <TouchableOpacity
               style={styles.eyeIcon}
@@ -82,8 +83,8 @@ const EditProfile = ({}) => {
               style={styles.inputWithIcon}
               placeholder="Enter your password"
               secureTextEntry={!isPasswordVisible}
-              value={password}
-              onChangeText={setPassword}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
             />
             <TouchableOpacity
               style={styles.eyeIcon}

@@ -527,8 +527,6 @@ export const handleLogin = async (
 // Function to get the logged-in user details
 export const getUser = async (): Promise<any | null> => {
   try {
-    console.log('getttuserr');
-
     // Retrieve the token securely from Keychain
     const token = await getToken();
 
@@ -546,6 +544,7 @@ export const getUser = async (): Promise<any | null> => {
     });
 
     const data = await response.json();
+    console.log('User on Login:', data);
     if (!response.ok) {
       throw new Error(data.message || 'Failed to fetch user details');
     }
