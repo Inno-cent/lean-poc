@@ -169,6 +169,18 @@ const LoginScreen = () => {
             </TouchableOpacity>
           </Text>
         </View>
+
+        
+        <View style={styles.acctTextContainer}>
+            <Text style={styles.acctText}> Don’t have an Account?</Text>
+            <TouchableOpacity>
+              <Text
+                style={styles.logInText}
+                onPress={() => navigation.navigate('Login')}>
+                 Create an account
+              </Text>
+            </TouchableOpacity>
+          </View>
         <TouchableOpacity
           style={styles.nextButton}
           onPress={() => navigation.navigate('CallScreen')}>
