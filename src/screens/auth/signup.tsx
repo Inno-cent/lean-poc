@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
   },
   logInText: {
     fontSize: 15,
-    color: '#1B263B',
+    color: '#778DA9',
     fontWeight: 'bold', // Optional for emphasis
     marginLeft: 4, // Add spacing between texts
   },
