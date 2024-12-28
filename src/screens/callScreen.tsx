@@ -23,7 +23,7 @@ const CallScreen = () => {
       setModalVisible(false);
       setPhoneNumber('');
     } else {
-      alert('Please enter a valid phone number.');
+      console.log('Please enter a valid phone number.');
     }
   };
 

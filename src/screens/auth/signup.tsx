@@ -147,9 +147,21 @@ const SignupScreen = ({navigation}) => {
           </View>
 
           <View style={styles.bottomTextContainer}>
+
+            
+          <View style={styles.acctTextContainer}>
+          <Text style={styles.acctText}>
+            Already Signed Up?
             <TouchableOpacity>
-              <Text style={styles.rememberText}>Already have an Account?</Text>
+              <Text
+                style={styles.createAccountText}
+                onPress={() => navigation.navigate('Login')}>
+                {' '}
+                Log in
+              </Text>
             </TouchableOpacity>
+          </Text>
+        </View>
             <TouchableOpacity>
               <Text style={styles.forgetPassword}>Forget password?</Text>
             </TouchableOpacity>
@@ -354,11 +366,15 @@ const styles = StyleSheet.create({
     color: '#1b263b',
   },
   acctTextContainer: {
+    display: 'flex',
+    justifyContent: "center",
     alignItems: 'center',
   },
   acctText: {
     fontSize: 15,
     color: '#1B263B',
+    alignItems: 'center',
+
   },
   disabledButton: {
     opacity: 0.6, // Add blur effect by lowering opacity
