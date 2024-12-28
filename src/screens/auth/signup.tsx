@@ -204,7 +204,11 @@ const SignupScreen = ({navigation}) => {
           <View style={styles.acctTextContainer}>
             <Text style={styles.acctText}>Already have an account?</Text>
             <TouchableOpacity>
-              <Text style={styles.logInText}>Log in</Text>
+              <Text
+                style={styles.logInText}
+                onPress={() => navigation.navigate('Login')}>
+                Log in
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
