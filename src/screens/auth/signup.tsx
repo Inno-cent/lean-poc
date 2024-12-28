@@ -202,11 +202,11 @@ const SignupScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <View style={styles.acctTextContainer}>
-              <Text style={styles.acctText}>Already have an account?</Text>
-              <TouchableOpacity>
-                <Text style={styles.logInText}>Log in</Text>
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.acctText}>Already have an account?</Text>
+            <TouchableOpacity>
+              <Text style={styles.logInText}>Log in</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -368,8 +368,8 @@ const styles = StyleSheet.create({
   logInText: {
     fontSize: 15,
     color: '#778DA9',
-    fontWeight: 'bold', // Optional for emphasis
-    marginLeft: 4, // Add spacing between texts
+    fontWeight: 'bold',
+    marginLeft: 4,
   },
   disabledButton: {
     opacity: 0.6, // Add blur effect by lowering opacity
