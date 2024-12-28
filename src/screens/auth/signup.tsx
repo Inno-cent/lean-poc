@@ -147,21 +147,12 @@ const SignupScreen = ({navigation}) => {
           </View>
 
           <View style={styles.bottomTextContainer}>
-
-            
-          <View style={styles.acctTextContainer}>
-          <Text style={styles.acctText}>
-            Already Signed Up?
-            <TouchableOpacity>
-              <Text
-                style={styles.createAccountText}
-                onPress={() => navigation.navigate('Login')}>
-                {' '}
-                Log in
-              </Text>
-            </TouchableOpacity>
-          </Text>
-        </View>
+            <View style={styles.acctTextContainer}>
+              <Text style={styles.acctText}>Already Signed Up?</Text>
+              <TouchableOpacity>
+                <Text style={styles.logInText}>Log in</Text>
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity>
               <Text style={styles.forgetPassword}>Forget password?</Text>
             </TouchableOpacity>
@@ -211,13 +202,11 @@ const SignupScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <View style={styles.acctTextContainer}>
-            <Text style={styles.acctText}>
-              Already have an Account?
+              <Text style={styles.acctText}>Already have an account?</Text>
               <TouchableOpacity>
-                <Text style={styles.createAccountText}> Log in</Text>
+                <Text style={styles.logInText}>Log in</Text>
               </TouchableOpacity>
-            </Text>
-          </View>
+            </View>
         </View>
       </View>
     </ScrollView>
@@ -367,14 +356,20 @@ const styles = StyleSheet.create({
   },
   acctTextContainer: {
     display: 'flex',
-    justifyContent: "center",
+    justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row', // Arrange elements in a row
   },
   acctText: {
     fontSize: 15,
     color: '#1B263B',
-    alignItems: 'center',
-
+    textAlign: 'center',
+  },
+  logInText: {
+    fontSize: 15,
+    color: '#1B263B',
+    fontWeight: 'bold', // Optional for emphasis
+    marginLeft: 4, // Add spacing between texts
   },
   disabledButton: {
     opacity: 0.6, // Add blur effect by lowering opacity
