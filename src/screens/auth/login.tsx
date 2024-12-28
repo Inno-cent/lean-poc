@@ -112,7 +112,8 @@ const LoginScreen = () => {
             </TouchableOpacity>
             <Text style={styles.rememberText}>Remember me for 30 days</Text>
           </View>
-          <TouchableOpacity  onPress={() => navigation.navigate('ForgetPassword')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forget password?</Text>
           </TouchableOpacity>
         </View>
@@ -157,30 +158,15 @@ const LoginScreen = () => {
         </TouchableOpacity>
 
         <View style={styles.acctTextContainer}>
-          <Text style={styles.acctText}>
-            Don’t have an Account?
-            <TouchableOpacity>
-              <Text
-                style={styles.createAccountText}
-                onPress={() => navigation.navigate('SignUp')}>
-                {' '}
-                Create an account
-              </Text>
-            </TouchableOpacity>
-          </Text>
+          <Text style={styles.acctText}> Don’t have an Account?</Text>
+          <TouchableOpacity>
+            <Text
+              style={styles.logInText}
+              onPress={() => navigation.navigate('SignUp')}>
+              Create an account
+            </Text>
+          </TouchableOpacity>
         </View>
-
-        
-        <View style={styles.acctTextContainer}>
-            <Text style={styles.acctText}> Don’t have an Account?</Text>
-            <TouchableOpacity>
-              <Text
-                style={styles.logInText}
-                onPress={() => navigation.navigate('Login')}>
-                 Create an account
-              </Text>
-            </TouchableOpacity>
-          </View>
         <TouchableOpacity
           style={styles.nextButton}
           onPress={() => navigation.navigate('CallScreen')}>
@@ -214,7 +200,7 @@ const styles = StyleSheet.create({
     color: '#1b263b',
     textAlign: 'center',
   },
-  
+
   passwordInputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -234,7 +220,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 27,
   },
-    phoneWrapper: {
+  phoneWrapper: {
     width: '100%',
   },
   inputInnerWrapper: {
@@ -390,11 +376,21 @@ const styles = StyleSheet.create({
     color: '#1b263b',
   },
   acctTextContainer: {
+    display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row', 
   },
   acctText: {
     fontSize: 15,
     color: '#1B263B',
+    textAlign: 'center',
+  },
+  logInText: {
+    fontSize: 15,
+    color: '#778DA9',
+    fontWeight: 'bold',
+    marginLeft: 4,
   },
   createAccountText: {
     color: '#778DA9',
