@@ -10,22 +10,55 @@ import {
   Modal,
   TextInput,
   Button,
+  FlatList
 } from 'react-native';
 import { useSocket } from '../context/socketContext';
 import AgoraUIKit from 'agora-rn-uikit';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Add user icon
+import ContactCard from '../components/contactCard'; 
+import { useContacts } from '../screens/contacts/api';
+
+interface Contact {
+  _id: string;
+  first_name: string;
+  last_name: string;
+  international_dialing_code: string;
+  phone_number: string;
+  profileImage: any;
+}
+
 
 const CallScreen = () => {
-  const { callDetails, isInCall, setIsInCall, inviteToCall } = useSocket();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { contacts, error } = useContacts(false) as {
+    contacts: Contact[];
+    error: any;
+  };
+
+  const openModal = () => setIsModalVisible(true);
+  const closeModal = () => setIsModalVisible(false);
+
+  const renderContact = ({ item }: { item: Contact }) => (
+    <ContactCard
+      key={item._id}
+      first_name={item.first_name}
+      id={item._id}
+      last_name={item.last_name}
+      international_dialing_code={item.international_dialing_code}
+      phone_number={item.phone_number}
+      profileImage={item.profileImage}
+    />
+  );
+  // const { callDetails, isInCall, setIsInCall, inviteToCall } = useSocket();
 
   // If no call details are available, show a waiting message
-  if (!isInCall || !callDetails) {
-    return (
-      <View style={styles.container}>
-        <Text>Waiting for the call to be accepted...</Text>
-      </View>
-    );
-  }
+  // if (!isInCall || !callDetails) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Text>Waiting for the call to be accepted...</Text>
+  //     </View>
+  //   );
+  // }
 
   // Agora call configuration
   // const connectionData = {
@@ -43,18 +76,46 @@ const CallScreen = () => {
     channel: "test",
     token: "007eJxTYHi9L32loMNZzkOaeps/xTpv/Wc3/ZDmzKCSN6ZzJlY4nTuhwGCSZpxqlJSUmmyRamZiYmCaaGCelJKaaJpqnpxilppqYPSrIL0hkJFB4KwlEyMDBIL4LAwlqcUlDAwAwuohIg==", // Token for the session
     uid: 1, // User ID for Agora
-    onEndCall: () => {
-      setIsInCall(false);
-    },
+    // onEndCall: () => {
+    //   setIsInCall(false);
+    // },
   };
 
   const rtcCallbacks = {
-    EndCall: () => setIsInCall(false),
+    // EndCall: () => setIsInCall(false),
   };
 
   return (
     <View style={styles.container}>
+       <TouchableOpacity
+        style={styles.addUserButton}
+        onPress={openModal}
+      >
+        <Icon name="person-add" size={30} color="#fff" />
+      </TouchableOpacity>
  
+       {/* Modal to Show Contacts */}
+       <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          {/* Close Icon */}
+          <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+            <Icon name="close" size={30} color="#000" />
+          </TouchableOpacity>
+
+          {/* Contacts List */}
+          <FlatList
+            data={contacts}
+            keyExtractor={(item) => item._id}
+            renderItem={renderContact}
+            contentContainerStyle={styles.contactList}
+          />
+        </View>
+      </Modal>
       {/* Agora Video Call */}
       <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
 
@@ -79,34 +140,26 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: '80%',
+    marginTop: 20,
+    marginHorizontal: 10,
     backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 20,
+  closeButton: {
+    position: 'absolute',
+    top: 15,
+    left: 15,
+    zIndex: 10,
   },
-  input: {
-    width: '100%',
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginBottom: 20,
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+  contactList: {
+    marginTop: 50,
+    paddingHorizontal: 10,
   },
 });
 

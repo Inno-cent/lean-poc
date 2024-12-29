@@ -13,6 +13,7 @@ import {handleLogin, handleGoogleOAuth} from './auth';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSocket} from '../../context/socketContext';
 import PhoneInput from '../../components/phoneInput';
+import { useUser } from '../../context/userContext';
 
 const LoginScreen = () => {
   const [countryCode, setCountryCode] = useState('+234');
@@ -23,6 +24,8 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const {connectSocket} = useSocket();
+
+  const { setUser } = useUser();
 
   const navigation = useNavigation();
 
@@ -129,6 +132,7 @@ const LoginScreen = () => {
               setLoading,
               navigation,
               connectSocket,
+              setUser
             )
           }
           disabled={loading}>
@@ -204,10 +208,7 @@ const styles = StyleSheet.create({
   passwordInputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#1B263B',
   },
-
   eyeIcon: {
     position: 'absolute',
     right: 10,
@@ -256,7 +257,6 @@ const styles = StyleSheet.create({
   },
   messageText: {
     color: '#fff',
-    // textAlign: 'center',
   },
   label: {
     fontSize: 14,

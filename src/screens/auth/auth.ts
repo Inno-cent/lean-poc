@@ -1,6 +1,7 @@
 import * as Keychain from 'react-native-keychain';
 import {API_BASE_URL} from '@env';
 import {useSocket} from '../context/socketContext';
+import { useUser } from '../../context/userContext';
 
 // Store the token securely using Keychain
 const storeToken = async (token: string): Promise<void> => {
@@ -24,6 +25,28 @@ export const getToken = async (): Promise<string | null> => {
   } catch (error) {
     console.error('Error retrieving the token:', error);
     return null;
+  }
+};
+
+// Remove the token securely from Keychain during logout
+export const removeToken = async (): Promise<void> => {
+  try {
+    await Keychain.resetGenericPassword();
+    console.log('Token removed securely');
+  } catch (error) {
+    console.error('Error removing the token:', error);
+  }
+};
+
+// Example logout function
+export const logout = async (navigation: NavigationFunction): Promise<void> => {
+  try {
+    await removeToken();
+    navigation.navigate('Login');
+    // Perform any additional logout logic here, such as navigating to the login screen
+    console.log('User logged out successfully');
+  } catch (error) {
+    console.error('Error during logout:', error);
   }
 };
 
@@ -203,7 +226,10 @@ export const handleLogin = async (
   setLoading: SetLoadingFunction,
   navigation: NavigationFunction,
   connectSocket: (userId: string) => void,
+  setUser: (user: any) => void,
 ): Promise<void> => {
+
+  
   if (!countryCode || !phoneNumber || !password) {
     displayMessage('Please fill out both Phone number and password');
     return;
@@ -234,11 +260,20 @@ export const handleLogin = async (
 
       // Store token securely using Keychain
       await storeToken(token);
-      console.log('User was here');
       // Fetch user details after successful login
       const userData = await getUser();
 
       if (userData && userData._id) {
+
+        setUser({
+          id: userData._id,
+          name: userData.name,
+          email: userData.email,
+          phoneNumber: userData.phone_number,
+          countryCode: userData.international_dialing_code,
+        });
+
+
         console.log('loginconnect', userData);
         connectSocket({
           dialingCode: userData.international_dialing_code,
@@ -270,8 +305,6 @@ export const handleLogin = async (
 // Function to get the logged-in user details
 export const getUser = async (): Promise<any | null> => {
   try {
-    console.log('getttuserr');
-
     // Retrieve the token securely from Keychain
     const token = await getToken();
 
@@ -289,6 +322,7 @@ export const getUser = async (): Promise<any | null> => {
     });
 
     const data = await response.json();
+    console.log('User on Login:', data);
     if (!response.ok) {
       throw new Error(data.message || 'Failed to fetch user details');
     }
