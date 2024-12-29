@@ -1,3 +1,6 @@
+
+
+
 import React, { useState } from 'react';
 import {
   View,
@@ -14,18 +17,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons'; // Add user icon
 
 const CallScreen = () => {
   const { callDetails, isInCall, setIsInCall, inviteToCall } = useSocket();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-
-  const handleAddUser = () => {
-    if (phoneNumber.trim() !== '') {
-      inviteToCall(callDetails.room_id, phoneNumber);
-      setModalVisible(false);
-      setPhoneNumber('');
-    } else {
-      console.log('Please enter a valid phone number.');
-    }
-  };
 
   // If no call details are available, show a waiting message
   if (!isInCall || !callDetails) {
@@ -37,11 +28,21 @@ const CallScreen = () => {
   }
 
   // Agora call configuration
+  // const connectionData = {
+  //   appId: callDetails.app_id, // Agora app ID
+  //   channel: callDetails.room_id, // Channel name
+  //   token: callDetails.token, // Token for the session
+  //   uid: callDetails.uid, // User ID for Agora
+  //   onEndCall: () => {
+  //     setIsInCall(false);
+  //   },
+  // };
+
   const connectionData = {
-    appId: callDetails.app_id, // Agora app ID
-    channel: callDetails.room_id, // Channel name
-    token: callDetails.token, // Token for the session
-    uid: callDetails.uid, // User ID for Agora
+    appId: "4f3e2bbec8e64405a07bdea5e7cd6ee0",
+    channel: "test",
+    token: "007eJxTYHi9L32loMNZzkOaeps/xTpv/Wc3/ZDmzKCSN6ZzJlY4nTuhwGCSZpxqlJSUmmyRamZiYmCaaGCelJKaaJpqnpxilppqYPSrIL0hkJFB4KwlEyMDBIL4LAwlqcUlDAwAwuohIg==", // Token for the session
+    uid: 1, // User ID for Agora
     onEndCall: () => {
       setIsInCall(false);
     },
@@ -53,45 +54,11 @@ const CallScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Add User Icon */}
-      <TouchableOpacity
-        style={styles.addUserButton}
-        onPress={() => setModalVisible(true)}
-      >
-        <Icon name="person-add" size={30} color="#fff" />
-      </TouchableOpacity>
-
+ 
       {/* Agora Video Call */}
       <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
 
-      {/* Modal for Adding User */}
-      <Modal
-        transparent
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Add User to Call</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter phone number"
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              keyboardType="phone-pad"
-            />
-            <View style={styles.modalButtons}>
-              <Button title="Add" onPress={handleAddUser} />
-              <Button
-                title="Cancel"
-                color="red"
-                onPress={() => setModalVisible(false)}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
+    
     </View>
   );
 };
@@ -144,6 +111,156 @@ const styles = StyleSheet.create({
 });
 
 export default CallScreen;
+
+
+
+
+// import React, { useState } from 'react';
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   TouchableOpacity,
+//   Modal,
+//   TextInput,
+//   Button,
+// } from 'react-native';
+// import { useSocket } from '../context/socketContext';
+// import AgoraUIKit from 'agora-rn-uikit';
+// import Icon from 'react-native-vector-icons/MaterialIcons'; // Add user icon
+
+// const CallScreen = () => {
+//   const { callDetails, isInCall, setIsInCall, inviteToCall } = useSocket();
+//   const [modalVisible, setModalVisible] = useState(false);
+//   const [phoneNumber, setPhoneNumber] = useState('');
+
+//   const handleAddUser = () => {
+//     if (phoneNumber.trim() !== '') {
+//       inviteToCall(callDetails.room_id, phoneNumber);
+//       setModalVisible(false);
+//       setPhoneNumber('');
+//     } else {
+//       console.log('Please enter a valid phone number.');
+//     }
+//   };
+
+//   // If no call details are available, show a waiting message
+//   if (!isInCall || !callDetails) {
+//     return (
+//       <View style={styles.container}>
+//         <Text>Waiting for the call to be accepted...</Text>
+//       </View>
+//     );
+//   }
+
+//   // Agora call configuration
+//   const connectionData = {
+//     appId: callDetails.app_id, // Agora app ID
+//     channel: callDetails.room_id, // Channel name
+//     token: callDetails.token, // Token for the session
+//     uid: callDetails.uid, // User ID for Agora
+//     onEndCall: () => {
+//       setIsInCall(false);
+//     },
+//   };
+
+//   const rtcCallbacks = {
+//     EndCall: () => setIsInCall(false),
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       {/* Add User Icon */}
+//       <TouchableOpacity
+//         style={styles.addUserButton}
+//         onPress={() => setModalVisible(true)}
+//       >
+//         <Icon name="person-add" size={30} color="#fff" />
+//       </TouchableOpacity>
+
+//       {/* Agora Video Call */}
+//       <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
+
+//       {/* Modal for Adding User */}
+//       <Modal
+//         transparent
+//         visible={modalVisible}
+//         animationType="slide"
+//         onRequestClose={() => setModalVisible(false)}
+//       >
+//         <View style={styles.modalContainer}>
+//           <View style={styles.modalContent}>
+//             <Text style={styles.modalTitle}>Add User to Call</Text>
+//             <TextInput
+//               style={styles.input}
+//               placeholder="Enter phone number"
+//               value={phoneNumber}
+//               onChangeText={setPhoneNumber}
+//               keyboardType="phone-pad"
+//             />
+//             <View style={styles.modalButtons}>
+//               <Button title="Add" onPress={handleAddUser} />
+//               <Button
+//                 title="Cancel"
+//                 color="red"
+//                 onPress={() => setModalVisible(false)}
+//               />
+//             </View>
+//           </View>
+//         </View>
+//       </Modal>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#000',
+//   },
+//   addUserButton: {
+//     position: 'absolute',
+//     top: 20,
+//     right: 20,
+//     zIndex: 10,
+//     backgroundColor: '#007AFF',
+//     borderRadius: 50,
+//     padding: 10,
+//   },
+//   modalContainer: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+//   },
+//   modalContent: {
+//     width: '80%',
+//     backgroundColor: '#fff',
+//     padding: 20,
+//     borderRadius: 10,
+//     alignItems: 'center',
+//   },
+//   modalTitle: {
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
+//   },
+//   input: {
+//     width: '100%',
+//     padding: 10,
+//     borderWidth: 1,
+//     borderColor: '#ccc',
+//     borderRadius: 5,
+//     marginBottom: 20,
+//   },
+//   modalButtons: {
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//     width: '100%',
+//   },
+// });
+
+// export default CallScreen;
 
 
 
