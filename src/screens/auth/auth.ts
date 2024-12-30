@@ -264,10 +264,11 @@ export const handleLogin = async (
       const userData = await getUser();
 
       if (userData && userData._id) {
-
+        const userId = `${userData.international_dialing_code}${userData.phone_number}`;
+        connectSocket(userId);
         setUser({
           id: userData._id,
-          name: userData.name,
+          name: userData.username,
           email: userData.email,
           phoneNumber: userData.phone_number,
           countryCode: userData.international_dialing_code,
@@ -275,10 +276,7 @@ export const handleLogin = async (
 
 
         console.log('loginconnect', userData);
-        connectSocket({
-          dialingCode: userData.international_dialing_code,
-          phoneNumber: userData.phone_number,
-        });
+        // connectSocket(userId);
         displayMessage('Login successful!');
         setIsSuccess(true);
         navigation.navigate('Home');

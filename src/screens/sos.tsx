@@ -9,6 +9,7 @@ import {
   Modal,
   ScrollView,
   SafeAreaView,
+  Linking,
   Switch,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -17,7 +18,19 @@ import Icon from 'react-native-vector-icons/AntDesign';
 const SOS = ({}) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
   const handleLogout = () => {
+    setModalVisible(false);
+  };
+
+  const handleCall = () => {
+    if (selectedService === 'Police') {
+      // Call 199 for police
+      Linking.openURL('tel:199');
+    } else {
+      // Call 112 for all other services
+      Linking.openURL('tel:112');
+    }
     setModalVisible(false);
   };
 
@@ -46,7 +59,7 @@ const SOS = ({}) => {
 
   return (
     <>
-      <SafeAreaView  style={styles.safeArea}>
+      <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           <ScrollView contentContainerStyle={styles.contentContainer}>
             <View style={styles.header}>
@@ -61,7 +74,10 @@ const SOS = ({}) => {
             <View style={styles.listItem}>
               {boxData.map(box => (
                 <TouchableOpacity
-                  onPress={() => setModalVisible(true)}
+                  onPress={() => {
+                    setSelectedService(box.text); // Store the selected service
+                    setModalVisible(true);
+                  }}
                   key={box.id}>
                   <View style={styles.box}>
                     <Image source={box.image} style={styles.image} />
@@ -81,12 +97,12 @@ const SOS = ({}) => {
               <View style={styles.modalContent}>
                 <Text style={styles.modalTitle}>Emergency Calls</Text>
                 <Text style={styles.modalText}>
-                  *** will be dialed by tapping call
+                  {selectedService} will be dialed by tapping call
                 </Text>
                 <View style={styles.modalButtons}>
                   <TouchableOpacity
                     style={styles.logoutButton}
-                    onPress={handleLogout}>
+                    onPress={handleCall}>
                     <Text style={styles.logoutButtonText}>Call</Text>
                   </TouchableOpacity>
                   <TouchableOpacity

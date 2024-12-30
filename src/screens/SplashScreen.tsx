@@ -3,21 +3,30 @@ import {View, Image, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {getUser} from './auth/auth';
 import {useSocket} from '../context/socketContext';
+import {useUser} from '../context/userContext';
 
 export default function SplashScreen() {
+  const {setUser} = useUser();
   const navigation = useNavigation();
   const {connectSocket} = useSocket();
 
   const initializeApp = async () => {
-    console.log('111111111');
+    console.log('splash');
     try {
       const user = await getUser();
       if (user && user._id) {
         console.log('splashscreenconnect', user);
-        connectSocket({
-          dialingCode: user.international_dialing_code,
+        const userId = `${user.international_dialing_code}${user.phone_number}`;
+        // Update user context
+        setUser({
+          id: user._id,
+          name: user.username,
+          email: user.email,
           phoneNumber: user.phone_number,
+          countryCode: user.international_dialing_code,
         });
+
+        connectSocket(userId);
         navigation.navigate('Home');
       } else {
         // navigation.navigate('Login');
@@ -32,16 +41,6 @@ export default function SplashScreen() {
   useEffect(() => {
     initializeApp(); // Initialize app on component mount
   }, []);
-
-  // useEffect(() => {
-  //   // Navigate to onboarding after a 2-second delay
-  //   const timeout = setTimeout(() => {
-  //     navigation.navigate('OnboardingPage');
-  //   }, 1000);
-
-  //   // Cleanup the timeout if the component unmounts
-  //   return () => clearTimeout(timeout);
-  // }, []);
 
   return (
     <View style={styles.container}>

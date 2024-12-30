@@ -5,6 +5,7 @@ import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSocket} from '../context/socketContext';
+import {useUser} from '../context/userContext';
 
 interface ContactCardProps {
   id: string;
@@ -32,16 +33,22 @@ const ContactCard: React.FC<ContactCardProps> = ({
   onLongPress,
 }) => {
   const {initiateCall} = useSocket();
+  const {user} = useUser();
 
   // Function to handle call initiation
   const handleInitiateCall = (type: 'Audio' | 'Video') => {
-    const callData = {
+    // if (!user) {
+    //   console.error('User not authenticated');
+    //   return;
+    // }
+    const caller_id = `${user.countryCode}${user.phoneNumber}`;
+    const callInitiateData = {
       call_type: type,
-      caller_id: `${international_dialing_code}${phone_number}`,
+      caller_id: caller_id,
       participants: [`${international_dialing_code}${phone_number}`],
     };
-    console.log(`Initiating ${type} call:`, callData);
-    initiateCall(callData);
+    console.log(`Initiating ${type} call:`, callInitiateData);
+    initiateCall(callInitiateData);
   };
   const defaultImage = require('../assets/images/ll.png');
   const userImage = profileImage ? {uri: profileImage} : defaultImage;

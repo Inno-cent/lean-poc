@@ -1,10 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SocketProvider} from './src/context/socketContext';
-import {UserProvider} from './src/context/userContext'
+import {UserProvider} from './src/context/userContext';
 import SplashScreen from './src/screens/SplashScreen';
 import Onboarding from './src/screens/onboarding';
 import LoginScreen from './src/screens/auth/login';
@@ -30,6 +30,7 @@ import CallScreen from './src/screens/callScreen';
 import CallLogs from './src/screens/call';
 import EditProfileScreen from './src/screens/profile/edit-profile';
 import ChangePasswordScreen from './src/screens/profile/change-password';
+import EmailVerificationBanner from './src/components/verifyMailNoti';
 
 // import { AuthProvider, AuthContext } from '../context/AuthContext';
 // import { ThemeProvider } from '../navigation/ThemeProvider';
@@ -38,15 +39,17 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <GestureHandlerRootView style={{ flex: 1}}>
+    <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer>
         {/* <ThemeProvider> */}
         {/* <AuthProvider> */}
         <UserProvider>
-        <SocketProvider>
-          {/* <CallListener /> */}
-          <AppNavigator />
-        </SocketProvider>
+          <SocketProvider>
+            <EmailVerificationBanner>
+              {/* <CallListener /> */}
+              <AppNavigator />
+            </EmailVerificationBanner>
+          </SocketProvider>
         </UserProvider>
         {/* </AuthProvider> */}
         {/* </ThemeProvider> */}
@@ -106,8 +109,6 @@ function AppNavigator() {
       <Stack.Screen name="IncomingCall" component={IncomingCall} />
       <Stack.Screen name="OutgoingCall" component={OutgoingCallScreen} />
       <Stack.Screen name="CallScreen" component={CallScreen} />
-
-
     </Stack.Navigator>
   );
 }

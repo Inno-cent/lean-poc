@@ -13,14 +13,16 @@ import NavigationTab from '../components/navigation-tab';
 import RecentCallsCard from '../components/callCard';
 import {useNavigation} from '@react-navigation/native';
 import {getUser} from './auth/auth';
+import {useUser} from '../context/userContext';
 
 // Define a type for the user object
-interface User {
-  username: string;
-  // Add other user properties as needed
-}
+// interface User {
+//   username: string;
+//   // Add other user properties as needed
+// }
 
 const HomePage = () => {
+  const {user} = useUser();
   const [activeTab, setActiveTab] = useState('home'); // Default active tab
   const navigation = useNavigation();
   const recentCallsData = [
@@ -44,29 +46,29 @@ const HomePage = () => {
     },
   ];
 
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  // const [user, setUser] = useState<User | null>(null);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  // useEffect(() => {
     // Call getUser on component mount to fetch user details
-    const fetchUser = async () => {
-      try {
-        const userData = await getUser();
-        console.log(userData.username);
-        setUser(userData);
-        //  if (userData) {
-        //   connectSocket(userData._id); 
-        // }
-      } catch (error) {
-        console.error('Error fetching user:', error); 
-        navigation.navigate('Login')
-      } finally {
-        setLoading(false); 
-      }
-    };
-
-    fetchUser();
-  }, []);
+    // const fetchUser = async () => {
+    //   try {
+    //     const userData = await getUser();
+    //     console.log(userData.username);
+    //     setUser(userData);
+    //     //  if (userData) {
+    //     //   connectSocket(userData._id);
+    //     // }
+    //   } catch (error) {
+    //     console.error('Error fetching user:', error);
+    //     navigation.navigate('Login')
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+    // console.log('homeeeeeeeeeeeeee', user);
+    // fetchUser();
+  // }, []);
 
   const handleTabPress = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
@@ -82,13 +84,9 @@ const HomePage = () => {
               <Text style={styles.headerText}>Onbrela</Text>
 
               <View>
-                {loading ? (
-                  <Text style={styles.subText}>Hi ...</Text> // Display loading text
-                ) : user ? (
-                  <Text style={styles.subText}>Hi, {user.username}</Text> // Accessing username
-                ) : (
-                  <Text style={styles.subText}>Hi, ?</Text> // Handle case where user is null
-                )}
+                <Text style={styles.subText}>
+                  Hi, {user ? user.name : '...'}
+                </Text>
               </View>
             </View>
 
@@ -431,9 +429,6 @@ const styles = StyleSheet.create({
 });
 
 export default HomePage;
-
-
-
 
 // import React, {useState} from 'react';
 // import {Text} from 'react-native';

@@ -1,9 +1,7 @@
 // callLogs.js
 import axios from 'axios';
+import {API_BASE_URL} from '@env';
 import { getToken } from '../screens/auth/auth'; // Adjust the path to the auth.js file
-
-// Base URL of your server
-const API_BASE_URL = 'http://3.86.186.237/v1/call';
 
 const CallService = {
   /**
@@ -22,7 +20,7 @@ const CallService = {
       }
 
       // Make the API call
-      const response = await axios.get(API_BASE_URL, {
+      const response = await axios.get(`${API_BASE_URL}/v1/call`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

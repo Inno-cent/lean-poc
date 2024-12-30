@@ -1,14 +1,15 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import io from 'socket.io-client';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {API_BASE_URL} from '@env';
 
-const SOCKET_URL = 'http://3.86.186.237/';
+const SOCKET_URL = API_BASE_URL;
 
 const SocketContext = createContext();
 
 export const useSocket = () => useContext(SocketContext);
 
-export const SocketProvider = ({ children }) => {
+export const SocketProvider = ({children}) => {
   const [socket, setSocket] = useState(null);
   const [callerInfo, setCallerInfo] = useState(null);
   const [callDetails, setCallDetails] = useState(null);
@@ -16,24 +17,38 @@ export const SocketProvider = ({ children }) => {
   const [callStatus, setCallStatus] = useState('Connecting...');
   const navigation = useNavigation();
 
-   // Helper function to navigate to CallScreen only if not already in a call
-   const navigateToCallScreen = callData => {
+  // Helper function to navigate to CallScreen only if not already in a call
+  const navigateToCallScreen = callData => {
     // if (!isInCall) {
-      setCallDetails(callData);
-      setIsInCall(true);
-      navigation.navigate('CallScreen', { callDetails: callData });
+    setCallDetails(callData);
+    setIsInCall(true);
+    navigation.navigate('CallScreen', {callDetails: callData});
     // }
   };
 
-  
-  const connectSocket = ({ dialingCode, phoneNumber }) => {
-    const userId = dialingCode + phoneNumber;
+  const connectSocket = userId => {
+    console.log('main connectSocket function with userId :', userId);
     if (!socket) {
       const newSocket = io(SOCKET_URL);
 
+      // newSocket.on('connect', () => {
+      //   console.log('Connected to Socket.IO server:', newSocket.id);
+      //   newSocket.emit('join-room', userId);
+      // });
+
       newSocket.on('connect', () => {
         console.log('Connected to Socket.IO server:', newSocket.id);
-        newSocket.emit('join-room', userId);
+
+        if (userId) {
+          // Emit the join-room event if userId is valid
+          console.log(`Emitting 'join-room' event with userId: ${userId}`);
+          newSocket.emit('join-room', userId);
+        } else {
+          // Log a message if userId is not valid
+          console.log(
+            'Error: userId is missing or invalid. Cannot emit join-room event.',
+          );
+        }
       });
 
       newSocket.on('disconnect', () => {
@@ -45,8 +60,8 @@ export const SocketProvider = ({ children }) => {
         console.log('Incoming call received:', callData);
         setCallStatus('Ringing...');
         setCallerInfo(callData);
-        navigation.navigate('IncomingCall', { callerInfo: callData });
-        callback({ status: true, message: 'Call Received' });
+        navigation.navigate('IncomingCall', {callerInfo: callData});
+        callback({status: true, message: 'Call Received'});
       });
 
       // Listen for 'join-call' event and navigate to CallScreen if not already in a call
@@ -57,7 +72,10 @@ export const SocketProvider = ({ children }) => {
 
       // Handle call rejection
       newSocket.on('call-reject', message => {
-        console.log('Call was rejected by a participant:', message.participant_id);
+        console.log(
+          'Call was rejected by a participant:',
+          message.participant_id,
+        );
         if (message.participant_id === socket.id) {
           setIsInCall(false);
           navigation.navigate('Home');
@@ -82,15 +100,16 @@ export const SocketProvider = ({ children }) => {
     }
   };
 
- 
-
   const initiateCall = callInitiateData => {
+    console.log('call initiate function first log');
     if (socket) {
+      console.log('if is socketconnected ( call-initiate)');
       socket.emit('call-initiate', callInitiateData, response => {
+        console.log('call emit logg debug');
         if (!response || !response.status) {
           console.error(
             'Error during call initiation:',
-            response?.message || 'Unknown error'
+            response?.message || 'Unknown error',
           );
         } else {
           console.log('Call initiated successfully:', response);
@@ -137,11 +156,11 @@ export const SocketProvider = ({ children }) => {
         if (!response || !response.status) {
           console.error(
             'Error during call acceptance:',
-            response?.message || 'Unknown error'
+            response?.message || 'Unknown error',
           );
         } else {
           console.log('Call accepted:', response);
-          const { data: callData } = response;
+          const {data: callData} = response;
           navigateToCallScreen(callData);
         }
       });
@@ -160,7 +179,7 @@ export const SocketProvider = ({ children }) => {
         if (!response || !response.status) {
           console.error(
             'Error during call rejection:',
-            response?.message || 'Unknown error'
+            response?.message || 'Unknown error',
           );
         } else {
           console.log('Call rejected:', response);
@@ -175,14 +194,14 @@ export const SocketProvider = ({ children }) => {
 
   const endCall = () => {
     if (socket && callDetails) {
-      const { room_id, participant_id } = callDetails;
-      const message = { room_id, participant_id };
+      const {room_id, participant_id} = callDetails;
+      const message = {room_id, participant_id};
 
       socket.emit('call-exit', message, response => {
         if (!response || !response.status) {
           console.error(
             'Error ending the call:',
-            response?.message || 'Unknown error'
+            response?.message || 'Unknown error',
           );
         } else {
           console.log('Call ended:', response);
@@ -217,8 +236,7 @@ export const SocketProvider = ({ children }) => {
         endCall,
         callStatus,
         // inviteToCall
-      }}
-    >
+      }}>
       {children}
     </SocketContext.Provider>
   );
