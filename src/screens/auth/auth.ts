@@ -348,7 +348,7 @@ export const handleSignup = async (
     };
     console.log('Payload before POST:', payload);
 
-    const response = await fetch(`${API_BASE_URL}/v1/session/signup`, {
+    const response = await fetch(`http://54.173.73.46/v1/session/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -377,80 +377,6 @@ export const handleSignup = async (
   }
 };
 
-// export const handleSignup = async (
-//   countryCode: string,
-//   phoneNumber: string,
-//   username: string,
-//   password: string,
-//   confirmPassword: string,
-//   displayMessage: DisplayMessageFunction,
-//   isPasswordStrong: (password: string) => boolean,
-//   setIsSuccess: SetSuccessFunction,
-//   setLoading: SetLoadingFunction,
-//   navigation: NavigationFunction,
-// ): Promise<void> => {
-//   if (
-//     !countryCode ||
-//     !phoneNumber ||
-//     !username ||
-//     !password ||
-//     !confirmPassword
-//   ) {
-//     displayMessage('Please fill out all fields');
-//     return;
-//   }
-//   console.log(
-//     'username:',username,'idc:', countryCode,'phone_number:',phoneNumber, ' password:',password,' confirmPassword:',confirmPassword,
-//   );
-
-//   if (password.trim() !== confirmPassword.trim()) {
-//     setIsSuccess(false);
-//     displayMessage('Passwords do not match');
-//     return;
-//   }
-
-//   if (!isPasswordStrong(password)) {
-//     setIsSuccess(false);
-//     displayMessage(
-//       'Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character',
-//     );
-//     return;
-//   }
-
-//   setLoading(true);
-//   try {
-//     const response = await fetch(`${API_BASE_URL}/v1/session/signup`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         accept: 'application/json',
-//       },
-//       body: JSON.stringify({
-//         idc: countryCode,
-//         phone_number: phoneNumber,
-//         username,
-//         password,
-//         confirmPassword,
-//       }),
-//     });
-
-//     const data = await response.json();
-//     if (response.ok) {
-//       displayMessage('Signup successful!');
-//       setIsSuccess(true);
-//       navigation.navigate('Login');
-//     } else {
-//       displayMessage(data.message || 'Signup failed.');
-//       setIsSuccess(false);
-//     }
-//   } catch (error) {
-//     displayMessage('Network error. Please try again.');
-//     setIsSuccess(false);
-//   } finally {
-//     setLoading(false);
-//   }
-// };
-
 export const handleLogin = async (
   countryCode: string,
   phoneNumber: string,
@@ -468,7 +394,7 @@ export const handleLogin = async (
 
   setLoading(true);
   try {
-    const response = await fetch(`${API_BASE_URL}/v1/session`, {
+    const response = await fetch(`http://54.173.73.46/v1/session`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -536,7 +462,7 @@ export const getUser = async (): Promise<any | null> => {
     }
 
     // Fetch user details from the backend
-    const response = await fetch('http://3.86.186.237/v1/session', {
+    const response = await fetch(`http://54.173.73.46/v1/session`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
