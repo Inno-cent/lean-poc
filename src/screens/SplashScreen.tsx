@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {getUser} from './auth/auth';
@@ -15,6 +15,7 @@ export default function SplashScreen() {
     try {
       const user = await getUser();
       if (user && user._id) {
+        console.log('User found:', user);
         console.log('splashscreenconnect', user);
         const userId = `${user.international_dialing_code}${user.phone_number}`;
         // Update user context
@@ -29,12 +30,12 @@ export default function SplashScreen() {
         connectSocket(userId);
         navigation.navigate('Home');
       } else {
-        // navigation.navigate('Login');
+        console.warn('No valid user found. Redirecting to Login.');
         navigation.navigate('Login');
       }
     } catch (error) {
       console.error('Error during initialization:', error);
-      // navigation.navigate('Login');
+      navigation.navigate('Login');
     }
   };
 

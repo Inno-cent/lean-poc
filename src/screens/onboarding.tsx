@@ -56,12 +56,6 @@ export default function Onboarding() {
 
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity
-        style={styles.nextButton}
-        onPress={() => navigation.navigate('CheckMail')}>
-        <Text style={styles.nextButtonText}>Home</Text>
-      </TouchableOpacity> */}
-
       <Text style={styles.headText}>{title}</Text>
       <Image source={image} style={styles.image} />
       <Text style={styles.description}>{description}</Text>
@@ -75,6 +69,12 @@ export default function Onboarding() {
           </Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity
+        style={styles.nextButton}
+        onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.nextButtonText}>login</Text>
+      </TouchableOpacity>
     </View>
   );
 }

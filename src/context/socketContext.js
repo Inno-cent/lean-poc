@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import {useNavigation} from '@react-navigation/native';
 import {API_BASE_URL} from '@env';
 
-const SOCKET_URL = API_BASE_URL;
+const SOCKET_URL = 'http://54.173.73.46/';
 
 const SocketContext = createContext();
 

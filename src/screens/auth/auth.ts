@@ -114,7 +114,7 @@ export const handleSignup = async (
     };
     console.log('Payload before POST:', payload);
 
-    const response = await fetch(`${API_BASE_URL}/v1/session/signup`, {
+    const response = await fetch(`http://54.173.73.46/v1/session/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ export const handleLogin = async (
 
   setLoading(true);
   try {
-    const response = await fetch(`${API_BASE_URL}/v1/session`, {
+    const response = await fetch(`http://54.173.73.46/v1/session`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -311,7 +311,7 @@ export const getUser = async (): Promise<any | null> => {
     }
 
     // Fetch user details from the backend
-    const response = await fetch(`${API_BASE_URL}/v1/session`, {
+    const response = await fetch(`http://54.173.73.46/v1/session`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -333,75 +333,75 @@ export const getUser = async (): Promise<any | null> => {
 };
 
 // Function to initiate Google OAuth redirect
-export const handleGoogleOAuthRedirect = async (
-  redirectUrl: string,
-  displayMessage: (message: string) => void,
-): Promise<void> => {
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/v1/google/oauth/redirect`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          accept: 'application/json',
-        },
-        body: JSON.stringify({redirect_url: redirectUrl}),
-      },
-    );
+// export const handleGoogleOAuthRedirect = async (
+//   redirectUrl: string,
+//   displayMessage: (message: string) => void,
+// ): Promise<void> => {
+//   try {
+//     const response = await fetch(
+//       `${API_BASE_URL}/v1/google/oauth/redirect`,
+//       {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           accept: 'application/json',
+//         },
+//         body: JSON.stringify({redirect_url: redirectUrl}),
+//       },
+//     );
 
-    const data = await response.json();
-    if (response.ok) {
-      const {url} = data;
-      console.log('Redirect URL:', url);
+//     const data = await response.json();
+//     if (response.ok) {
+//       const {url} = data;
+//       console.log('Redirect URL:', url);
 
-      // Redirect to the returned URL
-      window.open(url, '_blank');
-    } else {
-      console.error(data);
-      displayMessage(data.message || 'Failed to initiate Google OAuth.');
-    }
-  } catch (error) {
-    console.error('Error during Google OAuth Redirect:', error);
-    displayMessage('Network error. Please try again.');
-  }
-};
+//       // Redirect to the returned URL
+//       window.open(url, '_blank');
+//     } else {
+//       console.error(data);
+//       displayMessage(data.message || 'Failed to initiate Google OAuth.');
+//     }
+//   } catch (error) {
+//     console.error('Error during Google OAuth Redirect:', error);
+//     displayMessage('Network error. Please try again.');
+//   }
+// };
 
-// Function to handle Google OAuth
-export const handleGoogleOAuth = async (
-  request: {token: string},
-  displayMessage: (message: string) => void,
-  setLoading: (loading: boolean) => void,
-  navigation: {navigate: (screen: string) => void},
-): Promise<void> => {
-  setLoading(true);
-  try {
-    const response = await fetch(`${API_BASE_URL}/v1/google/oauth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
-      },
-      body: JSON.stringify(request),
-    });
+// // Function to handle Google OAuth
+// export const handleGoogleOAuth = async (
+//   request: {token: string},
+//   displayMessage: (message: string) => void,
+//   setLoading: (loading: boolean) => void,
+//   navigation: {navigate: (screen: string) => void},
+// ): Promise<void> => {
+//   setLoading(true);
+//   try {
+//     const response = await fetch(`${API_BASE_URL}/v1/google/oauth`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         accept: 'application/json',
+//       },
+//       body: JSON.stringify(request),
+//     });
 
-    const data = await response.json();
-    if (response.ok) {
-      const {token} = data;
+//     const data = await response.json();
+//     if (response.ok) {
+//       const {token} = data;
 
-      // Store the session token securely
-      await storeToken(token);
+//       // Store the session token securely
+//       await storeToken(token);
 
-      displayMessage('Google OAuth successful!');
-      navigation.navigate('Home'); // Navigate to the home screen
-    } else {
-      console.error(data);
-      displayMessage(data.message || 'Failed to complete Google OAuth.');
-    }
-  } catch (error) {
-    console.error('Error during Google OAuth:', error);
-    displayMessage('Network error. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
+//       displayMessage('Google OAuth successful!');
+//       navigation.navigate('Home'); // Navigate to the home screen
+//     } else {
+//       console.error(data);
+//       displayMessage(data.message || 'Failed to complete Google OAuth.');
+//     }
+//   } catch (error) {
+//     console.error('Error during Google OAuth:', error);
+//     displayMessage('Network error. Please try again.');
+//   } finally {
+//     setLoading(false);
+//   }
+// };

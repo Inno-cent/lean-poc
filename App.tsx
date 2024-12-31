@@ -39,20 +39,30 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    // <GestureHandlerRootView style={{flex: 1}}>
+    //   <NavigationContainer>
+    //     {/* <ThemeProvider> */}
+    //     {/* <AuthProvider> */}
+    //     <UserProvider>
+    //       <SocketProvider>
+    //         {/* <EmailVerificationBanner> */}
+    //           {/* <CallListener /> */}
+    //           <AppNavigator />
+    //         {/* </EmailVerificationBanner> */}
+    //       </SocketProvider>
+    //     </UserProvider>
+    //     {/* </AuthProvider> */}
+    //     {/* </ThemeProvider> */}
+    //   </NavigationContainer>
+    // </GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
-        {/* <ThemeProvider> */}
-        {/* <AuthProvider> */}
         <UserProvider>
           <SocketProvider>
-            <EmailVerificationBanner>
-              {/* <CallListener /> */}
-              <AppNavigator />
-            </EmailVerificationBanner>
+            <EmailVerificationBanner />
+            <AppNavigator />
           </SocketProvider>
         </UserProvider>
-        {/* </AuthProvider> */}
-        {/* </ThemeProvider> */}
       </NavigationContainer>
     </GestureHandlerRootView>
   );
