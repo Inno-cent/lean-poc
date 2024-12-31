@@ -16,8 +16,8 @@ const IncomingCallScreen = ({route}) => {
   const screenHeight = Dimensions.get('window').height;
   const navigation = useNavigation();
 
-  const {callerInfo} = route.params; // Access the caller info passed via route
-  const {acceptCall} = useSocket(); // Use acceptCall from the socket context
+  const {callerInfo} = route.params;
+  const {acceptCall, rejectCall} = useSocket();
 
   // Handle call acceptance
   const handleAccept = () => {
@@ -25,8 +25,10 @@ const IncomingCallScreen = ({route}) => {
     acceptCall(callerInfo.room_id, callerInfo.participants);
   };
 
+  // Handle call rejection
   const handleReject = () => {
-    navigation.goBack(); 
+    console.log('Rejecting call with caller info:', callerInfo);
+    rejectCall(callerInfo.room_id, callerInfo.participants);
   };
 
   return (

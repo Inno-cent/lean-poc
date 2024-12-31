@@ -169,11 +169,11 @@ export const SocketProvider = ({children}) => {
     }
   };
 
-  const rejectCall = roomId => {
+  const rejectCall = (roomId, participants)=> {
     if (socket) {
       const message = {
         room_id: roomId,
-        participant_id: socket.id,
+        participant_id: participants,
       };
       socket.emit('call-reject', message, response => {
         if (!response || !response.status) {
