@@ -1,24 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 import {useNavigation} from '@react-navigation/native';
 
 export default function Onboarding() {
-  const [step, setStep] = useState(1); // Track the current onboarding step
+  const [step, setStep] = useState(1); 
   const navigation = useNavigation();
 
+  useEffect(() => {
+    // Check if onboarding has been completed
+    const checkOnboardingStatus = async () => {
+      const completed = await AsyncStorage.getItem('onboardingCompleted');
+      if (completed) {
+        navigation.navigate('Login'); 
+      }
+    };
+    checkOnboardingStatus();
+  }, []);
+
   // Handle next button click
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step < 3) {
       setStep(step + 1);
     } else {
+      await AsyncStorage.setItem('onboardingCompleted', 'true'); // Mark onboarding as completed
       navigation.navigate('SignUp'); // Navigate to signup when done
     }
   };
 
   // Handle skip button click
-  const handleSkip = () => {
-    navigation.navigate('Login');
+  const handleSkip = async () => {
+    await AsyncStorage.setItem('onboardingCompleted', 'true'); // Mark onboarding as completed
+    navigation.navigate('Login'); // Navigate to login
   };
+
 
   // Dynamic content for each step
   const getContent = () => {
