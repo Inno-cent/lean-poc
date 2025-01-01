@@ -143,37 +143,6 @@ export const handleSignup = async (
   }
 };
 
-// export const handleSignup = async (
-//   countryCode: string,
-//   phoneNumber: string,
-//   username: string,
-//   password: string,
-//   confirmPassword: string,
-//   displayMessage: DisplayMessageFunction,
-//   isPasswordStrong: (password: string) => boolean,
-//   setIsSuccess: SetSuccessFunction,
-//   setLoading: SetLoadingFunction,
-//   navigation: NavigationFunction,
-// ): Promise<void> => {
-//   if (
-//     !countryCode ||
-//     !phoneNumber ||
-//     !username ||
-//     !password ||
-//     !confirmPassword
-//   ) {
-//     displayMessage('Please fill out all fields');
-//     return;
-//   }
-//   console.log(
-//     'username:',username,'idc:', countryCode,'phone_number:',phoneNumber, ' password:',password,' confirmPassword:',confirmPassword,
-//   );
-
-//   if (password.trim() !== confirmPassword.trim()) {
-//     setIsSuccess(false);
-//     displayMessage('Passwords do not match');
-//     return;
-//   }
 
 //   if (!isPasswordStrong(password)) {
 //     setIsSuccess(false);
