@@ -171,7 +171,7 @@ export const handleLogin = async (
         accept: 'application/json',
       },
       body: JSON.stringify({
-        idc: countryCode, // Pass the country code
+        idc: countryCode, 
         phone_number: phoneNumber,
         password,
       }),
@@ -179,12 +179,11 @@ export const handleLogin = async (
 
     const data = await response.json();
     if (response.ok) {
-      const token = data.token; // Assuming token is returned in the response
+      const token = data.token;
 
       if (!token) {
         throw new Error('Token not found in response');
       }
-
       // Store token securely using Keychain
       await storeToken(token);
       // Fetch user details after successful login
