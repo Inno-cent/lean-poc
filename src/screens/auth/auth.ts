@@ -143,32 +143,6 @@ export const handleSignup = async (
   }
 };
 
-
-//   if (!isPasswordStrong(password)) {
-//     setIsSuccess(false);
-//     displayMessage(
-//       'Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character',
-//     );
-//     return;
-//   }
-
-//   setLoading(true);
-//   try {
-//     const response = await fetch(`${API_BASE_URL}/v1/session/signup`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         accept: 'application/json',
-//       },
-//       body: JSON.stringify({
-//         idc: countryCode,
-//         phone_number: phoneNumber,
-//         username,
-//         password,
-//         confirmPassword,
-//       }),
-//     });
-
 //     const data = await response.json();
 //     if (response.ok) {
 //       displayMessage('Signup successful!');
