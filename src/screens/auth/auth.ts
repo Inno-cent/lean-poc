@@ -143,22 +143,6 @@ export const handleSignup = async (
   }
 };
 
-//     const data = await response.json();
-//     if (response.ok) {
-//       displayMessage('Signup successful!');
-//       setIsSuccess(true);
-//       navigation.navigate('Login');
-//     } else {
-//       displayMessage(data.message || 'Signup failed.');
-//       setIsSuccess(false);
-//     }
-//   } catch (error) {
-//     displayMessage('Network error. Please try again.');
-//     setIsSuccess(false);
-//   } finally {
-//     setLoading(false);
-//   }
-// };
 
 export const handleLogin = async (
   countryCode: string,
