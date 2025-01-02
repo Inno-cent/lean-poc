@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigationState, useNavigation } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 
 const EmailVerificationBanner = () => {
   const navigation = useNavigation();
   const state = useNavigationState((state) => state);
-  const authRoutes = ['Login', 'Signup', 'ForgotPassword']; // Define your auth routes here
+  const homeRoute = 'Home'; // Define the homepage route name
   const currentRouteName = state?.routes?.[state.index]?.name;
   const [showBanner, setShowBanner] = useState(true);
 
-  // Only show the banner if the current route is not an auth route
-  const shouldShowBanner = !authRoutes.includes(currentRouteName) && showBanner;
+  // Only show the banner if the current route is the homepage
+  const shouldShowBanner = currentRouteName === homeRoute && showBanner;
 
   // Handle the click event on the email link
   const handleLinkClick = () => {

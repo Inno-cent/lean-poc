@@ -20,7 +20,6 @@ import {
 } from 'react-native-agora';
 import {useUser} from '../context/userContext';
 
-
 // Define Agora constants
 const APP_ID = '4f3e2bbec8e64405a07bdea5e7cd6ee0'; // Your Agora App ID
 const CHANNEL_NAME = 'test-abc'; // Your channel name
@@ -30,7 +29,7 @@ const UID = 0; // Local user ID
 
 const App = () => {
   const agoraEngineRef = useRef<IRtcEngine>(); // Reference to Agora engine
-  const [isJoined, setIsJoined] = useState(false); // State to track channel join status
+  const [isJoined, setIsJoined] = useState(true); // State to track channel join status
   const [remoteUsers, setRemoteUsers] = useState([]); // State to track remote users
   const [micEnabled, setMicEnabled] = useState(true); // State to track microphone status
   const [cameraEnabled, setCameraEnabled] = useState(true); // State to track camera status
@@ -51,7 +50,7 @@ const App = () => {
         console.error('Error initializing Agora:', error);
       }
     };
-  
+
     initializeAgora();
     // Clean up when the component unmounts
     return () => {
@@ -137,49 +136,45 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.videoContainer}>
-        <TouchableOpacity style={styles.controlIcon} onPress={toggleMicrophone}>
-          <Text onPress={joinChannel}>Join</Text>
-        </TouchableOpacity>
         {isJoined && (
           <>
-            <RtcSurfaceView
-              canvas={{uid: UID}}
-              style={[
-                styles.localVideo,
-                {
-                  position: 'absolute',
-                  top: 10,
-                  right: 10,
-                  width: 100,
-                  height: 150,
-                  zIndex: 10,
-                },
-              ]}
-            />
-            {remoteUsers.length > 0 &&
-              remoteUsers.map((uid, index) => (
-                <View key={index} style={styles.remoteVideo}>
-                  {cameraEnabled ? (
-                    <RtcSurfaceView
-                      key={index}
-                      canvas={{uid}}
-                      style={[
-                        styles.remoteVideo,
-                        remoteUsers.length > 2
-                          ? {width: '50%', height: '50%'}
-                          : {flex: 1},
-                      ]}
-                    />
-                  ) : (
-                    <View style={styles.cameraOffPlaceholder}>
-                      <Text style={styles.placeholderText}>{user ? user.name : uid}</Text>
-                    </View>
-                  )}
-                </View>
-              ))}
+            {remoteUsers.length === 0 ? (
+              // Full-screen local video when no remote users
+              <RtcSurfaceView
+                canvas={{uid: UID}}
+                style={styles.fullScreenVideo}
+              />
+            ) : (
+              // Small local video and remote user videos
+              <>
+                <RtcSurfaceView
+                  canvas={{uid: UID}}
+                  style={[styles.localVideo]}
+                />
+                {remoteUsers.map((uid, index) => (
+                  <View key={index} style={styles.remoteVideoWrapper}>
+                    {cameraEnabled ? (
+                      <RtcSurfaceView
+                        key={index}
+                        canvas={{uid}}
+                        style={styles.remoteVideo}
+                      />
+                    ) : (
+                      <View style={styles.cameraOffPlaceholder}>
+                        <Text style={styles.placeholderText}>
+                          {user ? user.name : uid}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                ))}
+              </>
+            )}
           </>
         )}
       </View>
+
+     
       <View style={styles.controlsWrapper}>
         <View style={styles.controls}>
           <TouchableOpacity
@@ -224,11 +219,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  localVideo: {
-    // width: '100%',
-    // height: '100%',
+  fullScreenVideo: {
+    width: '100%',
+    height: '100%',
     backgroundColor: '#000',
-    // maxHeight: 300,
+  },
+  localVideo: {
+    width: 100,
+    height: 150,
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 10,
+    backgroundColor: '#000',
+  },
+  remoteVideoWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   remoteVideo: {
     width: '100%',
@@ -278,7 +286,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.7)', 
+    backgroundColor: 'rgba(0,0,0,0.7)',
   },
   placeholderText: {
     color: 'white',
@@ -287,6 +295,50 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+// <View style={styles.videoContainer}>
+// {isJoined && (
+//   <>
+//     <RtcSurfaceView
+//       canvas={{uid: UID}}
+//       style={[
+//         styles.localVideo,
+//         {
+//           position: 'absolute',
+//           top: 10,
+//           right: 10,
+//           width: 100,
+//           height: 150,
+//           zIndex: 10,
+//         },
+//       ]}
+//     />
+//     {remoteUsers.length > 0 &&
+//       remoteUsers.map((uid, index) => (
+//         <View key={index} style={styles.remoteVideo}>
+//           {cameraEnabled ? (
+//             <RtcSurfaceView
+//               key={index}
+//               canvas={{uid}}
+//               style={[
+//                 styles.remoteVideo,
+//                 remoteUsers.length > 2
+//                   ? {width: '50%', height: '50%'}
+//                   : {flex: 1},
+//               ]}
+//             />
+//           ) : (
+//             <View style={styles.cameraOffPlaceholder}>
+//               <Text style={styles.placeholderText}>
+//                 {user ? user.name : uid}
+//               </Text>
+//             </View>
+//           )}
+//         </View>
+//       ))}
+//   </>
+// )}
+// </View>
 
 // import React, { useState } from 'react';
 // import {
@@ -517,82 +569,8 @@ export default App;
 //       <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
 
 //       {/* Modal for Adding User */}
-//       <Modal
-//         transparent
-//         visible={modalVisible}
-//         animationType="slide"
-//         onRequestClose={() => setModalVisible(false)}
-//       >
-//         <View style={styles.modalContainer}>
-//           <View style={styles.modalContent}>
-//             <Text style={styles.modalTitle}>Add User to Call</Text>
-//             <TextInput
-//               style={styles.input}
-//               placeholder="Enter phone number"
-//               value={phoneNumber}
-//               onChangeText={setPhoneNumber}
-//               keyboardType="phone-pad"
-//             />
-//             <View style={styles.modalButtons}>
-//               <Button title="Add" onPress={handleAddUser} />
-//               <Button
-//                 title="Cancel"
-//                 color="red"
-//                 onPress={() => setModalVisible(false)}
-//               />
-//             </View>
-//           </View>
-//         </View>
-//       </Modal>
+
 //     </View>
 //   );
 // };
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#000',
-//   },
-//   addUserButton: {
-//     position: 'absolute',
-//     top: 20,
-//     right: 20,
-//     zIndex: 10,
-//     backgroundColor: '#007AFF',
-//     borderRadius: 50,
-//     padding: 10,
-//   },
-//   modalContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-//   },
-//   modalContent: {
-//     width: '80%',
-//     backgroundColor: '#fff',
-//     padding: 20,
-//     borderRadius: 10,
-//     alignItems: 'center',
-//   },
-//   modalTitle: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     marginBottom: 20,
-//   },
-//   input: {
-//     width: '100%',
-//     padding: 10,
-//     borderWidth: 1,
-//     borderColor: '#ccc',
-//     borderRadius: 5,
-//     marginBottom: 20,
-//   },
-//   modalButtons: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     width: '100%',
-//   },
-// });
-
-// export default CallScreen;
