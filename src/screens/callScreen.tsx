@@ -257,6 +257,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 15,
   },
+  cameraOffPlaceholder: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)', 
+  },
+  placeholderText: {
+    color: 'white',
+    fontSize: 18,
+  },
 });
 
 export default App;
