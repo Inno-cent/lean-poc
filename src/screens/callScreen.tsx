@@ -18,8 +18,7 @@ import {
   RtcSurfaceView,
   IRtcEngine,
 } from 'react-native-agora';
-import VideoCameraIcon from '../assets/images/video-camera.svg';
-import VideoCameraSlashIcon from './assets/images/video-camera-slash.svg';
+
 
 // Define Agora constants
 const APP_ID = '4f3e2bbec8e64405a07bdea5e7cd6ee0'; // Your Agora App ID
