@@ -45,6 +45,8 @@ const App = () => {
     };
   }, []);
 
+  const {user} = useUser();
+
   const setupAgoraEngine = async () => {
     if (Platform.OS === 'android') {
       await requestPermissions();
@@ -155,7 +157,7 @@ const App = () => {
                     />
                   ) : (
                     <View style={styles.cameraOffPlaceholder}>
-                      <Text style={styles.placeholderText}>User {uid}</Text>
+                      <Text style={styles.placeholderText}>{user ? user.name : uid}</Text>
                     </View>
                   )}
                 </View>
