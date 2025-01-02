@@ -141,16 +141,24 @@ const App = () => {
             />
             {remoteUsers.length > 0 &&
               remoteUsers.map((uid, index) => (
-                <RtcSurfaceView
-                  key={index}
-                  canvas={{uid}}
-                  style={[
-                    styles.remoteVideo,
-                    remoteUsers.length > 2
-                      ? {width: '50%', height: '50%'}
-                      : {flex: 1},
-                  ]}
-                />
+                <View key={index} style={styles.remoteVideo}>
+                  {cameraEnabled ? (
+                    <RtcSurfaceView
+                      key={index}
+                      canvas={{uid}}
+                      style={[
+                        styles.remoteVideo,
+                        remoteUsers.length > 2
+                          ? {width: '50%', height: '50%'}
+                          : {flex: 1},
+                      ]}
+                    />
+                  ) : (
+                    <View style={styles.cameraOffPlaceholder}>
+                      <Text style={styles.placeholderText}>User {uid}</Text>
+                    </View>
+                  )}
+                </View>
               ))}
           </>
         )}
