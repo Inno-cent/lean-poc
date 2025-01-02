@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {getUser} from './auth/auth';
@@ -11,12 +11,15 @@ export default function SplashScreen() {
   const {connectSocket} = useSocket();
 
   const initializeApp = async () => {
-    console.log('splash');
+    console.log('Splash Screen Initialization');
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Timeout exceeded')), 15000)
+    );
+
     try {
-      const user = await getUser();
+      const user = await Promise.race([getUser(), timeout]);
       if (user && user._id) {
         console.log('User found:', user);
-        console.log('splashscreenconnect', user);
         const userId = `${user.international_dialing_code}${user.phone_number}`;
         // Update user context
         setUser({
@@ -34,7 +37,7 @@ export default function SplashScreen() {
         navigation.navigate('Login');
       }
     } catch (error) {
-      console.error('Error during initialization:', error);
+      console.error('Error or timeout during initialization:', error.message);
       navigation.navigate('Login');
     }
   };
@@ -45,7 +48,6 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Replace with your logo */}
       <Image
         source={require('../assets/images/logo.png')}
         style={styles.logo}

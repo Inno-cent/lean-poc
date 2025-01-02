@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Platform,
   PermissionsAndroid,
+  Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -119,15 +120,36 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.videoContainer}>
+        <TouchableOpacity style={styles.controlIcon} onPress={toggleMicrophone}>
+          <Text onPress={joinChannel}>Join</Text>
+        </TouchableOpacity>
         {isJoined && (
           <>
-            <RtcSurfaceView canvas={{uid: UID}} style={styles.localVideo} />
+            <RtcSurfaceView
+              canvas={{uid: UID}}
+              style={[
+                styles.localVideo,
+                {
+                  position: 'absolute',
+                  top: 10,
+                  right: 10,
+                  width: 100,
+                  height: 150,
+                  zIndex: 10,
+                },
+              ]}
+            />
             {remoteUsers.length > 0 &&
               remoteUsers.map((uid, index) => (
                 <RtcSurfaceView
                   key={index}
                   canvas={{uid}}
-                  style={styles.remoteVideo}
+                  style={[
+                    styles.remoteVideo,
+                    remoteUsers.length > 2
+                      ? {width: '50%', height: '50%'}
+                      : {flex: 1},
+                  ]}
                 />
               ))}
           </>
@@ -176,6 +198,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    height: '100%',
   },
   localVideo: {
     width: '100%',
