@@ -36,7 +36,7 @@ const App = () => {
 
   useEffect(() => {
     setupAgoraEngine();
-
+    joinChannel();
     // Clean up when the component unmounts
     return () => {
       agoraEngineRef.current?.leaveChannel();
