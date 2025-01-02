@@ -18,6 +18,7 @@ import {
   RtcSurfaceView,
   IRtcEngine,
 } from 'react-native-agora';
+import {useUser} from '../context/userContext';
 
 
 // Define Agora constants
