@@ -25,7 +25,7 @@ import {useUser} from '../context/userContext';
 const APP_ID = '4f3e2bbec8e64405a07bdea5e7cd6ee0'; // Your Agora App ID
 const CHANNEL_NAME = 'test-abc'; // Your channel name
 const TEMP_TOKEN =
-  '007eJxTYLAKuphWw93ga8+xUHTSLI+d352vpEqxrvlm/fyDQcrxD7UKDCZpxqlGSUmpyRapZiYmBqaJBuZJKamJpqnmySlmqakGRyzL0hsCGRm2r9/LyMgAgSA+B0NJanGJbmJSMgMDANanIf0='; // Temporary token
+  '007eJxTYJjhIxyhlL28K2zts8xzDnbbLqb//fI7fLbpD0X3E3PZblQrMJikGacaJSWlJlukmpmYGJgmGpgnpaQmmqaaJ6eYpaYanH5Xlt4QyMjw6cBlJkYGCATxORhKUotLdBOTkhkYAIi5JJc='; // Temporary token
 const UID = 0; // Local user ID
 
 const App = () => {
@@ -36,8 +36,23 @@ const App = () => {
   const [cameraEnabled, setCameraEnabled] = useState(true); // State to track camera status
 
   useEffect(() => {
-    setupAgoraEngine();
-    joinChannel();
+    const initializeAgora = async () => {
+      try {
+        if (Platform.OS === 'android') {
+          const permissionsGranted = await requestPermissions();
+          if (!permissionsGranted) {
+            console.log('Permissions not granted');
+            return;
+          }
+        }
+        await setupAgoraEngine();
+        joinChannel(); // Move here to ensure it is called after setup
+      } catch (error) {
+        console.error('Error initializing Agora:', error);
+      }
+    };
+  
+    initializeAgora();
     // Clean up when the component unmounts
     return () => {
       agoraEngineRef.current?.leaveChannel();
