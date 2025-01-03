@@ -339,24 +339,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   modalContainer: {
-    flex: 1, 
-    backgroundColor: 'white', // White background
-    margin: '2.5%', // Ensures the modal occupies about 95% of the screen
-    borderRadius: 10, // Optional: Adds some rounded corners
-    elevation: 5, // Optional: Adds shadow for Android
-    shadowColor: '#000', // Shadow settings for iOS
+    flex: 1,
+    backgroundColor: 'white',
+    margin: '2.5%',
+    borderRadius: 10,
+    elevation: 5,
+    shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
   closeButton: {
-    position: 'absolute', // Keeps the icon at the top-left
-    top: 10, // Adjust as necessary
-    left: 10, // Adjust as necessary
-    zIndex: 10, // Ensures it stays above other elements
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 10,
   },
   contactList: {
-    paddingTop: 50, // Ensures the list does not overlap with the close icon
+    paddingTop: 50,
     flexGrow: 1,
   },
 });
