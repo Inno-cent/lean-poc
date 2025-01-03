@@ -22,6 +22,8 @@ import {useUser} from '../context/userContext';
 import {useSocket} from '../context/socketContext';
 import {useContacts} from '../screens/contacts/api';
 import ContactCard from '../components/contactCard';
+import {Modal} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 
 const CallScreen = () => {
   const agoraEngineRef = useRef<IRtcEngine>(); // Reference to Agora engine
@@ -30,6 +32,7 @@ const CallScreen = () => {
   const [micEnabled, setMicEnabled] = useState(true); // State to track microphone status
   const [cameraEnabled, setCameraEnabled] = useState(true); // State to track camera status
   const {callDetails, isInCall, setIsInCall} = useSocket(); // Get call details from socket
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const {user} = useUser();
   const {contacts} = useContacts(false);
 
@@ -216,7 +219,7 @@ const CallScreen = () => {
               color="white"
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.controlIcon}>
+          <TouchableOpacity style={styles.controlIcon} onPress={openModal}>
             <Icon name="user-plus" size={30} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
@@ -226,6 +229,26 @@ const CallScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
+
+      <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeModal}>
+        <View style={styles.modalContainer}>
+          {/* Close Icon */}
+          <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+            <Icon name="close" size={30} color="#000" />
+          </TouchableOpacity>
+          {/* Contacts List */}
+          <FlatList
+            data={contacts}
+            keyExtractor={item => item._id}
+            renderItem={renderContact}
+            contentContainerStyle={styles.contactList}
+          />
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -314,6 +337,27 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: 'white',
     fontSize: 18,
+  },
+  modalContainer: {
+    flex: 1, 
+    backgroundColor: 'white', // White background
+    margin: '2.5%', // Ensures the modal occupies about 95% of the screen
+    borderRadius: 10, // Optional: Adds some rounded corners
+    elevation: 5, // Optional: Adds shadow for Android
+    shadowColor: '#000', // Shadow settings for iOS
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  closeButton: {
+    position: 'absolute', // Keeps the icon at the top-left
+    top: 10, // Adjust as necessary
+    left: 10, // Adjust as necessary
+    zIndex: 10, // Ensures it stays above other elements
+  },
+  contactList: {
+    paddingTop: 50, // Ensures the list does not overlap with the close icon
+    flexGrow: 1,
   },
 });
 
