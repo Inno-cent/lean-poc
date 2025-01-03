@@ -19,22 +19,38 @@ import {
   IRtcEngine,
 } from 'react-native-agora';
 import {useUser} from '../context/userContext';
+import {useSocket} from '../context/socketContext';
+import {useContacts} from '../screens/contacts/api';
+import ContactCard from '../components/contactCard';
 
-// Define Agora constants
-const APP_ID = '4f3e2bbec8e64405a07bdea5e7cd6ee0'; // Your Agora App ID
-const CHANNEL_NAME = 'test-abc'; // Your channel name
-const TEMP_TOKEN =
-  '007eJxTYJjhIxyhlL28K2zts8xzDnbbLqb//fI7fLbpD0X3E3PZblQrMJikGacaJSWlJlukmpmYGJgmGpgnpaQmmqaaJ6eYpaYanH5Xlt4QyMjw6cBlJkYGCATxORhKUotLdBOTkhkYAIi5JJc='; // Temporary token
-const UID = 0; // Local user ID
-
-const App = () => {
+const CallScreen = () => {
   const agoraEngineRef = useRef<IRtcEngine>(); // Reference to Agora engine
-  const [isJoined, setIsJoined] = useState(true); // State to track channel join status
+  const [isJoined, setIsJoined] = useState(false); // State to track channel join status
   const [remoteUsers, setRemoteUsers] = useState([]); // State to track remote users
   const [micEnabled, setMicEnabled] = useState(true); // State to track microphone status
   const [cameraEnabled, setCameraEnabled] = useState(true); // State to track camera status
+  const {callDetails, isInCall, setIsInCall} = useSocket(); // Get call details from socket
+  const {user} = useUser();
+  const {contacts} = useContacts(false);
+
+  const openModal = () => setIsModalVisible(true);
+  const closeModal = () => setIsModalVisible(false);
+
+  const renderContact = ({item}) => (
+    <ContactCard
+      key={item._id}
+      first_name={item.first_name}
+      id={item._id}
+      last_name={item.last_name}
+      international_dialing_code={item.international_dialing_code}
+      phone_number={item.phone_number}
+      profileImage={item.profileImage}
+    />
+  );
 
   useEffect(() => {
+    if (!callDetails || !isInCall) return;
+
     const initializeAgora = async () => {
       try {
         if (Platform.OS === 'android') {
@@ -52,26 +68,20 @@ const App = () => {
     };
 
     initializeAgora();
-    // Clean up when the component unmounts
-    return () => {
-      agoraEngineRef.current?.leaveChannel();
-      agoraEngineRef.current?.release();
-    };
-  }, []);
 
-  const {user} = useUser();
+    return () => {
+      leaveChannel(); // Leave the channel on unmount
+      agoraEngineRef.current?.release(); // Release the engine
+    };
+  }, [callDetails, isInCall]);
 
   const setupAgoraEngine = async () => {
-    if (Platform.OS === 'android') {
-      await requestPermissions();
-    }
-
     agoraEngineRef.current = createAgoraRtcEngine();
     const agoraEngine = agoraEngineRef.current;
 
-    // Initialize the Agora engine with the App ID
+    // Initialize the Agora engine with the App ID from callDetails
     agoraEngine.initialize({
-      appId: APP_ID,
+      appId: callDetails.app_id,
     });
 
     // Enable video
@@ -108,16 +118,22 @@ const App = () => {
   };
 
   const joinChannel = () => {
-    agoraEngineRef.current?.joinChannel(TEMP_TOKEN, CHANNEL_NAME, UID, {
-      channelProfile: ChannelProfileType.ChannelProfileCommunication,
-      clientRoleType: ClientRoleType.ClientRoleBroadcaster,
-    });
+    agoraEngineRef.current?.joinChannel(
+      callDetails.token, // Token from callDetails
+      callDetails.room_id, // Room ID from callDetails
+      callDetails.uid, // Local user ID
+      {
+        channelProfile: ChannelProfileType.ChannelProfileCommunication,
+        clientRoleType: ClientRoleType.ClientRoleBroadcaster,
+      },
+    );
   };
 
   const leaveChannel = () => {
     agoraEngineRef.current?.leaveChannel();
     setIsJoined(false);
     setRemoteUsers([]);
+    setIsInCall(false); // Notify that the call has ended
     console.log('Left the channel');
   };
 
@@ -133,6 +149,14 @@ const App = () => {
     agoraEngineRef.current?.muteLocalVideoStream(!newCameraState);
   };
 
+  if (!isInCall || !callDetails) {
+    return (
+      <View style={styles.container}>
+        <Text>Waiting for call details...</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.videoContainer}>
@@ -141,14 +165,14 @@ const App = () => {
             {remoteUsers.length === 0 ? (
               // Full-screen local video when no remote users
               <RtcSurfaceView
-                canvas={{uid: UID}}
+                canvas={{uid: callDetails.uid}}
                 style={styles.fullScreenVideo}
               />
             ) : (
               // Small local video and remote user videos
               <>
                 <RtcSurfaceView
-                  canvas={{uid: UID}}
+                  canvas={{uid: callDetails.uid}}
                   style={[styles.localVideo]}
                 />
                 {remoteUsers.map((uid, index) => (
@@ -174,7 +198,6 @@ const App = () => {
         )}
       </View>
 
-     
       <View style={styles.controlsWrapper}>
         <View style={styles.controls}>
           <TouchableOpacity
@@ -294,7 +317,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default CallScreen;
 
 // <View style={styles.videoContainer}>
 // {isJoined && (
@@ -518,18 +541,6 @@ export default App;
 
 // const CallScreen = () => {
 //   const { callDetails, isInCall, setIsInCall, inviteToCall } = useSocket();
-//   const [modalVisible, setModalVisible] = useState(false);
-//   const [phoneNumber, setPhoneNumber] = useState('');
-
-//   const handleAddUser = () => {
-//     if (phoneNumber.trim() !== '') {
-//       inviteToCall(callDetails.room_id, phoneNumber);
-//       setModalVisible(false);
-//       setPhoneNumber('');
-//     } else {
-//       console.log('Please enter a valid phone number.');
-//     }
-//   };
 
 //   // If no call details are available, show a waiting message
 //   if (!isInCall || !callDetails) {
@@ -557,14 +568,6 @@ export default App;
 
 //   return (
 //     <View style={styles.container}>
-//       {/* Add User Icon */}
-//       <TouchableOpacity
-//         style={styles.addUserButton}
-//         onPress={() => setModalVisible(true)}
-//       >
-//         <Icon name="person-add" size={30} color="#fff" />
-//       </TouchableOpacity>
-
 //       {/* Agora Video Call */}
 //       <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
 
@@ -574,3 +577,4 @@ export default App;
 //   );
 // };
 
+// export default CallScreen;
