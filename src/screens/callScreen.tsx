@@ -124,7 +124,7 @@ const CallScreen = () => {
     agoraEngineRef.current?.joinChannel(
       callDetails.token, 
       callDetails.room_id, 
-      callDetails.uid, // Local user ID
+      callDetails.uid,
       {
         channelProfile: ChannelProfileType.ChannelProfileCommunication,
         clientRoleType: ClientRoleType.ClientRoleBroadcaster,
@@ -136,7 +136,7 @@ const CallScreen = () => {
     agoraEngineRef.current?.leaveChannel();
     setIsJoined(false);
     setRemoteUsers([]);
-    setIsInCall(false); // Notify that the call has ended
+    setIsInCall(false); 
     console.log('Left the channel');
   };
 
