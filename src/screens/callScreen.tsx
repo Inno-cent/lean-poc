@@ -122,8 +122,8 @@ const CallScreen = () => {
 
   const joinChannel = () => {
     agoraEngineRef.current?.joinChannel(
-      callDetails.token, // Token from callDetails
-      callDetails.room_id, // Room ID from callDetails
+      callDetails.token, 
+      callDetails.room_id, 
       callDetails.uid, // Local user ID
       {
         channelProfile: ChannelProfileType.ChannelProfileCommunication,
