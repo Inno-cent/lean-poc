@@ -27,10 +27,14 @@ const ContactCard: React.FC<ContactCardProps> = ({
   phone_number,
   international_dialing_code,
   profileImage,
-  isSelected,
-  isTick,
-  onExpand,
-  onLongPress,
+  // isSelected,
+  // isTick,
+  // onExpand,
+  // onLongPress,
+  isSelected = false, // Default to false
+  isTick = false, // Default to false
+  onExpand = () => {}, // Default to a no-op function
+  onLongPress = () => {}, // Default to a no-op function
 }) => {
   const {initiateCall} = useSocket();
   const {user} = useUser();

@@ -24,6 +24,7 @@ import {useContacts} from '../screens/contacts/api';
 import ContactCard from '../components/contactCard';
 import {Modal} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const CallScreen = () => {
   const agoraEngineRef = useRef<IRtcEngine>(); // Reference to Agora engine
@@ -31,24 +32,37 @@ const CallScreen = () => {
   const [remoteUsers, setRemoteUsers] = useState([]); // State to track remote users
   const [micEnabled, setMicEnabled] = useState(true); // State to track microphone status
   const [cameraEnabled, setCameraEnabled] = useState(true); // State to track camera status
-  const {callDetails, isInCall, setIsInCall} = useSocket(); // Get call details from socket
+  const {callDetails, isInCall, setIsInCall,inviteToCall} = useSocket(); // Get call details from socket
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {user} = useUser();
   const {contacts} = useContacts(false);
+  const navigation = useNavigation();
 
   const openModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
 
-  const renderContact = ({item}) => (
-    <ContactCard
-      key={item._id}
-      first_name={item.first_name}
-      id={item._id}
-      last_name={item.last_name}
-      international_dialing_code={item.international_dialing_code}
-      phone_number={item.phone_number}
-      profileImage={item.profileImage}
-    />
+  const renderContact = ({ item }) => {
+    const participantId = `${item.international_dialing_code}${item.phone_number}`;
+  
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          inviteToCall(callDetails.room_id, participantId); // Pass concatenated ID
+          closeModal(); // Close the modal
+        }}
+      >
+        <ContactCard
+          key={item._id}
+          first_name={item.first_name}
+          id={item._id}
+          last_name={item.last_name}
+          international_dialing_code={item.international_dialing_code}
+          phone_number={item.phone_number}
+          profileImage={item.profileImage}
+        />
+      </TouchableOpacity>
+    );
+  };
   );
 
   useEffect(() => {
@@ -136,8 +150,9 @@ const CallScreen = () => {
     agoraEngineRef.current?.leaveChannel();
     setIsJoined(false);
     setRemoteUsers([]);
-    setIsInCall(false); 
+    // setIsInCall(false); 
     console.log('Left the channel');
+    navigation.navigate('CallScreen')
   };
 
   const toggleMicrophone = () => {
