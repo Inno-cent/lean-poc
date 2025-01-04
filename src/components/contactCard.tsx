@@ -14,10 +14,10 @@ interface ContactCardProps {
   phone_number: string;
   international_dialing_code: string;
   profileImage: string;
-  isSelected: boolean;
-  isTick: boolean;
-  onExpand: () => void;
-  onLongPress: () => void;
+  isSelected?: boolean;
+  isTick?: boolean;
+  onExpand?: () => void;
+  onLongPress?: () => void;
 }
 
 const ContactCard: React.FC<ContactCardProps> = ({

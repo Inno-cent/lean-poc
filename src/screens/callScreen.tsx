@@ -24,7 +24,7 @@ import {useContacts} from '../screens/contacts/api';
 import ContactCard from '../components/contactCard';
 import {Modal} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const CallScreen = () => {
   const agoraEngineRef = useRef<IRtcEngine>(); // Reference to Agora engine
@@ -32,7 +32,7 @@ const CallScreen = () => {
   const [remoteUsers, setRemoteUsers] = useState([]); // State to track remote users
   const [micEnabled, setMicEnabled] = useState(true); // State to track microphone status
   const [cameraEnabled, setCameraEnabled] = useState(true); // State to track camera status
-  const {callDetails, isInCall, setIsInCall,inviteToCall} = useSocket(); // Get call details from socket
+  const {callDetails, isInCall, setIsInCall, inviteToCall} = useSocket(); // Get call details from socket
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {user} = useUser();
   const {contacts} = useContacts(false);
@@ -41,16 +41,15 @@ const CallScreen = () => {
   const openModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
 
-  const renderContact = ({ item }) => {
+  const renderContact = ({item}) => {
     const participantId = `${item.international_dialing_code}${item.phone_number}`;
-  
+
     return (
       <TouchableOpacity
         onPress={() => {
-          inviteToCall(callDetails.room_id, participantId); // Pass concatenated ID
+          inviteToCall(callDetails.room_id, participantId); // Use concatenated ID
           closeModal(); // Close the modal
-        }}
-      >
+        }}>
         <ContactCard
           key={item._id}
           first_name={item.first_name}
@@ -59,12 +58,11 @@ const CallScreen = () => {
           international_dialing_code={item.international_dialing_code}
           phone_number={item.phone_number}
           profileImage={item.profileImage}
+          // Optional props are omitted as defaults are already set in ContactCard
         />
       </TouchableOpacity>
     );
   };
-  );
-
   useEffect(() => {
     if (!callDetails || !isInCall) return;
 
@@ -136,8 +134,8 @@ const CallScreen = () => {
 
   const joinChannel = () => {
     agoraEngineRef.current?.joinChannel(
-      callDetails.token, 
-      callDetails.room_id, 
+      callDetails.token,
+      callDetails.room_id,
       callDetails.uid,
       {
         channelProfile: ChannelProfileType.ChannelProfileCommunication,
@@ -150,9 +148,9 @@ const CallScreen = () => {
     agoraEngineRef.current?.leaveChannel();
     setIsJoined(false);
     setRemoteUsers([]);
-    // setIsInCall(false); 
+    // setIsInCall(false);
     console.log('Left the channel');
-    navigation.navigate('CallScreen')
+    navigation.navigate('CallScreen');
   };
 
   const toggleMicrophone = () => {
