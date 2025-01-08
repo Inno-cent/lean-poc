@@ -48,41 +48,7 @@ const Call = () => {
       isVideoCall: true,
       profileImage: require('../assets/images/ll.png'),
     },
-    {
-      name: 'Aloye',
-      timeAgo: '2 hours ago',
-      isVideoCall: true,
-      isCallIncoming: false,
-      profileImage: require('../assets/images/ll.png'),
-    },
-    {
-      name: 'Aloye',
-      timeAgo: '2 hours ago',
-      isCallIncoming: false,
-      profileImage: require('../assets/images/ll.png'),
-    },
-    {
-      name: 'Aloye',
-      timeAgo: '2 hours ago',
-      isCallIncoming: true,
-      isVideoCall: false,
-
-      profileImage: require('../assets/images/ll.png'),
-    },
-    {
-      name: 'Aloye',
-      timeAgo: '2 hours ago',
-      isVideoCall: true,
-      isCallIncoming: false,
-      profileImage: require('../assets/images/ll.png'),
-    },
-    {
-      name: 'Aloye',
-      timeAgo: '2 hours ago',
-      isCallIncoming: false,
-      isVideoCall: true,
-      profileImage: require('../assets/images/ll.png'),
-    },
+   
     // Add more entries as needed
   ];
 
@@ -121,7 +87,7 @@ const Call = () => {
               </TouchableOpacity>
             </View>
           ) : (
-            // Call log state
+            // Call log state 
             <ScrollView>
               {recentCallsData.map((call, index) => (
                 <RecentCallsCard
